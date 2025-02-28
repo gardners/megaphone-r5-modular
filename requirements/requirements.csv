@@ -1,3 +1,4 @@
+Requirement,Description
 Requirement 1.1.1, "Integrated LiFePO4 or other similarly safe and robust chemistry battery cell."
 Requirement 1.1.2, "Battery capacity and idle power consumption combine to support a battery endurance of at least 1 week when idle."
 Requirement 1.1.2.1, "Integrated battery capacity of at least 30Wh."
