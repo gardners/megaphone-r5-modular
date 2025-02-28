@@ -74,9 +74,9 @@
 			(subtractmaskfromsilk no)
 			(outputformat 1)
 			(mirror no)
-			(drillshape 1)
+			(drillshape 0)
 			(scaleselection 1)
-			(outputdirectory "")
+			(outputdirectory "gerbers/")
 		)
 	)
 	(net 0 "")
@@ -1476,8 +1476,8 @@
 		)
 	)
 	(gr_line
-		(start 44.6024 34.29)
-		(end 44.6786 28.3718)
+		(start 44.6786 29)
+		(end 44.6786 34.5188)
 		(stroke
 			(width 0.05)
 			(type default)
@@ -1486,8 +1486,8 @@
 		(uuid "04188eef-438f-49b7-a674-0b887ca9e669")
 	)
 	(gr_line
-		(start 44.6786 28.3718)
-		(end 75.1332 28.2956)
+		(start 44.6786 29)
+		(end 75.1332 29)
 		(stroke
 			(width 0.05)
 			(type default)
@@ -1507,7 +1507,7 @@
 	)
 	(gr_line
 		(start 51.9208 34.5188)
-		(end 44.6024 34.29)
+		(end 44.6786 34.5188)
 		(stroke
 			(width 0.05)
 			(type default)
@@ -1516,8 +1516,8 @@
 		(uuid "774c5f17-f2a9-4570-8e5c-c7163d9042e4")
 	)
 	(gr_line
-		(start 75.1332 28.2956)
-		(end 75.2348 34.798)
+		(start 75.1332 29)
+		(end 75.1332 34.5188)
 		(stroke
 			(width 0.05)
 			(type default)
@@ -1526,7 +1526,7 @@
 		(uuid "92c48f10-280a-4ca4-b84f-8cbaa0398bdc")
 	)
 	(gr_line
-		(start 75.2348 34.798)
+		(start 75.1332 34.5188)
 		(end 67.511 34.5188)
 		(stroke
 			(width 0.05)
@@ -1534,6 +1534,30 @@
 		)
 		(layer "Edge.Cuts")
 		(uuid "b477b756-ad05-44ee-bfb1-7b493f96282e")
+	)
+	(gr_text "Molex 104168-1616"
+		(at 62.7634 40.767 90)
+		(layer "B.SilkS")
+		(uuid "e8c6bbf8-ecac-4142-870b-4926a2444b44")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+			(justify left bottom mirror)
+		)
+	)
+	(gr_text "github.com/gardners/\nmegaphone-r5-modular\nR20250225"
+		(at 59.7208 38.5188 90)
+		(layer "B.SilkS")
+		(uuid "faa1aea5-cb04-402e-82fe-bcc598fc0909")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+			(justify left bottom mirror)
+		)
 	)
 	(segment
 		(start 53.1554 57.4602)
