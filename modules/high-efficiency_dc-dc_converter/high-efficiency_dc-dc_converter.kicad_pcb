@@ -116,6 +116,7 @@
 					(size 1 1)
 					(thickness 0.15)
 				)
+				(justify mirror)
 			)
 		)
 		(property "Footprint" ""
@@ -326,6 +327,7 @@
 					(size 1 1)
 					(thickness 0.15)
 				)
+				(justify mirror)
 			)
 		)
 		(property "Footprint" ""
@@ -1273,6 +1275,7 @@
 					(size 1 1)
 					(thickness 0.15)
 				)
+				(justify mirror)
 			)
 		)
 		(property "Footprint" ""
@@ -1750,6 +1753,7 @@
 					(size 1 1)
 					(thickness 0.15)
 				)
+				(justify mirror)
 			)
 		)
 		(property "Footprint" ""
@@ -1960,6 +1964,7 @@
 					(size 1 1)
 					(thickness 0.15)
 				)
+				(justify mirror)
 			)
 		)
 		(property "Footprint" ""
@@ -2170,6 +2175,7 @@
 					(size 1 1)
 					(thickness 0.15)
 				)
+				(justify mirror)
 			)
 		)
 		(property "Footprint" ""
@@ -2380,6 +2386,7 @@
 					(size 1 1)
 					(thickness 0.15)
 				)
+				(justify mirror)
 			)
 		)
 		(property "Footprint" ""
@@ -2590,6 +2597,7 @@
 					(size 1 1)
 					(thickness 0.15)
 				)
+				(justify mirror)
 			)
 		)
 		(property "Footprint" ""
@@ -2802,6 +2810,7 @@
 					(size 1 1)
 					(thickness 0.15)
 				)
+				(justify mirror)
 			)
 		)
 		(property "Footprint" ""
@@ -3306,84 +3315,84 @@
 			(at -7.27 -13.97 90)
 			(size 0.6 0.6)
 			(drill 0.6)
-			(layers "F&B.Cu" "Edge.Cuts")
+			(layers "*.Cu" "Edge.Cuts")
 			(uuid "90f59f9c-c616-48d0-bee3-07ecf1859327")
 		)
 		(pad "" np_thru_hole circle
 			(at -6.3475 -13.97 90)
 			(size 0.45 0.45)
 			(drill 0.45)
-			(layers "F&B.Cu" "Edge.Cuts")
+			(layers "*.Cu" "Edge.Cuts")
 			(uuid "15fbdef5-9887-472e-a0f1-c4f0abe6b753")
 		)
 		(pad "" np_thru_hole circle
 			(at -5.5475 -13.97 90)
 			(size 0.45 0.45)
 			(drill 0.45)
-			(layers "F&B.Cu" "Edge.Cuts")
+			(layers "*.Cu" "Edge.Cuts")
 			(uuid "71446f5a-2119-4f7e-ad12-2e037a2250d9")
 		)
 		(pad "" np_thru_hole circle
 			(at -4.7475 -13.97 90)
 			(size 0.45 0.45)
 			(drill 0.45)
-			(layers "F&B.Cu" "Edge.Cuts")
+			(layers "*.Cu" "Edge.Cuts")
 			(uuid "0e0177bc-0936-4690-85e7-4a2d39b00196")
 		)
 		(pad "" np_thru_hole circle
 			(at -3.9475 -13.97 90)
 			(size 0.45 0.45)
 			(drill 0.45)
-			(layers "F&B.Cu" "Edge.Cuts")
+			(layers "*.Cu" "Edge.Cuts")
 			(uuid "3277f01f-d4c8-4238-86cb-33f44682be04")
 		)
 		(pad "" np_thru_hole circle
 			(at -3.025 -13.97 90)
 			(size 0.6 0.6)
 			(drill 0.6)
-			(layers "F&B.Cu" "Edge.Cuts")
+			(layers "*.Cu" "Edge.Cuts")
 			(uuid "f1e70d86-46d2-4073-b42a-35e7b3ab0142")
 		)
 		(pad "" np_thru_hole circle
 			(at 3.025 -13.97 90)
 			(size 0.6 0.6)
 			(drill 0.6)
-			(layers "F&B.Cu" "Edge.Cuts")
+			(layers "*.Cu" "Edge.Cuts")
 			(uuid "910056b0-eb22-4995-a69c-ca81a460718a")
 		)
 		(pad "" np_thru_hole circle
 			(at 3.9475 -13.97 90)
 			(size 0.45 0.45)
 			(drill 0.45)
-			(layers "F&B.Cu" "Edge.Cuts")
+			(layers "*.Cu" "Edge.Cuts")
 			(uuid "851787c4-ba30-4326-ad93-408995a0b688")
 		)
 		(pad "" np_thru_hole circle
 			(at 4.7475 -13.97 90)
 			(size 0.45 0.45)
 			(drill 0.45)
-			(layers "F&B.Cu" "Edge.Cuts")
+			(layers "*.Cu" "Edge.Cuts")
 			(uuid "e566f64d-1b49-4a00-80ae-bbba974377ed")
 		)
 		(pad "" np_thru_hole circle
 			(at 5.5475 -13.97 90)
 			(size 0.45 0.45)
 			(drill 0.45)
-			(layers "F&B.Cu" "Edge.Cuts")
+			(layers "*.Cu" "Edge.Cuts")
 			(uuid "a2cfb216-1eec-4506-b203-8f4d59f69808")
 		)
 		(pad "" np_thru_hole circle
 			(at 6.3475 -13.97 90)
 			(size 0.45 0.45)
 			(drill 0.45)
-			(layers "F&B.Cu" "Edge.Cuts")
+			(layers "*.Cu" "Edge.Cuts")
 			(uuid "ecabf503-58e2-4148-9f16-2fa386424e1e")
 		)
 		(pad "" np_thru_hole circle
 			(at 7.27 -13.97 90)
 			(size 0.6 0.6)
 			(drill 0.6)
-			(layers "F&B.Cu" "Edge.Cuts")
+			(layers "*.Cu" "Edge.Cuts")
 			(uuid "4d8ec259-006c-46c2-96cc-28835c206fe5")
 		)
 		(pad "1" thru_hole rect
@@ -3391,7 +3400,12 @@
 			(size 2.54 2)
 			(drill oval 2 1.5)
 			(property pad_prop_castellated)
-			(layers "*.Cu" "*.Mask")
+			(layers "*.Cu" "*.Mask" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
+				"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "In14.Cu"
+				"In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu" "In21.Cu"
+				"In22.Cu" "In23.Cu" "In24.Cu" "In25.Cu" "In26.Cu" "In27.Cu" "In28.Cu"
+				"In29.Cu" "In30.Cu"
+			)
 			(remove_unused_layers no)
 			(net 1 "VBAT")
 			(pinfunction "VCC")
@@ -3404,7 +3418,12 @@
 			(size 2.54 2)
 			(drill oval 2 1.5)
 			(property pad_prop_castellated)
-			(layers "*.Cu" "*.Mask")
+			(layers "*.Cu" "*.Mask" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
+				"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "In14.Cu"
+				"In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu" "In21.Cu"
+				"In22.Cu" "In23.Cu" "In24.Cu" "In25.Cu" "In26.Cu" "In27.Cu" "In28.Cu"
+				"In29.Cu" "In30.Cu"
+			)
 			(remove_unused_layers no)
 			(net 10 "EN")
 			(pintype "bidirectional")
@@ -3416,7 +3435,12 @@
 			(size 2.54 2)
 			(drill oval 2 1.5)
 			(property pad_prop_castellated)
-			(layers "*.Cu" "*.Mask")
+			(layers "*.Cu" "*.Mask" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
+				"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "In14.Cu"
+				"In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu" "In21.Cu"
+				"In22.Cu" "In23.Cu" "In24.Cu" "In25.Cu" "In26.Cu" "In27.Cu" "In28.Cu"
+				"In29.Cu" "In30.Cu"
+			)
 			(remove_unused_layers no)
 			(net 3 "VCC_OUT")
 			(pintype "bidirectional")
@@ -3428,7 +3452,12 @@
 			(size 2.54 2)
 			(drill oval 2 1.5)
 			(property pad_prop_castellated)
-			(layers "*.Cu" "*.Mask")
+			(layers "*.Cu" "*.Mask" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
+				"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "In14.Cu"
+				"In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu" "In21.Cu"
+				"In22.Cu" "In23.Cu" "In24.Cu" "In25.Cu" "In26.Cu" "In27.Cu" "In28.Cu"
+				"In29.Cu" "In30.Cu"
+			)
 			(remove_unused_layers no)
 			(net 2 "GND")
 			(pinfunction "GND")
@@ -3441,7 +3470,12 @@
 			(size 2.54 2)
 			(drill oval 2 1.5)
 			(property pad_prop_castellated)
-			(layers "*.Cu" "*.Mask")
+			(layers "*.Cu" "*.Mask" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
+				"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "In14.Cu"
+				"In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu" "In21.Cu"
+				"In22.Cu" "In23.Cu" "In24.Cu" "In25.Cu" "In26.Cu" "In27.Cu" "In28.Cu"
+				"In29.Cu" "In30.Cu"
+			)
 			(remove_unused_layers no)
 			(net 5 "{slash}5V_SEL")
 			(pintype "bidirectional")
@@ -3453,7 +3487,12 @@
 			(size 2.54 2)
 			(drill oval 2 1.5)
 			(property pad_prop_castellated)
-			(layers "*.Cu" "*.Mask")
+			(layers "*.Cu" "*.Mask" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
+				"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "In14.Cu"
+				"In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu" "In21.Cu"
+				"In22.Cu" "In23.Cu" "In24.Cu" "In25.Cu" "In26.Cu" "In27.Cu" "In28.Cu"
+				"In29.Cu" "In30.Cu"
+			)
 			(remove_unused_layers no)
 			(net 3 "VCC_OUT")
 			(pintype "bidirectional")
@@ -3465,7 +3504,12 @@
 			(size 2.54 2)
 			(drill oval 2 1.5)
 			(property pad_prop_castellated)
-			(layers "*.Cu" "*.Mask")
+			(layers "*.Cu" "*.Mask" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
+				"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "In14.Cu"
+				"In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu" "In21.Cu"
+				"In22.Cu" "In23.Cu" "In24.Cu" "In25.Cu" "In26.Cu" "In27.Cu" "In28.Cu"
+				"In29.Cu" "In30.Cu"
+			)
 			(remove_unused_layers no)
 			(net 3 "VCC_OUT")
 			(pintype "bidirectional")
@@ -3477,7 +3521,12 @@
 			(size 2.54 2)
 			(drill oval 2 1.5)
 			(property pad_prop_castellated)
-			(layers "*.Cu" "*.Mask")
+			(layers "*.Cu" "*.Mask" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
+				"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "In14.Cu"
+				"In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu" "In21.Cu"
+				"In22.Cu" "In23.Cu" "In24.Cu" "In25.Cu" "In26.Cu" "In27.Cu" "In28.Cu"
+				"In29.Cu" "In30.Cu"
+			)
 			(remove_unused_layers no)
 			(net 8 "MODE")
 			(pintype "bidirectional")
