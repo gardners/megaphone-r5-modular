@@ -1,4 +1,19 @@
+# Summary of Progress
+
+During this tranch of activity, the full requirements for the MEGAphone Modular were derived and documented.
+The derivation of the requirements can be found in this blog post:
+
+https://c65gs.blogspot.com/2025/02/modular-megaphone-requirement.html
+
+A collated table of the requirements can be found here:
+
+https://github.com/MEGA65/megaphone-modular/blob/main/requirements/requirements.csv
+
 # System Requirements Mapping to NLNet Milestones
+
+For the specific requirements specification milestones claimed, the mapping between those milestones and the derived requirements is summarised below.
+
+Note that for some modules, the requirements have ended up being quite short and succinct. This is a positive feature, enabled by the substantial work undertaken to understand the system, decompose it sensibly, and then distill the actual requirements (including a few desirable characteristics) of the system.
 
 | NLnet Milestone | Requirement(s) of Relevance |
 | --- | --- |
