@@ -1,62 +1,62 @@
-Requirement 1.1.1, Integrated LiFePO4 or other similarly safe and robust chemistry battery cell.
-Requirement 1.1.2, Battery capacity and idle power consumption combine to support a battery endurance of at least 1 week when idle.
-Requirement 1.1.2.1, Integrated battery capacity of at least 30Wh.
-Requirement 1.1.2.2, Idle power consumption below 175mW.
-Requirement 1.2.1.1, The internal battery shall be chargeable via an integrated USB-C connector, ideally fast charging.
-Requirement 1.2.1.2, Define module bay for USB-C charger + data module, large enough to fit the SparkFun module, as that looks to be the biggest, capable of delivering 20V @ 3A to the carrier board.
-Requirement 1.2.1.3, Proof-of-concept charger module based on a given USB-C power delivery module (no need for data).
-Requirement 1.2.1.4, Power isolation mechanism to allow conflict-free operation of the USB-C and alternative power inputs to the MEGAphone (back-flow and over-voltage protection, for example)
-Requirement 1.2.2.1, Means of accepting (including connector) dirty DC power between ~9V and ~28V using a MPPT to maximise efficiency with a solar panel. (Varied 20250209)
-Requirement 1.2.3.1, Means of accepting DC power from integrated solar panel at input voltages of 6V to 20V with a MPPT. (Varied 20250209)
-Requirement 1.3.1, Power management processor that can control power to all other sub-systems, and itself have very low power consumption, ideally <10mW.
-Requirement 1.3.2, Ability for power management processor to buffer communications when main processor is powered off.
-Requirement 1.3.3, Galvanic isolation of communications lines between sub-systems that can be independently powered off, e.g., using opto-isolators.
-Requirement 1.3.4, A small module for galvanic isolation, so that this can be reused. 
-Requirement 1.3.5, Implement UART connection between power control processor and the main FPGA via MEGA65 buffered UART interface. 
-Requirement 1.3.6, Protect writing to the power control UART so that it can be done only from the Hypervisor.
-Requirement 1.3.7, Implement Hypervisor calls to provide an API for applications to request power to be switched on and off.
-Requirement 1.3.8, Implement register access to check battery state and charger status (i.e., charging, discharging, which power source(s) are present).
-Requirement 1.4.1, High-efficiency DC switchable DC power supplies that can support various sub-systems with >=2A @ 3.3V or 5V (externally selectable), with an efficiency of at least 90% in typical conditions when powered from a single cell LiFEPO4 battery (28.V - 3.2V).
-Requirement 1.4.2, LCD Panel Backlight power supply module (20V, 50mA, powered from VBAT, switchable via a single enable input pin), unless incorporated into the solution to Requirement 3.3.1).
-Requirement 2.1.1, Bluetooth host module that can connect to headsets and other audio devices. Must support UART or I2C control, and audio interfaces that we can easily implement from the FPGA, such as I2S audio.
-Requirement 2.1.2, Bluetooth host module support for keyboards and other HID peripherals.
-Requirement 2.2.1, Cellular Module Carrier board that can accept an industry standard industrial cellular modem, breaking out all pins from the connectors, and provides a SIM card slot.
-Requirement 2.2.2, Create UART for cellular modem AT command interface to the MEGA65 buffered serial interface. This should keep output from cellular modem in a buffer until the application requests the next line or bunch of bytes, and require acknowledgement each time, to prevent loss of important messages.
-Requirement 2.2.3, Allow Hypervisor to protect access to the cellular modem UART.
-Requirement 2.2.4, Create Hypervisor API to request access to the cellular modem.
-Requirement 2.3.1, Power-switched, galvanically isolated UART interface to a module bay that can accept an alternative communications module
-Requirement 2.3.2, A proof-of-concept module for the above that can accommodate some alternative communications module.
-Requirement 3.1.1, One or more power-switchable MEMS microphones with power status indication.
-Requirement 3.2.1, Audio CODEC or equivalent that has output channels for loud speaker (mono is ok), 3.5mm audio output (stereo) ear piece, and input channel for 3.5mm microphone.
-Requirement 3.3.1, Module to connect to industrial LCD panels of the type used in previous MEGAphone prototypes, large enough to allow for some variability in cable lengths and positions, for both DVGA and touch interface. Allow for either resistive or capacitive interfaces. Include appropriate LCD backlight driver and expose the PWM brightness control signal.
-Requirement 3.3.2, Module bay to accept the LCD panel module.
-Requirement 3.4.1, Module hosting a thumb-wheel potentiometer and an I2C potentiometer, with two pins to select I2C address of the module, and pads on the module to add the selection resistors if required.
-Requirement 3.4.2, Module to accept D-pad
-Requirement 3.4.3, Module to accept push-button pairs
-Requirement 3.4.4, I2C I/O Expander to accept inputs from buttons and control LEDs
-Requirement 3.4.5, Slider switch module for input
-Desirable 3.4.6, Module for hosting e-ink display and recessed buttons
-Desirable 3.4.7, Module specification for hosting I2C sensors and peripherals
-Requirement 4.1.1,  A100T or larger FPGA module SWaP and pin-compatible with the Trenz TE0725.
-Requirement 4.2.1, Module bay that can power and host a FireAnt or similar FPGA module to control the power to all sub-systems, and interdict the communications between the main FPGA and sub-systems that require monitoring when the main FPGA is powerd off.
-Desirable 4.3.1, Bay for Pi Compute Module 4
-Desirable 4.3.2, DVGA multiplexor to allow LCD panel to display either the MEGA65 or Pi display, on a pixel by pixel basis.
-Desirable 4.3.3, Isolatable USB data connection between cellular modem and Pi.
-Desirable 4.3.4, UART interface between Pi Compute Module and MEGA65 core.
-Requirement 5.1.1, Main carrier board that connects all sub-systems together.
-Requirement 5.1.2, Design a 3D-printable / CNC machinable case to contain the electronics package.
-Requirement 6.1.1, Power control API on low-power FPGA to allow control of power to all sub-systems, including the main FPGA.
-Requirement 6.1.2, Logic to activate power to the main FPGA based on relevant criteria (eg incoming call, user pressing power button etc).
-Requirement 6.1.3, UART interface between main and low-power FPGA module exposed via one of the MEGA65 buffered UART interfaces.
-Requirement 6.1.4, MEGA65-side software that implements the power control API.
-Requirement 6.2.1, Can initiate telephone calls via dialing or selecting a contact.
-Requirement 6.2.2, Can accept incoming telephone calls, showing contact name when the caller matches an existing contact.
-Requirement 6.2.3, Can list contacts.
-Requirement 6.2.4, Can add a contact.
-Requirement 6.2.5, Can edit a contact.
-Requirement 6.2.6, Can delete a contact. 
-Requirement 6.2.7, Incoming calls are indicated, even if the user is performing some other function (e.g., OSD overlay or blinking LED).
-Requirement 6.3.1, Incoming SMS messages are indicated, even if the user is performing some other function (e.g., OSD overlay or blinking LED).
-Requirement 6.3.2, SMS message can be composed and sent to a number or contact.
-Requirement 6.3.3, SMS message can be received, and the corresponding contact indicated.
-Desirable 6.3.4, SMS messages are logged, so that SMS conversation threads can be displayed.
+Requirement 1.1.1, "Integrated LiFePO4 or other similarly safe and robust chemistry battery cell."
+Requirement 1.1.2, "Battery capacity and idle power consumption combine to support a battery endurance of at least 1 week when idle."
+Requirement 1.1.2.1, "Integrated battery capacity of at least 30Wh."
+Requirement 1.1.2.2, "Idle power consumption below 175mW."
+Requirement 1.2.1.1, "The internal battery shall be chargeable via an integrated USB-C connector, ideally fast charging."
+Requirement 1.2.1.2, "Define module bay for USB-C charger + data module, large enough to fit the SparkFun module, as that looks to be the biggest, capable of delivering 20V @ 3A to the carrier board."
+Requirement 1.2.1.3, "Proof-of-concept charger module based on a given USB-C power delivery module (no need for data)."
+Requirement 1.2.1.4, "Power isolation mechanism to allow conflict-free operation of the USB-C and alternative power inputs to the MEGAphone (back-flow and over-voltage protection, for example)"
+Requirement 1.2.2.1, "Means of accepting (including connector) dirty DC power between ~9V and ~28V using a MPPT to maximise efficiency with a solar panel. (Varied 20250209)"
+Requirement 1.2.3.1, "Means of accepting DC power from integrated solar panel at input voltages of 6V to 20V with a MPPT. (Varied 20250209)"
+Requirement 1.3.1, "Power management processor that can control power to all other sub-systems, and itself have very low power consumption, ideally <10mW."
+Requirement 1.3.2, "Ability for power management processor to buffer communications when main processor is powered off."
+Requirement 1.3.3, "Galvanic isolation of communications lines between sub-systems that can be independently powered off, e.g., using opto-isolators."
+Requirement 1.3.4, "A small module for galvanic isolation, so that this can be reused. "
+Requirement 1.3.5, "Implement UART connection between power control processor and the main FPGA via MEGA65 buffered UART interface. "
+Requirement 1.3.6, "Protect writing to the power control UART so that it can be done only from the Hypervisor."
+Requirement 1.3.7, "Implement Hypervisor calls to provide an API for applications to request power to be switched on and off."
+Requirement 1.3.8, "Implement register access to check battery state and charger status (i.e., charging, discharging, which power source(s) are present)."
+Requirement 1.4.1, "High-efficiency DC switchable DC power supplies that can support various sub-systems with >=2A @ 3.3V or 5V (externally selectable), with an efficiency of at least 90% in typical conditions when powered from a single cell LiFEPO4 battery (28.V - 3.2V)."
+Requirement 1.4.2, "LCD Panel Backlight power supply module (20V, 50mA, powered from VBAT, switchable via a single enable input pin), unless incorporated into the solution to Requirement 3.3.1)."
+Requirement 2.1.1, "Bluetooth host module that can connect to headsets and other audio devices. Must support UART or I2C control, and audio interfaces that we can easily implement from the FPGA, such as I2S audio."
+Requirement 2.1.2, "Bluetooth host module support for keyboards and other HID peripherals."
+Requirement 2.2.1, "Cellular Module Carrier board that can accept an industry standard industrial cellular modem, breaking out all pins from the connectors, and provides a SIM card slot."
+Requirement 2.2.2, "Create UART for cellular modem AT command interface to the MEGA65 buffered serial interface. This should keep output from cellular modem in a buffer until the application requests the next line or bunch of bytes, and require acknowledgement each time, to prevent loss of important messages."
+Requirement 2.2.3, "Allow Hypervisor to protect access to the cellular modem UART."
+Requirement 2.2.4, "Create Hypervisor API to request access to the cellular modem."
+Requirement 2.3.1, "Power-switched, galvanically isolated UART interface to a module bay that can accept an alternative communications module"
+Requirement 2.3.2, "A proof-of-concept module for the above that can accommodate some alternative communications module."
+Requirement 3.1.1, "One or more power-switchable MEMS microphones with power status indication."
+Requirement 3.2.1, "Audio CODEC or equivalent that has output channels for loud speaker (mono is ok), 3.5mm audio output (stereo) ear piece, and input channel for 3.5mm microphone."
+Requirement 3.3.1, "Module to connect to industrial LCD panels of the type used in previous MEGAphone prototypes, large enough to allow for some variability in cable lengths and positions, for both DVGA and touch interface. Allow for either resistive or capacitive interfaces. Include appropriate LCD backlight driver and expose the PWM brightness control signal."
+Requirement 3.3.2, "Module bay to accept the LCD panel module."
+Requirement 3.4.1, "Module hosting a thumb-wheel potentiometer and an I2C potentiometer, with two pins to select I2C address of the module, and pads on the module to add the selection resistors if required."
+Requirement 3.4.2, "Module to accept D-pad"
+Requirement 3.4.3, "Module to accept push-button pairs"
+Requirement 3.4.4, "I2C I/O Expander to accept inputs from buttons and control LEDs"
+Requirement 3.4.5, "Slider switch module for input"
+Desirable 3.4.6, "Module for hosting e-ink display and recessed buttons"
+Desirable 3.4.7, "Module specification for hosting I2C sensors and peripherals"
+Requirement 4.1.1, "A100T or larger FPGA module SWaP and pin-compatible with the Trenz TE0725."
+Requirement 4.2.1, "Module bay that can power and host a FireAnt or similar FPGA module to control the power to all sub-systems, and interdict the communications between the main FPGA and sub-systems that require monitoring when the main FPGA is powerd off."
+Desirable 4.3.1, "Bay for Pi Compute Module 4"
+Desirable 4.3.2, "DVGA multiplexor to allow LCD panel to display either the MEGA65 or Pi display, on a pixel by pixel basis."
+Desirable 4.3.3, "Isolatable USB data connection between cellular modem and Pi."
+Desirable 4.3.4, "UART interface between Pi Compute Module and MEGA65 core."
+Requirement 5.1.1, "Main carrier board that connects all sub-systems together."
+Requirement 5.1.2, "Design a 3D-printable / CNC machinable case to contain the electronics package."
+Requirement 6.1.1, "Power control API on low-power FPGA to allow control of power to all sub-systems, including the main FPGA."
+Requirement 6.1.2, "Logic to activate power to the main FPGA based on relevant criteria (eg incoming call, user pressing power button etc)."
+Requirement 6.1.3, "UART interface between main and low-power FPGA module exposed via one of the MEGA65 buffered UART interfaces."
+Requirement 6.1.4, "MEGA65-side software that implements the power control API."
+Requirement 6.2.1, "Can initiate telephone calls via dialing or selecting a contact."
+Requirement 6.2.2, "Can accept incoming telephone calls, showing contact name when the caller matches an existing contact."
+Requirement 6.2.3, "Can list contacts."
+Requirement 6.2.4, "Can add a contact."
+Requirement 6.2.5, "Can edit a contact."
+Requirement 6.2.6, "Can delete a contact. "
+Requirement 6.2.7, "Incoming calls are indicated, even if the user is performing some other function (e.g., OSD overlay or blinking LED)."
+Requirement 6.3.1, "Incoming SMS messages are indicated, even if the user is performing some other function (e.g., OSD overlay or blinking LED)."
+Requirement 6.3.2, "SMS message can be composed and sent to a number or contact."
+Requirement 6.3.3, "SMS message can be received, and the corresponding contact indicated."
+Desirable 6.3.4, "SMS messages are logged, so that SMS conversation threads can be displayed."
