@@ -144,6 +144,179 @@
 				)
 			)
 		)
+		(symbol "MegaCastle:MegaCastle2x13-Module-I14.0x28.2-M800C00C-NOCUTOUT-EDGE"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "M"
+				(at 0 -20.32 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "MegaCastle:MegaCastle2x13-Module-I14.0x28.2-M800C00C"
+				(at 0 -22.86 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Generated using footprint-gen .. 14 28 5 M800C00C"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "MegaCastle2x13-Module-I14.0x28.2-M800C00C-NOCUTOUT-EDGE_0_1"
+				(rectangle
+					(start -6.35 17.78)
+					(end 7.62 -17.78)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "MegaCastle2x13-Module-I14.0x28.2-M800C00C-NOCUTOUT-EDGE_1_1"
+				(text " BOARD EDGE"
+					(at 0 19.05 0)
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -6.35 15.24 0)
+					(length 2.54)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -6.35 -15.24 0)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "13"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 7.62 15.24 180)
+					(length 2.54)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "14"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 7.62 -12.7 180)
+					(length 2.54)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "25"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 7.62 -15.24 180)
+					(length 2.54)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "26"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+	)
+	(no_connect
+		(at 71.12 120.65)
+		(uuid "5864402b-890b-4c87-af9f-94d7331b4f77")
+	)
+	(no_connect
+		(at 57.15 92.71)
+		(uuid "98db162a-cc96-42e3-aa0f-7989b3d9598e")
+	)
+	(no_connect
+		(at 71.12 92.71)
+		(uuid "b1de8904-4a76-4547-a687-50b083a9f514")
 	)
 	(text "These USB-C Power Delivery modules that are available on AliExpress, \nAmazon and lots of other places are pretty good, but more variable than\nthe share-price of snake oil.\n\nWATCH ESPECIALLY FOR POLARITY SWITCHING OF THE POWER OUTPUT PINS!\n\nYou shouldn't need to change anything on this schematic, as it really\nis just connecting the power and GND pins. To support other variants\nyou will instead need to go to the PCB layout, and select the footprint\nthere and then press E, and then select \"open in footprint editor\" to\nmunge it to suit your module."
 		(exclude_from_sim no)
@@ -155,6 +328,28 @@
 			(justify left)
 		)
 		(uuid "546cacd9-a031-49a2-8ee0-8f2b096d7d15")
+	)
+	(global_label "GND"
+		(shape input)
+		(at 57.15 123.19 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3701a2eb-8afd-4f2f-b3a0-a4dc43f93231")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 50.2943 123.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
 	)
 	(global_label "+20V"
 		(shape input)
@@ -200,6 +395,105 @@
 			)
 		)
 	)
+	(global_label "+20V"
+		(shape input)
+		(at 71.12 123.19 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "e1a8ab8c-69fc-47e9-84a8-6da4a883a130")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 79.1852 123.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MegaCastle:MegaCastle2x13-Module-I14.0x28.2-M800C00C-NOCUTOUT-EDGE")
+		(at 63.5 107.95 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "4d1e1785-4b76-4b70-ab47-81d631be861e")
+		(property "Reference" "M1"
+			(at 64.0038 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "~"
+			(at 64.0038 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "MegaCastle:MegaCastle2x13-Module-I14.0x28.2-M800C00C-PANEL-NIBBLE"
+			(at 63.5 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 63.5 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generated using footprint-gen .. 14 28 5 M800C00C"
+			(at 63.5 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "26"
+			(uuid "ef3ef88d-6753-4710-8d8a-122241c044e2")
+		)
+		(pin "25"
+			(uuid "5e8d5425-1982-436a-861e-457a9ad97608")
+		)
+		(pin "14"
+			(uuid "3c035950-553a-4c41-8c3e-03b587bd5e73")
+		)
+		(pin "13"
+			(uuid "186d3dae-023c-4141-8977-14742d866a13")
+		)
+		(pin "1"
+			(uuid "51493748-5cab-4e4a-8e3d-8342953fb2a7")
+		)
+		(instances
+			(project ""
+				(path "/1ab374f1-1696-497e-a408-710496bc66f3"
+					(reference "M1")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x02")
 		(at 63.5 64.77 0)
@@ -228,7 +522,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
 			(at 63.5 64.77 0)
 			(effects
 				(font
