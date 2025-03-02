@@ -1,0 +1,80 @@
+
+(kicad_symbol_lib (version 20211014) (generator kicad_symbol_editor)
+  (symbol "BZX384-C30_115" (pin_names (offset 1.016)) (in_bom yes) (on_board yes)
+    (property "Reference" "D" (id 0) (at -2.54 -5.08 0)
+      (effects (font (size 1.27 1.27)) (justify bottom left))
+    )
+    (property "Value" "BZX384-C30_115" (id 1) (at -2.54 2.54 0)
+      (effects (font (size 1.27 1.27)) (justify bottom left))
+    )
+    (property "Footprint" "BZX384-C30_115:DIO_BZX384-C30_115" (id 2) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "MF" "Nexperia USA" (id 4) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Purchase-URL" "https://pricing.snapeda.com/search/part/BZX384-C30,115/?ref=eda" (id 5) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Package" "SOD323-2 Nexperia USA Inc." (id 6) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Price" "None" (id 7) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "MP" "BZX384-C30,115" (id 8) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Availability" "In Stock" (id 9) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (property "Description" "Zener Diode 30 V 300 mW ±5% Surface Mount SOD-323" (id 10) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (symbol "BZX384-C30_115_0_0"
+      (polyline
+        (pts (xy 1.27 1.27) (xy -1.27 0.0)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy -1.27 0.0) (xy 1.27 -1.27)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy -0.635 -1.27) (xy -1.27 -1.27)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy -1.27 -1.27) (xy -1.27 0.0)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy 1.27 -1.27) (xy 1.27 0.0)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy 1.27 0.0) (xy 1.27 1.27)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy -1.27 0.0) (xy -1.27 1.27)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy 2.54 0.0) (xy 1.27 0.0)) (stroke (width 0.254))
+      )
+      (polyline
+        (pts (xy -2.54 0.0) (xy -1.27 0.0)) (stroke (width 0.254))
+      )
+      (pin passive line (at -5.08 0.0 0) (length 2.54)
+        (name "~"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "K"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at 5.08 0.0 180.0) (length 2.54)
+        (name "~"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "A"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+    )
+  )
+)
