@@ -1978,6 +1978,337 @@
 				)
 			)
 		)
+		(symbol "Transistor_FET:SQJQ466E"
+			(pin_names
+				(offset 0) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "Q"
+				(at 5.08 1.27 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "SQJQ466E"
+				(at 5.08 -1.27 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:LFPAK88"
+				(at 5.08 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://www.vishay.com/docs/75138/sqjq466e.pdf"
+				(at 5.08 -6.35 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+					(hide yes)
+				)
+			)
+			(property "Description" "200A Id, 60V Vds, N-Channel TrenchFET MOSFET, 1.9mOhm Ron, 14nC Qqd, -55 to 175 °C, LFPAK88"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "Power MOSFET N-MOS Automotive AEC-Q101 PowerPAK 8x8L"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "LFPAK88*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "SQJQ466E_0_1"
+				(polyline
+					(pts
+						(xy 0.254 0) (xy -2.54 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.254 1.905) (xy 0.254 -1.905)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 -1.27) (xy 0.762 -2.286)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 0.508) (xy 0.762 -0.508)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 2.286) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 2.54) (xy 2.54 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 -1.778) (xy 3.302 -1.778) (xy 3.302 1.778) (xy 0.762 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.016 0) (xy 2.032 0.381) (xy 2.032 -0.381) (xy 1.016 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.794 0.508) (xy 2.921 0.381) (xy 3.683 0.381) (xy 3.81 0.254)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 3.302 0.381) (xy 2.921 -0.254) (xy 3.683 -0.254) (xy 3.302 0.381)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 1.651 0)
+					(radius 2.794)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 2.54 -1.778)
+					(radius 0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(circle
+					(center 2.54 1.778)
+					(radius 0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+			)
+			(symbol "SQJQ466E_1_1"
+				(pin input line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "G"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54) hide
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54) hide
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "D"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "power:GND"
 			(power)
 			(pin_numbers hide)
@@ -2190,6 +2521,12 @@
 		(uuid "720a05ec-2a1f-4038-a61d-508bb6e4be9f")
 	)
 	(junction
+		(at 234.95 153.67)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8aa8053d-c5f2-443b-b9b6-7199a1f6837a")
+	)
+	(junction
 		(at 182.88 101.6)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2272,6 +2609,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "edaea40e-f444-41a9-83b1-1bd97fd1c225")
+	)
+	(junction
+		(at 212.09 139.7)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "efc083c3-e4ba-4a6a-9c6c-5fb69958afef")
 	)
 	(junction
 		(at 46.99 64.77)
@@ -2427,6 +2770,16 @@
 	)
 	(wire
 		(pts
+			(xy 234.95 144.78) (xy 234.95 153.67)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1caa0284-b4b6-4f36-8d7c-00287a92913a")
+	)
+	(wire
+		(pts
 			(xy 149.86 133.35) (xy 154.94 133.35)
 		)
 		(stroke
@@ -2504,6 +2857,16 @@
 			(type default)
 		)
 		(uuid "2b8c5bc2-e8e4-4174-848a-deedea2c10dd")
+	)
+	(wire
+		(pts
+			(xy 212.09 139.7) (xy 227.33 139.7)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2c375c78-132d-49c4-9b16-7d080ec5f125")
 	)
 	(wire
 		(pts
@@ -2847,6 +3210,16 @@
 	)
 	(wire
 		(pts
+			(xy 209.55 139.7) (xy 212.09 139.7)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "656b8b5f-852b-4e65-a600-b151748fc72b")
+	)
+	(wire
+		(pts
 			(xy 142.24 76.2) (xy 182.88 76.2)
 		)
 		(stroke
@@ -2954,6 +3327,16 @@
 			(type default)
 		)
 		(uuid "7932b5c8-b061-4c8e-b951-0514f0c0bc9f")
+	)
+	(wire
+		(pts
+			(xy 234.95 153.67) (xy 234.95 160.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7b2c15d3-ff29-4865-915c-e9f8b54b6aef")
 	)
 	(wire
 		(pts
@@ -3187,6 +3570,16 @@
 	)
 	(wire
 		(pts
+			(xy 212.09 143.51) (xy 212.09 139.7)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a7572958-2448-4639-baa4-00ba5d3e51a2")
+	)
+	(wire
+		(pts
 			(xy 36.83 62.23) (xy 39.37 62.23)
 		)
 		(stroke
@@ -3344,6 +3737,16 @@
 			(type default)
 		)
 		(uuid "c5e07af5-e52a-43e6-8cf8-c61f08492d5c")
+	)
+	(wire
+		(pts
+			(xy 212.09 153.67) (xy 234.95 153.67)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d0a704f2-30e5-46af-b7cb-f379f561ddb2")
 	)
 	(wire
 		(pts
@@ -3536,6 +3939,16 @@
 		)
 		(uuid "3a20727a-1dfe-4fda-a59d-6e428987caff")
 	)
+	(text "Reverse polarity protection (to 60V)\nfor Dirty DC / external solar panel."
+		(exclude_from_sim no)
+		(at 211.328 124.968 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "72a77c50-d4cf-4471-8f3f-f91808a8ae9a")
+	)
 	(text "Detect over-voltage condition\nusing 200V tolerant TVS to\nconduct above ~24V."
 		(exclude_from_sim no)
 		(at 30.734 131.318 0)
@@ -3569,7 +3982,7 @@
 	)
 	(global_label "DIRTY_DC_+"
 		(shape input)
-		(at 67.31 52.07 180)
+		(at 234.95 160.02 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3579,7 +3992,7 @@
 		)
 		(uuid "00932c49-3382-4732-882c-5382509257f1")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 53.0762 52.07 0)
+			(at 220.7162 160.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3602,6 +4015,28 @@
 		(uuid "039d179f-7960-472f-af76-b9eb22182e88")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 71.2796 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "DIRTY_DC_-"
+		(shape input)
+		(at 201.93 139.7 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "03b1d60a-6790-4309-a949-c8da72019d70")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 187.6962 139.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3809,6 +4244,28 @@
 			)
 		)
 	)
+	(global_label "DIRTY_DC_+_PROTECTED"
+		(shape output)
+		(at 234.95 134.62 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "79ad3164-5e36-4658-909f-1b837b44ce12")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 209.1049 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "USB-C_POWER_IN"
 		(shape input)
 		(at 67.31 72.39 180)
@@ -3822,6 +4279,28 @@
 		(uuid "9b18eb07-1ef8-4a1f-92b0-930121f65c08")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 47.331 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "DIRTY_DC_+_PROTECTED"
+		(shape input)
+		(at 140.97 41.91 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "9b2aea68-3e29-4e74-8937-ccb3b3607d2a")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 115.1249 41.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3941,9 +4420,9 @@
 			)
 		)
 	)
-	(global_label "DIRTY_DC_+"
+	(global_label "DIRTY_DC_+_PROTECTED"
 		(shape input)
-		(at 140.97 41.91 180)
+		(at 67.31 52.07 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3951,9 +4430,9 @@
 			)
 			(justify right)
 		)
-		(uuid "bb061b4c-92cd-44cd-8460-c2d5bf5623ac")
+		(uuid "c8ccbb85-3cca-4124-9c68-e5c8e67f2172")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 126.7362 41.91 0)
+			(at 41.4649 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4864,6 +5343,74 @@
 			(project "input-power-selector"
 				(path "/c18eebf3-c622-42ce-a76a-45e5fabab2b4"
 					(reference "C4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 205.74 139.7 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "45a05c5f-e77d-4e9f-a150-6e335617f439")
+		(property "Reference" "R14"
+			(at 205.74 133.35 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "246K 0.25W"
+			(at 205.74 135.89 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
+			(at 205.74 141.478 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 205.74 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 205.74 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "0cdb049f-2664-4173-87f6-78e4c632d6d0")
+		)
+		(pin "1"
+			(uuid "710694c6-78dd-4b25-bde4-cf9b69d2b2c6")
+		)
+		(instances
+			(project "input-power-selector"
+				(path "/c18eebf3-c622-42ce-a76a-45e5fabab2b4"
+					(reference "R14")
 					(unit 1)
 				)
 			)
@@ -6201,6 +6748,147 @@
 		)
 	)
 	(symbol
+		(lib_id "BZX384-C30_115:BZX384-C30_115")
+		(at 212.09 148.59 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ac3a271f-575c-4f63-acd3-63a54198c964")
+		(property "Reference" "D3"
+			(at 214.63 147.3199 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "BZX384-C12_115"
+			(at 214.63 149.8599 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "BZX384-C30_115:DIO_BZX384-C30_115"
+			(at 212.09 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 212.09 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 212.09 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MF" "Nexperia USA"
+			(at 212.09 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "Purchase-URL" "https://pricing.snapeda.com/search/part/BZX384-C30,115/?ref=eda"
+			(at 212.09 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "Package" "SOD323-2 Nexperia USA Inc."
+			(at 212.09 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "Price" "None"
+			(at 212.09 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "MP" "BZX384-C30,115"
+			(at 212.09 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "Availability" "In Stock"
+			(at 212.09 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "Description_1" "Zener Diode 30 V 300 mW ±5% Surface Mount SOD-323"
+			(at 212.09 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(pin "K"
+			(uuid "0242c5df-c746-4fa4-81d7-8599cb8cd7da")
+		)
+		(pin "A"
+			(uuid "212a0520-db49-475c-a684-f3d71f51b686")
+		)
+		(instances
+			(project "input-power-selector"
+				(path "/c18eebf3-c622-42ce-a76a-45e5fabab2b4"
+					(reference "D3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 73.66 74.93 90)
 		(unit 1)
@@ -7271,6 +7959,87 @@
 			(project ""
 				(path "/c18eebf3-c622-42ce-a76a-45e5fabab2b4"
 					(reference "U1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Transistor_FET:SQJQ466E")
+		(at 232.41 139.7 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f2ce5c8d-b143-4939-ad58-432ba46b5542")
+		(property "Reference" "Q6"
+			(at 238.76 138.4299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "SQJQ457EP"
+			(at 238.76 140.9699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_SO:PowerPAK_SO-8L_Single"
+			(at 237.49 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.vishay.com/docs/75138/sqjq466e.pdf"
+			(at 237.49 146.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" "200A Id, 60V Vds, N-Channel TrenchFET MOSFET, 1.9mOhm Ron, 14nC Qqd, -55 to 175 °C, LFPAK88"
+			(at 232.41 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "855be462-77bd-495b-b60f-923fb2ceaced")
+		)
+		(pin "5"
+			(uuid "b3778f9c-36e2-43d7-86c6-63076a2f723e")
+		)
+		(pin "4"
+			(uuid "2755d4e1-7464-4f28-a282-9aee5374cc8c")
+		)
+		(pin "3"
+			(uuid "0448cf2f-b378-4ae2-935a-28e162c0e107")
+		)
+		(pin "2"
+			(uuid "3770dc4f-d3b8-4f5a-be0f-447153e18304")
+		)
+		(instances
+			(project ""
+				(path "/c18eebf3-c622-42ce-a76a-45e5fabab2b4"
+					(reference "Q6")
 					(unit 1)
 				)
 			)
