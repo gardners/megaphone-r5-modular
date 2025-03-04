@@ -5228,7 +5228,7 @@
 				)
 			)
 		)
-		(property "Footprint" "BZX384-C30_115:DIO_BZX384-C30_115"
+		(property "Footprint" "footprints:DIO_BZX384-C30_115"
 			(at 71.12 189.23 0)
 			(effects
 				(font
@@ -7529,7 +7529,7 @@
 				)
 			)
 		)
-		(property "Footprint" "BZX384-C30_115:DIO_BZX384-C30_115"
+		(property "Footprint" "footprints:DIO_BZX384-C30_115"
 			(at 85.09 138.43 0)
 			(effects
 				(font
@@ -7670,7 +7670,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "BZX384-C30_115:DIO_BZX384-C30_115"
+		(property "Footprint" "footprints:DIO_BZX384-C30_115"
 			(at 212.09 148.59 0)
 			(effects
 				(font
