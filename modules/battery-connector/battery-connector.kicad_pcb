@@ -1,2 +1,416 @@
-(kicad_pcb (version 20240108) (generator "pcbnew") (generator_version "8.0")
+(kicad_pcb
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(general
+		(thickness 1.6)
+		(legacy_teardrops no)
+	)
+	(paper "A4")
+	(layers
+		(0 "F.Cu" signal)
+		(31 "B.Cu" signal)
+		(32 "B.Adhes" user "B.Adhesive")
+		(33 "F.Adhes" user "F.Adhesive")
+		(34 "B.Paste" user)
+		(35 "F.Paste" user)
+		(36 "B.SilkS" user "B.Silkscreen")
+		(37 "F.SilkS" user "F.Silkscreen")
+		(38 "B.Mask" user)
+		(39 "F.Mask" user)
+		(40 "Dwgs.User" user "User.Drawings")
+		(41 "Cmts.User" user "User.Comments")
+		(42 "Eco1.User" user "User.Eco1")
+		(43 "Eco2.User" user "User.Eco2")
+		(44 "Edge.Cuts" user)
+		(45 "Margin" user)
+		(46 "B.CrtYd" user "B.Courtyard")
+		(47 "F.CrtYd" user "F.Courtyard")
+		(48 "B.Fab" user)
+		(49 "F.Fab" user)
+		(50 "User.1" user)
+		(51 "User.2" user)
+		(52 "User.3" user)
+		(53 "User.4" user)
+		(54 "User.5" user)
+		(55 "User.6" user)
+		(56 "User.7" user)
+		(57 "User.8" user)
+		(58 "User.9" user)
+	)
+	(setup
+		(pad_to_mask_clearance 0)
+		(allow_soldermask_bridges_in_footprints no)
+		(pcbplotparams
+			(layerselection 0x00010fc_ffffffff)
+			(plot_on_all_layers_selection 0x0000000_00000000)
+			(disableapertmacros no)
+			(usegerberextensions no)
+			(usegerberattributes yes)
+			(usegerberadvancedattributes yes)
+			(creategerberjobfile yes)
+			(dashed_line_dash_ratio 12.000000)
+			(dashed_line_gap_ratio 3.000000)
+			(svgprecision 4)
+			(plotframeref no)
+			(viasonmask no)
+			(mode 1)
+			(useauxorigin no)
+			(hpglpennumber 1)
+			(hpglpenspeed 20)
+			(hpglpendiameter 15.000000)
+			(pdf_front_fp_property_popups yes)
+			(pdf_back_fp_property_popups yes)
+			(dxfpolygonmode yes)
+			(dxfimperialunits yes)
+			(dxfusepcbnewfont yes)
+			(psnegative no)
+			(psa4output no)
+			(plotreference yes)
+			(plotvalue yes)
+			(plotfptext yes)
+			(plotinvisibletext no)
+			(sketchpadsonfab no)
+			(subtractmaskfromsilk no)
+			(outputformat 1)
+			(mirror no)
+			(drillshape 1)
+			(scaleselection 1)
+			(outputdirectory "")
+		)
+	)
+	(net 0 "")
+	(net 1 "unconnected-(J1-Pad1)")
+	(net 2 "unconnected-(J1-Pad2)")
+	(footprint "footprints:691210910002"
+		(layer "F.Cu")
+		(uuid "fcea6fab-cb92-492f-88c1-5b365d4673cf")
+		(at 68.072 60.96)
+		(descr "<b>WR-TBL Serie 2109 - 2.54 mm Horiz. Entry<br></b>Max Height =8.5mm , Pitch 2.54mm , 2 Pins")
+		(property "Reference" "J1"
+			(at 0 -4.635 0)
+			(layer "F.SilkS")
+			(uuid "0bba69f3-a4df-46c5-80fe-db7e4ab23e17")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Value" "691210910002"
+			(at 4.12 4.865 0)
+			(layer "F.Fab")
+			(uuid "c9eedead-1dfd-4d1c-94d0-c521502fe0cc")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "footprints:691210910002"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "e1c488a1-d929-4e7f-b076-4eb269f8d148")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "7e317f6c-44a2-420e-af97-9fc4fc85a728")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "07fc0cbf-8a5b-46cd-85c8-89066aa885cb")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "WIRE" "30 to 18 (AWG) 0.0509 to 0.823 (mm²)"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "203ac116-4df6-4e51-9ae8-4362d00f7ace")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MOUNT" "THT"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "86ede9da-cd47-46e9-82da-68ffa04ce3d7")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "IR-UL" "6A"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "670a3a3a-69e9-4c2f-84c7-0d7ef0833e15")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "WORKING-VOLTAGE-UL" "150V (AC)"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "4c73d00c-23ab-435b-a513-afa2a5dad326")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "PART-NUMBER" "691210910002"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a0488fda-9c81-47c8-9cb5-9d9ac814db55")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "DATASHEET-URL" "https://www.we-online.com/redexpert/spec/691210910002?ae"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "9a72fa92-7dad-4cef-95b8-c56a918910b2")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "PITCH" "2.54mm"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "9d6eb4fa-12a1-411f-9968-52f17719c13b")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "PINS" "2"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "b718ca82-8765-4374-b14d-40f72d8c5b8f")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "TYPE" "Horizontal"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "f22ed785-9ff6-49f6-88e4-35318012c209")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/ff76097a-e75b-4e34-bc44-461f0394aaa6")
+		(sheetname "Root")
+		(sheetfile "battery-connector.kicad_sch")
+		(attr through_hole)
+		(fp_line
+			(start -2.84 -3.35)
+			(end 2.84 -3.35)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "d010a769-a2bf-446a-92dd-16af8eccf601")
+		)
+		(fp_line
+			(start -2.84 3.35)
+			(end -2.84 -3.35)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "a59d8101-7097-4b42-b933-41bfdcf778d5")
+		)
+		(fp_line
+			(start 2.84 -3.35)
+			(end 2.84 3.35)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "363f2bcf-5a2a-4e62-a458-e38dd4fb6026")
+		)
+		(fp_line
+			(start 2.84 3.35)
+			(end -2.84 3.35)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "66277f83-dfed-44ad-8236-83cc17e392af")
+		)
+		(fp_circle
+			(center -2.2 -1.7)
+			(end -2.1 -1.7)
+			(stroke
+				(width 0.4)
+				(type solid)
+			)
+			(fill none)
+			(layer "F.SilkS")
+			(uuid "12a09c5a-164c-41ab-b041-993313882d2f")
+		)
+		(fp_poly
+			(pts
+				(xy -3.04 -3.55) (xy 3.04 -3.55) (xy 3.04 3.55) (xy -3.04 3.55)
+			)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(fill solid)
+			(layer "F.CrtYd")
+			(uuid "05425359-d03c-49d7-a878-cfa43969bf8a")
+		)
+		(fp_line
+			(start -2.74 -3.25)
+			(end -2.74 3.25)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "8b7806a1-4e97-486f-aa5b-adb1fb6948ad")
+		)
+		(fp_line
+			(start -2.74 3.25)
+			(end 2.74 3.25)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "254bb066-418c-4445-bdb1-7c510a71b2b9")
+		)
+		(fp_line
+			(start 2.74 -3.25)
+			(end -2.74 -3.25)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "7b06e38d-1635-40e8-8c65-92d505953872")
+		)
+		(fp_line
+			(start 2.74 3.25)
+			(end 2.74 -3.25)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "aecd86b2-6eed-4beb-8896-b320bedf0c77")
+		)
+		(pad "1" thru_hole circle
+			(at -1.27 0)
+			(size 1.95 1.95)
+			(drill 1.3)
+			(layers "*.Cu" "*.Mask" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
+				"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "In14.Cu"
+				"In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu" "In21.Cu"
+				"In22.Cu" "In23.Cu" "In24.Cu" "In25.Cu" "In26.Cu" "In27.Cu" "In28.Cu"
+				"In29.Cu" "In30.Cu"
+			)
+			(remove_unused_layers no)
+			(net 1 "unconnected-(J1-Pad1)")
+			(pintype "passive")
+			(solder_mask_margin 0.102)
+			(uuid "2c36f432-d7dc-410e-8a31-10f79b5a5175")
+		)
+		(pad "2" thru_hole circle
+			(at 1.27 0)
+			(size 1.95 1.95)
+			(drill 1.3)
+			(layers "*.Cu" "*.Mask" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
+				"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "In14.Cu"
+				"In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu" "In21.Cu"
+				"In22.Cu" "In23.Cu" "In24.Cu" "In25.Cu" "In26.Cu" "In27.Cu" "In28.Cu"
+				"In29.Cu" "In30.Cu"
+			)
+			(remove_unused_layers no)
+			(net 2 "unconnected-(J1-Pad2)")
+			(pintype "passive")
+			(solder_mask_margin 0.102)
+			(uuid "3e35b0fc-a535-4942-9295-d958cf5ebcd0")
+		)
+		(model "${KIPRJMOD}/footprints/691210910002.step"
+			(offset
+				(xyz 0 0 2.5)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
+	)
 )
