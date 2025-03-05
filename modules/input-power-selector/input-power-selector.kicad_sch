@@ -9407,7 +9407,7 @@
 				)
 			)
 		)
-		(property "Footprint" "MegaCastle:MegaCastle2x24-Module-I42.0x56.2-M88887D8C0001"
+		(property "Footprint" "MegaCastle:MegaCastle2x24-Module-I42.0x56.2-M88887D8C0001-NIBBLE"
 			(at 243.84 106.68 0)
 			(effects
 				(font
