@@ -268,6 +268,355 @@
 				)
 			)
 		)
+		(symbol "MegaCastle:MegaCastle2x5-Module-I7.0x7.9-M8CC"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "M"
+				(at 0 -10.16 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "MegaCastle:MegaCastle2x5-Module-I7.0x7.9-M8CC"
+				(at 0 -12.7 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Generated using footprint-gen .. 7 8 5 M8CC"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "MegaCastle2x5-Module-I7.0x7.9-M8CC_0_1"
+				(rectangle
+					(start -6.35 7.62)
+					(end 7.62 -7.62)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -3.35 2.54)
+					(end 4.62 -2.54)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "MegaCastle2x5-Module-I7.0x7.9-M8CC_1_1"
+				(text "REAR ZONE"
+					(at 0.5 0 900)
+					(effects
+						(font
+							(size 1 1)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -6.35 5.08 0)
+					(length 2.54)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 7.62 -5.08 180)
+					(length 2.54)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -6.35 -5.08 0)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 7.62 5.08 180)
+					(length 2.54)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 7.62 -2.54 180)
+					(length 2.54)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+	)
+	(no_connect
+		(at 113.03 41.91)
+		(uuid "2b1fb203-ae27-4379-9b2c-738c8801c259")
+	)
+	(no_connect
+		(at 113.03 34.29)
+		(uuid "4c017ab5-f814-4601-a07d-7f9a78ec1dc6")
+	)
+	(no_connect
+		(at 113.03 44.45)
+		(uuid "b0183f7e-4587-414d-a1a8-8f73da2122a6")
+	)
+	(global_label "VBAT_+"
+		(shape input)
+		(at 99.06 34.29 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "082b6357-82e1-4b81-9305-c362898cfe11")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 89.12 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VBAT_-"
+		(shape input)
+		(at 99.06 44.45 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "10f11f23-0e7c-4a07-b5dc-5d039e900741")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 89.12 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VBAT_-"
+		(shape input)
+		(at 125.73 60.96 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3501304f-acfa-4dc4-972d-5ba633e54b8c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 125.73 70.9 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VBAT_+"
+		(shape input)
+		(at 123.19 60.96 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "bf5ae834-b9d2-49dd-a4e6-29105dda5b07")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 123.19 70.9 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MegaCastle:MegaCastle2x5-Module-I7.0x7.9-M8CC")
+		(at 105.41 39.37 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7ef47e3b-b0b4-4ac0-8130-7f89292cbdb0")
+		(property "Reference" "M1"
+			(at 106.045 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "~"
+			(at 106.045 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "MegaCastle:MegaCastle2x5-Module-I7.0x7.9-M8CC-PANEL-NIBBLE"
+			(at 105.41 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 105.41 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generated using footprint-gen .. 7 8 5 M8CC"
+			(at 105.41 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "5"
+			(uuid "8ebcf789-4fc0-43e7-b186-4c07940c473c")
+		)
+		(pin "1"
+			(uuid "84b58f4c-c756-4e8c-b34e-1f3bed9ad856")
+		)
+		(pin "6"
+			(uuid "84a6e14f-4ed1-4c76-83e7-6834be121848")
+		)
+		(pin "9"
+			(uuid "8e251b1d-809a-42d7-b53e-45be7909bbcf")
+		)
+		(pin "10"
+			(uuid "0be79022-c8a7-47a8-aa23-670391189bb5")
+		)
+		(instances
+			(project ""
+				(path "/de625f4d-017d-4e61-aaaf-647862dae6d9"
+					(reference "M1")
+					(unit 1)
+				)
+			)
+		)
 	)
 	(symbol
 		(lib_id "691210910002:691210910002")
