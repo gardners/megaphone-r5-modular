@@ -84286,4 +84286,1666 @@
                         )
 		)
 	)
+	(symbol "MegaCastle2x5-I7.0x7.9-M8CC-NOCUTOUT"
+                (exclude_from_sim no)
+                (in_bom yes)
+                (on_board yes)
+                (property "Reference" "M"
+                        (at 0 -10.160000 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                        )
+                )
+                (property "Value" ""
+                        (at 0 5.08 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                        )
+                )
+                (property "Footprint" "MegaCastle:MegaCastle2x5-I7.0x7.9-M8CC"
+                        (at 0 -15.240000 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (property "Datasheet" ""
+                        (at 0 5.08 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (property "Description" "Generated using footprint-gen .. 7 8 5 M8CC"
+                        (at 0 0 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (symbol "MegaCastle2x5-I7.0x7.9-M8CC-NOCUTOUT_0_1"
+                        (rectangle
+                                (start -27.94 16.51)
+                                (end -12.7 10.16)
+                                (stroke
+                                        (width 0)
+                                        (type default)
+                                )
+                                (fill
+                                        (type none)
+                                )
+                        )
+                        (rectangle
+                                (start -27.94 -8.89)
+                                (end -12.7 -15.24)
+                                (stroke
+                                        (width 0)
+                                        (type default)
+                                )
+                                (fill
+                                        (type none)
+                                )
+                        )
+                        (rectangle
+                                (start -6.35 7.620000)
+                                (end 7.62 -7.620000)
+                                (stroke
+                                        (width 0)
+                                        (type default)
+                                )
+                                (fill
+                                        (type none)
+                                )
+                        )
+                )
+                (symbol "MegaCastle2x5-I7.0x7.9-M8CC-NOCUTOUT_1_1"
+                        (text "GND Bridge\n(Connect B1 to 5,\nB2 to GND)"
+                                (at -17.78 -5.08 0)
+                                (effects
+                                        (font
+                                                (size 1.27 1.27)
+                                        )
+                                )
+                        )
+                        (text "VCC Bridge\n(Connect A1 to 1,\nA2 to VCC)"
+                                (at -17.78 6.35 0)
+                                (effects
+                                        (font
+                                                (size 1.27 1.27)
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -6.35 5.080000 0)
+                                (length 2.54)
+                                (name "VCC"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "1"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -6.35 -5.080000 0)
+                                (length 2.54)
+                                (name "GND"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "5"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 5.080000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "6"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 -2.540000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "9"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 -5.080000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "10"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -12.7 11.43 180)
+                                (length 2.54)
+                                (name "Module_VCC"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "A1"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                        (pin bidirectional line
+                                (at -12.7 13.97 180)
+                                (length 2.54)
+                                (name "Board_VCC"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "A2"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -12.7 -11.43 180)
+                                (length 2.54)
+                                (name "Module_GND"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "B1"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                        (pin bidirectional line
+                                (at -12.7 -13.97 180)
+                                (length 2.54)
+                                (name "Board_GND"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "B2"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+		)
+	)
+	(symbol "MegaCastle2x5-I7.0x7.9-M8CC"
+                (exclude_from_sim no)
+                (in_bom yes)
+                (on_board yes)
+                (property "Reference" "M"
+                        (at 0 -10.160000 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                        )
+                )
+                (property "Value" ""
+                        (at 0 5.08 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                        )
+                )
+                (property "Footprint" "MegaCastle:MegaCastle2x5-I7.0x7.9-M8CC"
+                        (at 0 -15.240000 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (property "Datasheet" ""
+                        (at 0 5.08 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (property "Description" "Generated using footprint-gen .. 7 8 5 M8CC"
+                        (at 0 0 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (symbol "MegaCastle2x5-I7.0x7.9-M8CC_0_1"
+                        (rectangle
+                                (start -27.94 16.51)
+                                (end -12.7 10.16)
+                                (stroke
+                                        (width 0)
+                                        (type default)
+                                )
+                                (fill
+                                        (type none)
+                                )
+                        )
+                        (rectangle
+                                (start -27.94 -8.89)
+                                (end -12.7 -15.24)
+                                (stroke
+                                        (width 0)
+                                        (type default)
+                                )
+                                (fill
+                                        (type none)
+                                )
+                        )
+                        (rectangle
+                                (start -6.35 7.620000)
+                                (end 7.62 -7.620000)
+                                (stroke
+                                        (width 0)
+                                        (type default)
+                                )
+                                (fill
+                                        (type none)
+                                )
+                        )
+                        (rectangle
+                                (start -3.35 2.540000)
+                                (end 4.62 -2.540000)
+                                (stroke
+                                        (width 0)
+                                        (type default)
+                                )
+                                (fill
+                                        (type none)
+                                )
+                        )
+                )
+                (symbol "MegaCastle2x5-I7.0x7.9-M8CC_1_1"
+                        (text "GND Bridge\n(Connect B1 to 5,\nB2 to GND)"
+                                (at -17.78 -5.08 0)
+                                (effects
+                                        (font
+                                                (size 1.27 1.27)
+                                        )
+                                )
+                        )
+                        (text "VCC Bridge\n(Connect A1 to 1,\nA2 to VCC)"
+                                (at -17.78 6.35 0)
+                                (effects
+                                        (font
+                                                (size 1.27 1.27)
+                                        )
+                                )
+                        )
+                        (text "CUTOUT"
+                                (at 0.5 0 900)
+                                (effects
+                                        (font
+                                                (size 1 1)
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -6.35 5.080000 0)
+                                (length 2.54)
+                                (name "VCC"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "1"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -6.35 -5.080000 0)
+                                (length 2.54)
+                                (name "GND"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "5"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 5.080000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "6"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 -2.540000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "9"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 -5.080000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "10"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -12.7 11.43 180)
+                                (length 2.54)
+                                (name "Module_VCC"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "A1"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                        (pin bidirectional line
+                                (at -12.7 13.97 180)
+                                (length 2.54)
+                                (name "Board_VCC"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "A2"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -12.7 -11.43 180)
+                                (length 2.54)
+                                (name "Module_GND"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "B1"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                        (pin bidirectional line
+                                (at -12.7 -13.97 180)
+                                (length 2.54)
+                                (name "Board_GND"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "B2"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+		)
+	)
+	(symbol "MegaCastle2x5-I7.0x7.9-M8CC-NOCUTOUT-EDGE"
+                (exclude_from_sim no)
+                (in_bom yes)
+                (on_board yes)
+                (property "Reference" "M"
+                        (at 0 -10.160000 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                        )
+                )
+                (property "Value" ""
+                        (at 0 5.08 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                        )
+                )
+                (property "Footprint" "MegaCastle:MegaCastle2x5-I7.0x7.9-M8CC"
+                        (at 0 -15.240000 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (property "Datasheet" ""
+                        (at 0 5.08 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (property "Description" "Generated using footprint-gen .. 7 8 5 M8CC"
+                        (at 0 0 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (symbol "MegaCastle2x5-I7.0x7.9-M8CC-NOCUTOUT-EDGE_0_1"
+                        (rectangle
+                                (start -27.94 -8.89)
+                                (end -12.7 -15.24)
+                                (stroke
+                                        (width 0)
+                                        (type default)
+                                )
+                                (fill
+                                        (type none)
+                                )
+                        )
+                        (rectangle
+                                (start -6.35 7.620000)
+                                (end 7.62 -7.620000)
+                                (stroke
+                                        (width 0)
+                                        (type default)
+                                )
+                                (fill
+                                        (type none)
+                                )
+                        )
+                )
+                (symbol "MegaCastle2x5-I7.0x7.9-M8CC-NOCUTOUT-EDGE_1_1"
+                        (text "GND Bridge\n(Connect B1 to 5,\nB2 to GND)"
+                                (at -17.78 -5.08 0)
+                                (effects
+                                        (font
+                                                (size 1.27 1.27)
+                                        )
+                                )
+                        )
+                        (text " BOARD EDGE"
+                                (at 0 8.890000 0)
+                                (effects
+                                        (font
+                                                (size 1.27 1.27)
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -6.35 5.080000 0)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "1"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -6.35 -5.080000 0)
+                                (length 2.54)
+                                (name "GND"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "5"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 5.080000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "6"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 -2.540000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "9"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 -5.080000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "10"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -12.7 -11.43 180)
+                                (length 2.54)
+                                (name "Module_GND"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "B1"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                        (pin bidirectional line
+                                (at -12.7 -13.97 180)
+                                (length 2.54)
+                                (name "Board_GND"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "B2"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+		)
+	)
+	(symbol "MegaCastle2x5-I7.0x7.9-M8CC-EDGE"
+                (exclude_from_sim no)
+                (in_bom yes)
+                (on_board yes)
+                (property "Reference" "M"
+                        (at 0 -10.160000 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                        )
+                )
+                (property "Value" ""
+                        (at 0 5.08 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                        )
+                )
+                (property "Footprint" "MegaCastle:MegaCastle2x5-I7.0x7.9-M8CC"
+                        (at 0 -15.240000 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (property "Datasheet" ""
+                        (at 0 5.08 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (property "Description" "Generated using footprint-gen .. 7 8 5 M8CC"
+                        (at 0 0 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (symbol "MegaCastle2x5-I7.0x7.9-M8CC-EDGE_0_1"
+                        (rectangle
+                                (start -27.94 -8.89)
+                                (end -12.7 -15.24)
+                                (stroke
+                                        (width 0)
+                                        (type default)
+                                )
+                                (fill
+                                        (type none)
+                                )
+                        )
+                        (rectangle
+                                (start -6.35 7.620000)
+                                (end 7.62 -7.620000)
+                                (stroke
+                                        (width 0)
+                                        (type default)
+                                )
+                                (fill
+                                        (type none)
+                                )
+                        )
+                        (rectangle
+                                (start -3.35 2.540000)
+                                (end 4.62 -2.540000)
+                                (stroke
+                                        (width 0)
+                                        (type default)
+                                )
+                                (fill
+                                        (type none)
+                                )
+                        )
+                )
+                (symbol "MegaCastle2x5-I7.0x7.9-M8CC-EDGE_1_1"
+                        (text "GND Bridge\n(Connect B1 to 5,\nB2 to GND)"
+                                (at -17.78 -5.08 0)
+                                (effects
+                                        (font
+                                                (size 1.27 1.27)
+                                        )
+                                )
+                        )
+                        (text " BOARD EDGE"
+                                (at 0 8.890000 0)
+                                (effects
+                                        (font
+                                                (size 1.27 1.27)
+                                        )
+                                )
+                        )
+                        (text "CUTOUT"
+                                (at 0.5 0 900)
+                                (effects
+                                        (font
+                                                (size 1 1)
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -6.35 5.080000 0)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "1"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -6.35 -5.080000 0)
+                                (length 2.54)
+                                (name "GND"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "5"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 5.080000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "6"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 -2.540000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "9"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 -5.080000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "10"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -12.7 -11.43 180)
+                                (length 2.54)
+                                (name "Module_GND"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "B1"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                        (pin bidirectional line
+                                (at -12.7 -13.97 180)
+                                (length 2.54)
+                                (name "Board_GND"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "B2"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+		)
+	)
+	(symbol "MegaCastle2x5-Module-I7.0x7.9-M8CC-NOCUTOUT"
+                (exclude_from_sim no)
+                (in_bom yes)
+                (on_board yes)
+                (property "Reference" "M"
+                        (at 0 -10.160000 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                        )
+                )
+                (property "Value" ""
+                        (at 0 5.08 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                        )
+                )
+                (property "Footprint" "MegaCastle:MegaCastle2x5-Module-I7.0x7.9-M8CC"
+                        (at 0 -12.700000 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (property "Datasheet" ""
+                        (at 0 5.08 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (property "Description" "Generated using footprint-gen .. 7 8 5 M8CC"
+                        (at 0 0 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (symbol "MegaCastle2x5-Module-I7.0x7.9-M8CC-NOCUTOUT_0_1"
+                        (rectangle
+                                (start -6.35 7.620000)
+                                (end 7.62 -7.620000)
+                                (stroke
+                                        (width 0)
+                                        (type default)
+                                )
+                                (fill
+                                        (type none)
+                                )
+                        )
+                )
+                (symbol "MegaCastle2x5-Module-I7.0x7.9-M8CC-NOCUTOUT_1_1"
+                       (pin bidirectional line
+                                (at -6.35 5.080000 0)
+                                (length 2.54)
+                                (name "VCC"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "1"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -6.35 -5.080000 0)
+                                (length 2.54)
+                                (name "GND"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "5"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 5.080000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "6"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 -2.540000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "9"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 -5.080000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "10"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+		)
+	)
+	(symbol "MegaCastle2x5-Module-I7.0x7.9-M8CC"
+                (exclude_from_sim no)
+                (in_bom yes)
+                (on_board yes)
+                (property "Reference" "M"
+                        (at 0 -10.160000 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                        )
+                )
+                (property "Value" ""
+                        (at 0 5.08 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                        )
+                )
+                (property "Footprint" "MegaCastle:MegaCastle2x5-Module-I7.0x7.9-M8CC"
+                        (at 0 -12.700000 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (property "Datasheet" ""
+                        (at 0 5.08 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (property "Description" "Generated using footprint-gen .. 7 8 5 M8CC"
+                        (at 0 0 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (symbol "MegaCastle2x5-Module-I7.0x7.9-M8CC_0_1"
+                        (rectangle
+                                (start -6.35 7.620000)
+                                (end 7.62 -7.620000)
+                                (stroke
+                                        (width 0)
+                                        (type default)
+                                )
+                                (fill
+                                        (type none)
+                                )
+                        )
+                        (rectangle
+                                (start -3.35 2.540000)
+                                (end 4.62 -2.540000)
+                                (stroke
+                                        (width 0)
+                                        (type default)
+                                )
+                                (fill
+                                        (type none)
+                                )
+                        )
+                )
+                (symbol "MegaCastle2x5-Module-I7.0x7.9-M8CC_1_1"
+                        (text "REAR ZONE"
+                                (at 0.5 0 900)
+                                (effects
+                                        (font
+                                                (size 1 1)
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -6.35 5.080000 0)
+                                (length 2.54)
+                                (name "VCC"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "1"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -6.35 -5.080000 0)
+                                (length 2.54)
+                                (name "GND"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "5"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 5.080000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "6"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 -2.540000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "9"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 -5.080000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "10"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+		)
+	)
+	(symbol "MegaCastle2x5-Module-I7.0x7.9-M8CC-NOCUTOUT-EDGE"
+                (exclude_from_sim no)
+                (in_bom yes)
+                (on_board yes)
+                (property "Reference" "M"
+                        (at 0 -10.160000 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                        )
+                )
+                (property "Value" ""
+                        (at 0 5.08 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                        )
+                )
+                (property "Footprint" "MegaCastle:MegaCastle2x5-Module-I7.0x7.9-M8CC"
+                        (at 0 -12.700000 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (property "Datasheet" ""
+                        (at 0 5.08 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (property "Description" "Generated using footprint-gen .. 7 8 5 M8CC"
+                        (at 0 0 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (symbol "MegaCastle2x5-Module-I7.0x7.9-M8CC-NOCUTOUT-EDGE_0_1"
+                        (rectangle
+                                (start -6.35 7.620000)
+                                (end 7.62 -7.620000)
+                                (stroke
+                                        (width 0)
+                                        (type default)
+                                )
+                                (fill
+                                        (type none)
+                                )
+                        )
+                )
+                (symbol "MegaCastle2x5-Module-I7.0x7.9-M8CC-NOCUTOUT-EDGE_1_1"
+                        (text " BOARD EDGE"
+                                (at 0 8.890000 0)
+                                (effects
+                                        (font
+                                                (size 1.27 1.27)
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -6.35 5.080000 0)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "1"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -6.35 -5.080000 0)
+                                (length 2.54)
+                                (name "GND"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "5"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 5.080000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "6"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 -2.540000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "9"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 -5.080000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "10"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+		)
+	)
+	(symbol "MegaCastle2x5-Module-I7.0x7.9-M8CC-EDGE"
+                (exclude_from_sim no)
+                (in_bom yes)
+                (on_board yes)
+                (property "Reference" "M"
+                        (at 0 -10.160000 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                        )
+                )
+                (property "Value" ""
+                        (at 0 5.08 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                        )
+                )
+                (property "Footprint" "MegaCastle:MegaCastle2x5-Module-I7.0x7.9-M8CC"
+                        (at 0 -12.700000 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (property "Datasheet" ""
+                        (at 0 5.08 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (property "Description" "Generated using footprint-gen .. 7 8 5 M8CC"
+                        (at 0 0 0)
+                        (effects
+                                (font
+                                        (size 1.27 1.27)
+                                )
+                                (hide yes)
+                        )
+                )
+                (symbol "MegaCastle2x5-Module-I7.0x7.9-M8CC-EDGE_0_1"
+                        (rectangle
+                                (start -6.35 7.620000)
+                                (end 7.62 -7.620000)
+                                (stroke
+                                        (width 0)
+                                        (type default)
+                                )
+                                (fill
+                                        (type none)
+                                )
+                        )
+                        (rectangle
+                                (start -3.35 2.540000)
+                                (end 4.62 -2.540000)
+                                (stroke
+                                        (width 0)
+                                        (type default)
+                                )
+                                (fill
+                                        (type none)
+                                )
+                        )
+                )
+                (symbol "MegaCastle2x5-Module-I7.0x7.9-M8CC-EDGE_1_1"
+                        (text " BOARD EDGE"
+                                (at 0 8.890000 0)
+                                (effects
+                                        (font
+                                                (size 1.27 1.27)
+                                        )
+                                )
+                        )
+                        (text "REAR ZONE"
+                                (at 0.5 0 900)
+                                (effects
+                                        (font
+                                                (size 1 1)
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -6.35 5.080000 0)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "1"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at -6.35 -5.080000 0)
+                                (length 2.54)
+                                (name "GND"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "5"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 5.080000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "6"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 -2.540000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "9"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+                       (pin bidirectional line
+                                (at 7.62 -5.080000 180)
+                                (length 2.54)
+                                (name ""
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                                (number "10"
+                                        (effects
+                                                (font
+                                                        (size 1.27 1.27)
+                                                )
+                                        )
+                                )
+                        )
+		)
+	)
 )
