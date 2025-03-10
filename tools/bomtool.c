@@ -148,6 +148,64 @@ void check_schematic(const char *filename) {
                     }
 
                     block_depth++;
+
+
+	    if (block_depth > 0 && strcmp(block_names[block_depth], "property") == 0) {
+	      if (block_depth > 1 && strcmp(block_names[block_depth - 1], "symbol") == 0) {
+		
+		size_t prop_start = i;
+		while (prop_start < file_size && mapped_data[prop_start] != '"') {
+		  prop_start++;
+		}
+		size_t prop_end = prop_start + 1;
+		while (prop_end < file_size && mapped_data[prop_end] != '"') {
+		  prop_end++;
+		}
+		
+		// **Extract Property Name**
+		size_t prop_name_len = prop_end - prop_start - 1;
+		if (prop_name_len > 0 && prop_name_len < MAX_PROPERTY_NAME) {
+		  strncpy(current_symbol.properties[current_symbol.property_count].name, 
+			  mapped_data + prop_start + 1, prop_name_len);
+		  current_symbol.properties[current_symbol.property_count].name[prop_name_len] = '\0';
+		  
+		  printf(">> property name = '%s' @ %zu\n", 
+			 current_symbol.properties[current_symbol.property_count].name, prop_start);
+		}
+		
+		// **Skip to property value**
+		prop_start = prop_end + 1;
+		while (prop_start < file_size && mapped_data[prop_start] != '"') {
+		  prop_start++;
+		}
+		prop_end = prop_start + 1;
+		while (prop_end < file_size && mapped_data[prop_end] != '"') {
+		  prop_end++;
+		}
+		
+		// **Extract Property Value**
+		size_t prop_value_len = prop_end - prop_start - 1;
+		if (prop_value_len > 0 && prop_value_len < MAX_PROPERTY_VALUE) {
+		  strncpy(current_symbol.properties[current_symbol.property_count].value, 
+			  mapped_data + prop_start + 1, prop_value_len);
+		  current_symbol.properties[current_symbol.property_count].value[prop_value_len] = '\0';
+		  
+		  printf(">> property value = '%s'\n", 
+			 current_symbol.properties[current_symbol.property_count].value);
+		}
+		
+		// **Ensure properties are correctly paired**
+		if (strlen(current_symbol.properties[current_symbol.property_count].name) > 0 &&
+		    strlen(current_symbol.properties[current_symbol.property_count].value) > 0) {
+		  current_symbol.property_count++;
+		}
+		
+	      }
+	    }
+	    
+
+
+		    
                 } else {
                     fprintf(stderr, "Error: Too many nested blocks in %s\n", filename);
                     break;
@@ -180,50 +238,8 @@ void check_schematic(const char *filename) {
                         }
                     }
                 }
-            } else if (block_depth > 0 && strcmp(block_names[block_depth - 1], "symbol") == 0 &&
-                       strcmp(block_names[block_depth], "property") == 0) {
-                // Capture property name and value
-                size_t prop_start = i;
-                while (prop_start < file_size && mapped_data[prop_start] != '"') {
-                    prop_start++;
-                }
-                size_t prop_end = prop_start + 1;
-                while (prop_end < file_size && mapped_data[prop_end] != '"') {
-                    prop_end++;
-                }
-
-                if (prop_start < prop_end && prop_end < file_size && current_symbol.property_count < MAX_PROPERTIES) {
-                    size_t prop_name_len = prop_end - prop_start - 1;
-                    if (prop_name_len > 0 && prop_name_len < MAX_PROPERTY_NAME) {
-                        strncpy(current_symbol.properties[current_symbol.property_count].name, mapped_data + prop_start + 1, prop_name_len);
-                        current_symbol.properties[current_symbol.property_count].name[prop_name_len] = '\0';
-                    }
-
-                    prop_start = prop_end + 1;
-                    while (prop_start < file_size && mapped_data[prop_start] != '"') {
-                        prop_start++;
-                    }
-                    prop_end = prop_start + 1;
-                    while (prop_end < file_size && mapped_data[prop_end] != '"') {
-                        prop_end++;
-                    }
-
-                    size_t prop_value_len = prop_end - prop_start - 1;
-                    if (prop_value_len > 0 && prop_value_len < MAX_PROPERTY_VALUE) {
-                        strncpy(current_symbol.properties[current_symbol.property_count].value, mapped_data + prop_start + 1, prop_value_len);
-                        current_symbol.properties[current_symbol.property_count].value[prop_value_len] = '\0';
-                    }
-
-		    // **Advance `i` past this property block** to prevent duplicates
-		    i = prop_end;
-		    
-		    // Increment property count
-		    if (current_symbol.property_count < MAX_PROPERTIES) {
-		      current_symbol.property_count++;
-		    }		    
-
-                }
-            }
+            } 
+	    
         }
     }
 
