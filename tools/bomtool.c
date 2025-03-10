@@ -8,12 +8,16 @@
 #include <dirent.h>
 #include <ctype.h>
 
+#include "parts-library.h"
+
 #define MAX_NESTED_BLOCKS 128
 #define MAX_PROPERTIES 256
 #define MAX_PROPERTY_NAME 128
 #define MAX_PROPERTY_VALUE 256
 
 int debug_parsing = 0;
+
+PartsLibrary parts;
 
 typedef struct {
     char name[MAX_PROPERTY_NAME];
@@ -59,11 +63,24 @@ void check_symbol(const unsigned char *mapped_data, size_t start, size_t end, FI
   // Ignore power symbols (including GND)
   if (strncmp("power:",symbol->symbol_name,strlen("power:"))) {
 
-    printf("Processing symbol: %s\n", symbol->symbol_name);
-    for (int i = 0; i < symbol->property_count; i++) {
-      printf("  Property: %s = %s\n", symbol->properties[i].name, symbol->properties[i].value);
-    }
+    char device[1024] = "";
+    char value[1024]="";
+    char footprint[1024]="";     
+    snprintf(device,sizeof(device),"%s",symbol->symbol_name);
 
+    for (int i = 0; i < symbol->property_count; i++) {
+      if (0) printf("  Property: %s = %s\n", symbol->properties[i].name, symbol->properties[i].value);
+      if (!strcasecmp("Value",symbol->properties[i].name))
+	snprintf(value,sizeof(value),"%s",symbol->properties[i].value);
+      if (!strcasecmp("Footprint",symbol->properties[i].name))
+	snprintf(footprint,sizeof(footprint),"%s",symbol->properties[i].value);
+    }
+    printf("Searching for part (%s, %s, %s)\n", device, value, footprint);	   
+    
+    PartRecord *found = find_part(&parts, device, value, footprint);
+    
+    
+    
     // Placeholder logic that might modify the symbol
     // (Currently, no modifications are made, so the flag remains 0)
     // This is where we would add parsing and editing logic in the future.
@@ -308,6 +325,9 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
+    init_parts_library(&parts);
+    load_parts_library(&parts,"parts-library.csv");
+    
     search_kicad_sch(argv[1]);
 
     return EXIT_SUCCESS;

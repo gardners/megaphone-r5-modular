@@ -2,10 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "parts-library.h"
+
 #define INITIAL_PARTS_CAPACITY 50
 
 // Function to initialize the parts library
-tatic void init_parts_library(PartsLibrary *lib) {
+void init_parts_library(PartsLibrary *lib) {
     lib->size = 0;
     lib->capacity = INITIAL_PARTS_CAPACITY;
     lib->parts = (PartRecord *)malloc(lib->capacity * sizeof(PartRecord));
@@ -16,7 +18,7 @@ tatic void init_parts_library(PartsLibrary *lib) {
 }
 
 // Function to grow the parts library dynamically
-static void expand_parts_library(PartsLibrary *lib) {
+void expand_parts_library(PartsLibrary *lib) {
     lib->capacity *= 2;
     lib->parts = (PartRecord *)realloc(lib->parts, lib->capacity * sizeof(PartRecord));
     if (!lib->parts) {
@@ -26,7 +28,7 @@ static void expand_parts_library(PartsLibrary *lib) {
 }
 
 // Function to trim newline characters from strings
-static void trim_newline(char *str) {
+void trim_newline(char *str) {
     size_t len = strlen(str);
     if (len > 0 && (str[len - 1] == '\n' || str[len - 1] == '\r')) {
         str[len - 1] = '\0';
@@ -105,6 +107,7 @@ void free_parts_library(PartsLibrary *lib) {
     free(lib->parts);
 }
 
+#ifdef DEMO_MODE
 // Example usage
 int main() {
     PartsLibrary lib;
@@ -125,3 +128,4 @@ int main() {
     free_parts_library(&lib);
     return 0;
 }
+#endif 
