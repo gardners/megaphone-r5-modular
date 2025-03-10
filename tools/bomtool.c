@@ -13,6 +13,8 @@
 #define MAX_PROPERTY_NAME 128
 #define MAX_PROPERTY_VALUE 256
 
+int debug_parsing = 0;
+
 typedef struct {
     char name[MAX_PROPERTY_NAME];
     char value[MAX_PROPERTY_VALUE];
@@ -123,9 +125,11 @@ void check_schematic(const char *filename) {
                     } else {
                         strcpy(block_names[block_depth], "(unknown)");
                     }
-
-                    for (int j = 0; j < block_depth; j++) printf("  ");
-                    printf("(%s at index %zu, depth %zu\n", block_names[block_depth], i, block_depth);
+		    
+		    if (debug_parsing) {
+		      for (int j = 0; j < block_depth; j++) printf("  ");		    
+		      printf("(%s at index %zu, depth %zu\n", block_names[block_depth], i, block_depth);
+		    }
 
                     // If this is a (symbol ...) block, capture the symbol name
                     if (strcmp(block_names[block_depth], "symbol") == 0) {
@@ -217,9 +221,11 @@ void check_schematic(const char *filename) {
                     block_depth--;
                     size_t start_pos = block_positions[block_depth];
                     size_t end_pos = i;
-
-                    for (int j = 0; j <= block_depth; j++) printf("  ");
-                    printf("%s) at index %zu, depth %zu\n", block_names[block_depth], i, block_depth);
+		    
+		    if (debug_parsing) {
+		      for (int j = 0; j <= block_depth; j++) printf("  ");
+		      printf("%s) at index %zu, depth %zu\n", block_names[block_depth], i, block_depth);
+		    }
 
                     if (!strcmp(block_names[block_depth], "lib_symbols")) {
                         lib_symbols_ended = 1;
