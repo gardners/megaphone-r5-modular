@@ -51,7 +51,7 @@ void *mmap_file(const char *filename, size_t *size) {
     return mapped;
 }
 
-void check_symbol(const char *mapped_data, size_t start, size_t end, FILE *temp_fp, SymbolInfo *symbol) {
+void check_symbol(const unsigned char *mapped_data, size_t start, size_t end, FILE *temp_fp, SymbolInfo *symbol) {
 
   int modified=0;
   // Ignore power symbols (including GND)
@@ -118,7 +118,7 @@ void check_schematic(const char *filename) {
                     }
                     size_t name_length = name_end - name_start;
                     if (name_length > 0 && name_length < 255) {
-                        strncpy(block_names[block_depth], mapped_data + name_start, name_length);
+		      strncpy(block_names[block_depth], (char *)(mapped_data + name_start), name_length);
                         block_names[block_depth][name_length] = '\0';
                     } else {
                         strcpy(block_names[block_depth], "(unknown)");
@@ -142,17 +142,15 @@ void check_schematic(const char *filename) {
 
                         size_t symbol_len = symbol_end - symbol_start - 1;
                         if (symbol_len > 0 && symbol_len < MAX_PROPERTY_VALUE) {
-                            strncpy(current_symbol.symbol_name, mapped_data + symbol_start + 1, symbol_len);
+			  strncpy(current_symbol.symbol_name,
+				  (const char *)(mapped_data + symbol_start + 1),
+				  symbol_len);
                             current_symbol.symbol_name[symbol_len] = '\0';
                         }
                     }
 
                     block_depth++;
 
-		    if (0) printf("== [%s][%s] %d\n",
-				  (block_depth<2)?"<>":block_names[block_depth-1],
-				  block_names[block_depth], block_depth);
-		    
 	    if (block_depth > 1 && strcmp(block_names[block_depth - 1], "property") == 0) {
 	      if (block_depth > 2 && strcmp(block_names[block_depth - 2], "symbol") == 0) {
 		
@@ -170,7 +168,7 @@ void check_schematic(const char *filename) {
 		size_t prop_name_len = prop_end - prop_start - 1;
 		if (prop_name_len > 0 && prop_name_len < MAX_PROPERTY_NAME) {
 		  strncpy(current_symbol.properties[current_symbol.property_count].name, 
-			  mapped_data + prop_start + 1, prop_name_len);
+			  (char *)(mapped_data + prop_start + 1), prop_name_len);
 		  current_symbol.properties[current_symbol.property_count].name[prop_name_len] = '\0';
 		  
 		  if (0) printf(">> property name = '%s' @ %zu\n", 
@@ -191,7 +189,7 @@ void check_schematic(const char *filename) {
 		size_t prop_value_len = prop_end - prop_start - 1;
 		if (prop_value_len > 0 && prop_value_len < MAX_PROPERTY_VALUE) {
 		  strncpy(current_symbol.properties[current_symbol.property_count].value, 
-			  mapped_data + prop_start + 1, prop_value_len);
+			  (char *)(mapped_data + prop_start + 1), prop_value_len);
 		  current_symbol.properties[current_symbol.property_count].value[prop_value_len] = '\0';
 		  
 		  if (0) printf(">> property value = '%s'\n", 
