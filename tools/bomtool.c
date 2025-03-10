@@ -8,7 +8,21 @@
 #include <dirent.h>
 #include <ctype.h>
 
-#define MAX_NESTED_BLOCKS 128  // Adjust as needed
+#define MAX_NESTED_BLOCKS 128
+#define MAX_PROPERTIES 256
+#define MAX_PROPERTY_NAME 128
+#define MAX_PROPERTY_VALUE 256
+
+typedef struct {
+    char name[MAX_PROPERTY_NAME];
+    char value[MAX_PROPERTY_VALUE];
+} Property;
+
+typedef struct {
+    char symbol_name[MAX_PROPERTY_VALUE];
+    Property properties[MAX_PROPERTIES];
+    int property_count;
+} SymbolInfo;
 
 // mmap function to read files
 void *mmap_file(const char *filename, size_t *size) {
@@ -37,32 +51,35 @@ void *mmap_file(const char *filename, size_t *size) {
     return mapped;
 }
 
-void check_symbol(const char *mapped_data, size_t start, size_t end, FILE *temp_fp) {
-    int modified = 0; // Flag to track whether modifications were made
+void check_symbol(const char *mapped_data, size_t start, size_t end, FILE *temp_fp, SymbolInfo *symbol) {
+    printf("Processing symbol: %s\n", symbol->symbol_name);
+    for (int i = 0; i < symbol->property_count; i++) {
+        printf("  Property: %s = %s\n", symbol->properties[i].name, symbol->properties[i].value);
+    }
+
+    int modified=0;
 
     // Placeholder logic that might modify the symbol
     // (Currently, no modifications are made, so the flag remains 0)
     // This is where we would add parsing and editing logic in the future.
-
+    
     if (!modified) {
         // No modifications, write the symbol as-is
-        fwrite(mapped_data + start, 1, end - start , temp_fp);
+        fwrite(mapped_data + start, 1, end - start + 1 , temp_fp);
     } else {
         // If modifications were made, they would be written here instead
         // (e.g., modifying some parts of the symbol before writing)
     }
 }
 
-
 void check_schematic(const char *filename) {
     size_t file_size;
-    void *mapped_data = mmap_file(filename, &file_size);
+    unsigned char *mapped_data = mmap_file(filename, &file_size);
     if (!mapped_data) {
         fprintf(stderr, "Failed to mmap: %s\n", filename);
         return;
     }
 
-    // Create a temporary file
     char temp_filename[] = "temp_output.kicad_sch";
     FILE *temp_fp = fopen(temp_filename, "w");
     if (!temp_fp) {
@@ -71,64 +88,145 @@ void check_schematic(const char *filename) {
         return;
     }
 
-    // Tracking block nesting
-    size_t block_positions[MAX_NESTED_BLOCKS] = {0};  // Stack for '(' positions
+    size_t block_positions[MAX_NESTED_BLOCKS] = {0};
+    char block_names[MAX_NESTED_BLOCKS][256] = {{0}};
     size_t block_depth = 0;
-    int in_quotes = 0; // Flag to track whether inside quotes
+    int in_quotes = 0;
+    int lib_symbols_ended = 0;
 
-    size_t last_written_pos = 0;  // Last position written to the temp file
+    size_t last_written_pos = 0;
+    SymbolInfo current_symbol = { .symbol_name = "", .property_count = 0 };
 
     for (size_t i = 0; i < file_size; i++) {
-        char c = ((char *)mapped_data)[i];
+        unsigned char c = mapped_data[i];
 
         if (c == '"') {
-            in_quotes = !in_quotes;  // Toggle quote state
+            in_quotes = !in_quotes;
         } else if (!in_quotes) {
             if (c == '(') {
                 if (block_depth < MAX_NESTED_BLOCKS) {
-                    block_positions[block_depth++] = i;
+                    block_positions[block_depth] = i;
+
+                    size_t name_start = i + 1;
+                    size_t name_end = name_start;
+                    while (name_end < file_size && !isspace(mapped_data[name_end]) && mapped_data[name_end] != ')') {
+                        name_end++;
+                    }
+                    size_t name_length = name_end - name_start;
+                    if (name_length > 0 && name_length < 255) {
+                        strncpy(block_names[block_depth], mapped_data + name_start, name_length);
+                        block_names[block_depth][name_length] = '\0';
+                    } else {
+                        strcpy(block_names[block_depth], "(unknown)");
+                    }
+
+                    for (int j = 0; j < block_depth; j++) printf("  ");
+                    printf("(%s at index %zu, depth %zu\n", block_names[block_depth], i, block_depth);
+
+                    // If it's a symbol block, reset properties
+                    if (strcmp(block_names[block_depth], "symbol") == 0) {
+                        current_symbol.property_count = 0;
+
+                        size_t symbol_start = name_end + 1;
+                        while (symbol_start < file_size && isspace(mapped_data[symbol_start])) {
+                            symbol_start++;
+                        }
+
+                        size_t symbol_end = symbol_start;
+                        while (symbol_end < file_size && mapped_data[symbol_end] != ')' && !isspace(mapped_data[symbol_end])) {
+                            symbol_end++;
+                        }
+
+                        size_t symbol_len = symbol_end - symbol_start;
+                        if (symbol_len > 0 && symbol_len < MAX_PROPERTY_VALUE) {
+                            strncpy(current_symbol.symbol_name, mapped_data + symbol_start, symbol_len);
+                            current_symbol.symbol_name[symbol_len] = '\0';
+                        }
+                    }
+
+                    block_depth++;
                 } else {
                     fprintf(stderr, "Error: Too many nested blocks in %s\n", filename);
                     break;
                 }
             } else if (c == ')') {
                 if (block_depth > 0) {
-                    size_t start_pos = block_positions[--block_depth];
-
-                    // Ensure start_pos points to the '(' and end points to the ')'
+                    block_depth--;
+                    size_t start_pos = block_positions[block_depth];
                     size_t end_pos = i;
 
-                    // Check if it's a "(symbol" block
-                    if (start_pos + 7 < file_size && 
-                        strncmp((char *)mapped_data + start_pos + 1, "symbol", 6) == 0 &&
-                        isspace(((char *)mapped_data)[start_pos + 7])) {
+                    for (int j = 0; j <= block_depth; j++) printf("  ");
+                    printf("%s) at index %zu, depth %zu\n", block_names[block_depth], i, block_depth);
 
-                        // Write non-symbol content before this symbol block
-                        if (last_written_pos < start_pos) {
-                            fwrite(mapped_data + last_written_pos, 1, start_pos - last_written_pos, temp_fp);
-                        }
-
-                        // Pass the correct start and end positions to check_symbol()
-                        check_symbol(mapped_data, start_pos, end_pos, temp_fp);
-
-                        // Update last written position
-                        last_written_pos = end_pos + 1;
+                    if (!strcmp(block_names[block_depth], "lib_symbols")) {
+                        lib_symbols_ended = 1;
                     }
+
+                    if (lib_symbols_ended) {
+                        if (start_pos + 7 < file_size &&
+                            strncmp((char *)mapped_data + start_pos + 1, "symbol", 6) == 0 &&
+                            isspace(((char *)mapped_data)[start_pos + 7])) {
+                            
+                            if (last_written_pos < start_pos) {
+                                fwrite(mapped_data + last_written_pos, 1, start_pos - last_written_pos, temp_fp);
+                            }
+
+                            check_symbol(mapped_data, start_pos, end_pos, temp_fp, &current_symbol);
+
+                            last_written_pos = end_pos + 1;
+                        }
+                    }
+                }
+            } else if (block_depth > 0 && strcmp(block_names[block_depth - 1], "symbol") == 0 &&
+                       strcmp(block_names[block_depth], "property") == 0) {
+                // Capture property name and value
+                size_t prop_start = i;
+                while (prop_start < file_size && mapped_data[prop_start] != '"') {
+                    prop_start++;
+                }
+                size_t prop_end = prop_start + 1;
+                while (prop_end < file_size && mapped_data[prop_end] != '"') {
+                    prop_end++;
+                }
+
+                if (prop_start < prop_end && prop_end < file_size && current_symbol.property_count < MAX_PROPERTIES) {
+                    size_t prop_name_len = prop_end - prop_start - 1;
+                    if (prop_name_len > 0 && prop_name_len < MAX_PROPERTY_NAME) {
+                        strncpy(current_symbol.properties[current_symbol.property_count].name, mapped_data + prop_start + 1, prop_name_len);
+                        current_symbol.properties[current_symbol.property_count].name[prop_name_len] = '\0';
+                    }
+
+                    prop_start = prop_end + 1;
+                    while (prop_start < file_size && mapped_data[prop_start] != '"') {
+                        prop_start++;
+                    }
+                    prop_end = prop_start + 1;
+                    while (prop_end < file_size && mapped_data[prop_end] != '"') {
+                        prop_end++;
+                    }
+
+                    size_t prop_value_len = prop_end - prop_start - 1;
+                    if (prop_value_len > 0 && prop_value_len < MAX_PROPERTY_VALUE) {
+                        strncpy(current_symbol.properties[current_symbol.property_count].value, mapped_data + prop_start + 1, prop_value_len);
+                        current_symbol.properties[current_symbol.property_count].value[prop_value_len] = '\0';
+                    }
+
+                    current_symbol.property_count++;
                 }
             }
         }
     }
 
-    // Write remaining non-symbol content after the last processed symbol
     if (last_written_pos < file_size) {
         fwrite((char *)mapped_data + last_written_pos, 1, file_size - last_written_pos, temp_fp);
     }
 
     fclose(temp_fp);
     munmap(mapped_data, file_size);
-
-    printf("Processed schematic: %s -> %s\n", filename, temp_filename);
 }
+
+
+
 
 // Recursive function to traverse directories and find *.kicad_sch files
 void search_kicad_sch(const char *dir_path) {
