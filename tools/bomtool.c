@@ -52,16 +52,20 @@ void *mmap_file(const char *filename, size_t *size) {
 }
 
 void check_symbol(const char *mapped_data, size_t start, size_t end, FILE *temp_fp, SymbolInfo *symbol) {
+
+  int modified=0;
+  // Ignore power symbols (including GND)
+  if (strncmp("power:",symbol->symbol_name,strlen("power:"))) {
+
     printf("Processing symbol: %s\n", symbol->symbol_name);
     for (int i = 0; i < symbol->property_count; i++) {
-        printf("  Property: %s = %s\n", symbol->properties[i].name, symbol->properties[i].value);
+      printf("  Property: %s = %s\n", symbol->properties[i].name, symbol->properties[i].value);
     }
-
-    int modified=0;
 
     // Placeholder logic that might modify the symbol
     // (Currently, no modifications are made, so the flag remains 0)
     // This is where we would add parsing and editing logic in the future.
+  }
     
     if (!modified) {
         // No modifications, write the symbol as-is
@@ -208,10 +212,6 @@ void check_schematic(const char *filename) {
                     if (prop_value_len > 0 && prop_value_len < MAX_PROPERTY_VALUE) {
                         strncpy(current_symbol.properties[current_symbol.property_count].value, mapped_data + prop_start + 1, prop_value_len);
                         current_symbol.properties[current_symbol.property_count].value[prop_value_len] = '\0';
-			printf(">> property name = '%s' @ %d\n",
-			       current_symbol.properties[current_symbol.property_count].name,i);
-			printf(">> property value = '%s'\n",
-			       current_symbol.properties[current_symbol.property_count].value);
                     }
 
 		    // **Advance `i` past this property block** to prevent duplicates
