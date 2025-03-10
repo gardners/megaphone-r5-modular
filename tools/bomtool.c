@@ -149,9 +149,12 @@ void check_schematic(const char *filename) {
 
                     block_depth++;
 
-
-	    if (block_depth > 0 && strcmp(block_names[block_depth], "property") == 0) {
-	      if (block_depth > 1 && strcmp(block_names[block_depth - 1], "symbol") == 0) {
+		    if (0) printf("== [%s][%s] %d\n",
+				  (block_depth<2)?"<>":block_names[block_depth-1],
+				  block_names[block_depth], block_depth);
+		    
+	    if (block_depth > 1 && strcmp(block_names[block_depth - 1], "property") == 0) {
+	      if (block_depth > 2 && strcmp(block_names[block_depth - 2], "symbol") == 0) {
 		
 		size_t prop_start = i;
 		while (prop_start < file_size && mapped_data[prop_start] != '"') {
@@ -161,6 +164,7 @@ void check_schematic(const char *filename) {
 		while (prop_end < file_size && mapped_data[prop_end] != '"') {
 		  prop_end++;
 		}
+		// printf(">> Property block at (%d,%d)\n",prop_start,prop_end);
 		
 		// **Extract Property Name**
 		size_t prop_name_len = prop_end - prop_start - 1;
@@ -169,8 +173,8 @@ void check_schematic(const char *filename) {
 			  mapped_data + prop_start + 1, prop_name_len);
 		  current_symbol.properties[current_symbol.property_count].name[prop_name_len] = '\0';
 		  
-		  printf(">> property name = '%s' @ %zu\n", 
-			 current_symbol.properties[current_symbol.property_count].name, prop_start);
+		  if (0) printf(">> property name = '%s' @ %zu\n", 
+				current_symbol.properties[current_symbol.property_count].name, prop_start);
 		}
 		
 		// **Skip to property value**
@@ -190,8 +194,8 @@ void check_schematic(const char *filename) {
 			  mapped_data + prop_start + 1, prop_value_len);
 		  current_symbol.properties[current_symbol.property_count].value[prop_value_len] = '\0';
 		  
-		  printf(">> property value = '%s'\n", 
-			 current_symbol.properties[current_symbol.property_count].value);
+		  if (0) printf(">> property value = '%s'\n", 
+				current_symbol.properties[current_symbol.property_count].value);
 		}
 		
 		// **Ensure properties are correctly paired**
