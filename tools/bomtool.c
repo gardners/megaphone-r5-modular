@@ -123,23 +123,22 @@ void check_schematic(const char *filename) {
                     for (int j = 0; j < block_depth; j++) printf("  ");
                     printf("(%s at index %zu, depth %zu\n", block_names[block_depth], i, block_depth);
 
-                    // If it's a symbol block, reset properties
+                    // If this is a (symbol ...) block, capture the symbol name
                     if (strcmp(block_names[block_depth], "symbol") == 0) {
-                        current_symbol.property_count = 0;
+                        current_symbol.property_count = 0; // Reset properties
 
                         size_t symbol_start = name_end + 1;
-                        while (symbol_start < file_size && isspace(mapped_data[symbol_start])) {
+                        while (symbol_start < file_size && mapped_data[symbol_start] != '"') {
                             symbol_start++;
                         }
-
-                        size_t symbol_end = symbol_start;
-                        while (symbol_end < file_size && mapped_data[symbol_end] != ')' && !isspace(mapped_data[symbol_end])) {
+                        size_t symbol_end = symbol_start + 1;
+                        while (symbol_end < file_size && mapped_data[symbol_end] != '"') {
                             symbol_end++;
                         }
 
-                        size_t symbol_len = symbol_end - symbol_start;
+                        size_t symbol_len = symbol_end - symbol_start - 1;
                         if (symbol_len > 0 && symbol_len < MAX_PROPERTY_VALUE) {
-                            strncpy(current_symbol.symbol_name, mapped_data + symbol_start, symbol_len);
+                            strncpy(current_symbol.symbol_name, mapped_data + symbol_start + 1, symbol_len);
                             current_symbol.symbol_name[symbol_len] = '\0';
                         }
                     }
@@ -209,9 +208,20 @@ void check_schematic(const char *filename) {
                     if (prop_value_len > 0 && prop_value_len < MAX_PROPERTY_VALUE) {
                         strncpy(current_symbol.properties[current_symbol.property_count].value, mapped_data + prop_start + 1, prop_value_len);
                         current_symbol.properties[current_symbol.property_count].value[prop_value_len] = '\0';
+			printf(">> property name = '%s' @ %d\n",
+			       current_symbol.properties[current_symbol.property_count].name,i);
+			printf(">> property value = '%s'\n",
+			       current_symbol.properties[current_symbol.property_count].value);
                     }
 
-                    current_symbol.property_count++;
+		    // **Advance `i` past this property block** to prevent duplicates
+		    i = prop_end;
+		    
+		    // Increment property count
+		    if (current_symbol.property_count < MAX_PROPERTIES) {
+		      current_symbol.property_count++;
+		    }		    
+
                 }
             }
         }
@@ -224,9 +234,6 @@ void check_schematic(const char *filename) {
     fclose(temp_fp);
     munmap(mapped_data, file_size);
 }
-
-
-
 
 // Recursive function to traverse directories and find *.kicad_sch files
 void search_kicad_sch(const char *dir_path) {
