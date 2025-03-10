@@ -50,10 +50,10 @@ void load_parts_library(PartsLibrary *lib, const char *filename) {
         }
 
         PartRecord *part = &lib->parts[lib->size];
-        char quantity_str[16];
         
-        if (sscanf(line, "%63[^,],%127[^,],%127[^,],%127[^,],%255[^,],%15s", part->symbol, part->value, part->footprint, part->mpn, part->digikey_url, quantity_str) == 6) {
-            part->quantity = atoi(quantity_str);
+        if (sscanf(line, "%63[^,],%127[^,],%127[^,],%127[^,],%255[^,]", part->symbol, part->value, part->footprint, part->mpn, part->digikey_url) == 5) {
+	  // We don't read quantity, as we write baskets out to a separate file
+            part->quantity = 0;
             trim_newline(part->digikey_url);
             lib->size++;
         }
@@ -71,6 +71,21 @@ void save_parts_library(const PartsLibrary *lib, const char *filename) {
     
     for (size_t i = 0; i < lib->size; i++) {
         fprintf(file, "%s,%s,%s,%s,%s,%d\n", lib->parts[i].symbol, lib->parts[i].value, lib->parts[i].footprint, lib->parts[i].mpn, lib->parts[i].digikey_url, lib->parts[i].quantity);
+    }
+    fclose(file);
+}
+
+void save_basket(const PartsLibrary *lib, const char *filename) {
+    FILE *file = fopen(filename, "w");
+    if (!file) {
+        fprintf(stderr, "Error: Could not open %s for writing\n", filename);
+        return;
+    }
+
+    fprintf(file,"MPN,quantity\n");
+    
+    for (size_t i = 0; i < lib->size; i++) {
+        fprintf(file, "%s,%d\n", lib->parts[i].mpn, lib->parts[i].quantity);
     }
     fclose(file);
 }

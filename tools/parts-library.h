@@ -26,6 +26,7 @@ typedef struct {
 void init_parts_library(PartsLibrary *lib);
 void load_parts_library(PartsLibrary *lib, const char *filename);
 void save_parts_library(const PartsLibrary *lib, const char *filename);
+void save_basket(const PartsLibrary *lib, const char *filename);
 PartRecord *find_part(PartsLibrary *lib, const char *symbol, const char *value, const char *footprint);
 void add_part(PartsLibrary *lib, const char *symbol, const char *value, const char *footprint, const char *mpn, const char *digikey_url, int quantity);
 void free_parts_library(PartsLibrary *lib);

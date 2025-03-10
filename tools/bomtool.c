@@ -75,10 +75,15 @@ void check_symbol(const unsigned char *mapped_data, size_t start, size_t end, FI
       if (!strcasecmp("Footprint",symbol->properties[i].name))
 	snprintf(footprint,sizeof(footprint),"%s",symbol->properties[i].value);
     }
-    printf("Searching for part (%s, %s, %s)\n", device, value, footprint);	   
     
     PartRecord *found = find_part(&parts, device, value, footprint);
-    
+
+    if (found) {
+      printf("Found part (%s, %s, %s). Adding to basket.\n", device, value, footprint);
+      found->quantity++;
+    } else {
+      printf("Unknown part (%s, %s, %s)\n", device, value, footprint);	   
+    }
     
     
     // Placeholder logic that might modify the symbol
@@ -330,5 +335,7 @@ int main(int argc, char *argv[]) {
     
     search_kicad_sch(argv[1]);
 
+    save_basket(&parts,"basket.csv");
+    
     return EXIT_SUCCESS;
 }
