@@ -1,3 +1,4 @@
+import json
 import requests
 import time
 import os
@@ -9,12 +10,13 @@ from threading import Thread
 # DigiKey API Details
 AUTH_URL = "https://api.digikey.com/v1/oauth2/authorize"
 TOKEN_URL = "https://api.digikey.com/v1/oauth2/token"
-SEARCH_URL = "https://api.digikey.com/services/api/v1/search/keyword"
+SEARCH_URL = "https://api.digikey.com/products/v4/search/{}/productdetails"
+
 
 # Local OAuth Server Configuration
 REDIRECT_URI = "https://oauth.horseomatic.org:8123/oauth/callback"
 CERT_FILE = "secrets/fullchain.pem"
-KEY_FILE = "secrets/privkey.pem"
+KEY_FILE = "secrets/server.pem"
 
 # File paths for secrets
 CLIENT_ID_FILE = "secrets/digikey-client-id"
@@ -140,6 +142,13 @@ def search_digikey(mpn):
     """Search DigiKey for the given Manufacturer Part Number (MPN)."""
     access_token = get_access_token()
     headers = {
+       "Authorization": f"Bearer {access_token}",
+       "Content-Type": "application/json",
+       "X-DIGIKEY-Client-Id": CLIENT_ID,
+       "Accept": "application/json"
+    }
+
+    headers = {
         "Authorization": f"Bearer {access_token}",
         "Content-Type": "application/json",
         "X-DIGIKEY-Client-Id": CLIENT_ID
@@ -155,7 +164,14 @@ def search_digikey(mpn):
         }
     }
 
-    response = requests.post(SEARCH_URL, headers=headers, json=payload)
+    url = SEARCH_URL.format(mpn)  # Correct URL formatting
+    response = requests.get(url, headers=headers, json=payload)
+
+    print("API Request URL:", url)
+    print("Request Headers:", headers)
+    print("Request Payload:", json.dumps(payload, indent=2))
+    print("Response Status Code:", response.status_code)
+    print("Response Body:", response.text)    
     
     if response.status_code == 200:
         results = response.json()
