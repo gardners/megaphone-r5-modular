@@ -6,6 +6,15 @@
 
 #define INITIAL_PARTS_CAPACITY 50
 
+typedef struct {
+    char part_number[MAX_PROPERTY_LENGTH];
+    char description[MAX_PROPERTY_LENGTH];
+    char manufacturer[MAX_PROPERTY_LENGTH];
+    char unit_price[MAX_PROPERTY_LENGTH];
+    char stock[MAX_PROPERTY_LENGTH];
+    char product_url[MAX_PROPERTY_LENGTH];
+} PartInfo;
+
 // Function to initialize the parts library
 void init_parts_library(PartsLibrary *lib) {
     lib->size = 0;
@@ -120,6 +129,36 @@ void add_part(PartsLibrary *lib, const char *symbol, const char *value, const ch
 // Cleanup function
 void free_parts_library(PartsLibrary *lib) {
     free(lib->parts);
+}
+
+PartInfo parse_csv(const char *filename) {
+    PartInfo part;
+    FILE *file = fopen(filename, "r");
+    if (!file) {
+        perror("Error opening file");
+        exit(EXIT_FAILURE);
+    }
+
+    char line[MAX_LINE_LENGTH];
+
+    // Skip the header
+    if (fgets(line, sizeof(line), file) == NULL) {
+        fprintf(stderr, "Error reading CSV header.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Read the first (and only) result row
+    if (fgets(line, sizeof(line), file) != NULL) {
+        sscanf(line, "%255[^,],%255[^,],%255[^,],%255[^,],%255[^,],%255[^\n]",
+               part.part_number, part.description, part.manufacturer,
+               part.unit_price, part.stock, part.product_url);
+    } else {
+        fprintf(stderr, "Error reading CSV data.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    fclose(file);
+    return part;
 }
 
 #ifdef DEMO_MODE

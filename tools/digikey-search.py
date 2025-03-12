@@ -1,3 +1,4 @@
+import csv
 import json
 import requests
 import time
@@ -6,6 +7,8 @@ import webbrowser
 import argparse
 from flask import Flask, request
 from threading import Thread
+
+OUTPUT_CSV_FILE= "part-search-results.csv"
 
 # DigiKey API Details
 AUTH_URL = "https://api.digikey.com/v1/oauth2/authorize"
@@ -162,18 +165,26 @@ def search_digikey(mpn):
         product = results.get("Product", {})
 
         if product:
-            part_number = product.get("ManufacturerProductNumber")
-            product_url = product.get("ProductUrl")
-            description = product["Description"].get("ProductDescription", "No description available")
-            price = product.get("UnitPrice", "N/A")
+            part_number = product.get("ManufacturerProductNumber", "Unknown")
+            description = product.get("Description", {}).get("ProductDescription", "No description")
+            manufacturer = product.get("Manufacturer", {}).get("Name", "Unknown")
+            unit_price = product.get("UnitPrice", "N/A")
             stock = product.get("QuantityAvailable", "N/A")
+            product_url = product.get("ProductUrl", "N/A")
 
-            print(f"\n✅ Part Found: {part_number}")
+            # ✅ Print results in a readable format
+            print(f"✅ Part Found: {part_number}")
             print(f"🔗 DigiKey URL: {product_url}")
             print(f"📜 Description: {description}")
-            print(f"💲 Price: {price} USD")
-            print(f"📦 Stock: {stock} units available\n")
+            print(f"🏭 Manufacturer: {manufacturer}")
+            print(f"💲 Price: {unit_price} USD")
+            print(f"📦 Stock: {stock} units available")
 
+            with open(OUTPUT_CSV_FILE, "w", newline="") as csvfile:
+                writer = csv.writer(csvfile)
+                writer.writerow(["PartNumber", "Description", "Manufacturer", "UnitPrice", "Stock", "ProductURL"])
+                writer.writerow([part_number, description, manufacturer, unit_price, stock, product_url])
+            
             return part_number, product_url
         else:
             print("⚠️ No valid parts found on DigiKey.")
