@@ -139,51 +139,49 @@ def get_access_token():
 
 ### DigiKey Search Function ###
 def search_digikey(mpn):
-    """Search DigiKey for the given Manufacturer Part Number (MPN)."""
+    """Search DigiKey for a given Manufacturer Part Number (MPN)."""
     access_token = get_access_token()
-    headers = {
-       "Authorization": f"Bearer {access_token}",
-       "Content-Type": "application/json",
-       "X-DIGIKEY-Client-Id": CLIENT_ID,
-       "Accept": "application/json"
-    }
-
     headers = {
         "Authorization": f"Bearer {access_token}",
         "Content-Type": "application/json",
-        "X-DIGIKEY-Client-Id": CLIENT_ID
-    }
-    payload = {
-        "Keywords": mpn,
-        "RecordCount": 10,
-        "Filters": {
-            "InStock": True, 
-            "NormallyStocked": True, 
-            "ExcludeMarketPlace": True, 
-            "ExcludeObsolete": True
-        }
+        "X-DIGIKEY-Client-Id": CLIENT_ID,
+        "X-DIGIKEY-Locale-Site": "US",
+        "X-DIGIKEY-Locale-Language": "en",
+        "X-DIGIKEY-Locale-Currency": "USD"
     }
 
-    url = SEARCH_URL.format(mpn)  # Correct URL formatting
-    response = requests.get(url, headers=headers, json=payload)
+    url = SEARCH_URL.format(mpn)
+    response = requests.get(url, headers=headers)
 
     print("API Request URL:", url)
-    print("Request Headers:", headers)
-    print("Request Payload:", json.dumps(payload, indent=2))
     print("Response Status Code:", response.status_code)
-    print("Response Body:", response.text)    
-    
+    print("Response Body:", response.text)
+
     if response.status_code == 200:
         results = response.json()
-        if "Parts" in results and results["Parts"]:
-            best_match = results["Parts"][0]  # Take the first result
-            return best_match["DigiKeyPartNumber"], best_match["ProductUrl"]
+        product = results.get("Product", {})
+
+        if product:
+            part_number = product.get("ManufacturerProductNumber")
+            product_url = product.get("ProductUrl")
+            description = product["Description"].get("ProductDescription", "No description available")
+            price = product.get("UnitPrice", "N/A")
+            stock = product.get("QuantityAvailable", "N/A")
+
+            print(f"\n✅ Part Found: {part_number}")
+            print(f"🔗 DigiKey URL: {product_url}")
+            print(f"📜 Description: {description}")
+            print(f"💲 Price: {price} USD")
+            print(f"📦 Stock: {stock} units available\n")
+
+            return part_number, product_url
         else:
-            print("No valid parts found on DigiKey.")
+            print("⚠️ No valid parts found on DigiKey.")
             return None, None
     else:
-        print("Error searching DigiKey:", response.text)
+        print(f"❌ Error searching DigiKey: {response.text}")
         return None, None
+
 
 ### Main Function ###
 def main():
