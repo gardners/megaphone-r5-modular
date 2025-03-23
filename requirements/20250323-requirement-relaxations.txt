@@ -1,0 +1,4 @@
+Relaxation of Requirement 2.1.2: Bluetooth host module support for keyboards and other HID peripherals. Downgrade from REQUIREMENT to DESIRABLE.
+Impact: Bluetooth keyboards and other HID devices will not be usable.
+Proposed: PGS
+Assessed and approved: PGS

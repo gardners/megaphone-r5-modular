@@ -20,7 +20,7 @@ Requirement 1.3.8, "Implement register access to check battery state and charger
 Requirement 1.4.1, "High-efficiency DC switchable DC power supplies that can support various sub-systems with >=2A @ 3.3V or 5V (externally selectable), with an efficiency of at least 90% in typical conditions when powered from a single cell LiFEPO4 battery (28.V - 3.2V)."
 Requirement 1.4.2, "LCD Panel Backlight power supply module (20V, 50mA, powered from VBAT, switchable via a single enable input pin), unless incorporated into the solution to Requirement 3.3.1)."
 Requirement 2.1.1, "Bluetooth host module that can connect to headsets and other audio devices. Must support UART or I2C control, and audio interfaces that we can easily implement from the FPGA, such as I2S audio."
-Requirement 2.1.2, "Bluetooth host module support for keyboards and other HID peripherals."
+Desirable 2.1.2, "Bluetooth host module support for keyboards and other HID peripherals."
 Requirement 2.2.1, "Cellular Module Carrier board that can accept an industry standard industrial cellular modem, breaking out all pins from the connectors, and provides a SIM card slot."
 Requirement 2.2.2, "Create UART for cellular modem AT command interface to the MEGA65 buffered serial interface. This should keep output from cellular modem in a buffer until the application requests the next line or bunch of bytes, and require acknowledgement each time, to prevent loss of important messages."
 Requirement 2.2.3, "Allow Hypervisor to protect access to the cellular modem UART."
