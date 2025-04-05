@@ -106,7 +106,13 @@ int main() {
     printf("Connected to %s\n", SERIAL_DEVICE);
 
     // Send BD_ADDR request (opcode 0x0F, no params)
-    send_command(fd, 0x0F, (uint8_t[]){0x00}, 1);
+    //    send_command(fd, 0x0F, (uint8_t[]){0x00}, 1);
+    
+    // Send read device name request (opcode 0x10, no params)
+    //    send_command(fd, 0x10, (uint8_t[]){0x00}, 1);
+    
+    // Send BTM Utility Function request (opcode 0x13, no params)
+    send_command(fd, 0x13, (uint8_t[]){0x00}, 1);
 
     uint8_t buffer[MAX_PACKET_SIZE];
     int pos = 0;
@@ -130,6 +136,11 @@ int main() {
             } else if (pos >= 4 && pos == expected_len + 4) {
                 parse_packet(buffer, pos);
                 pos = 0;
+    // Send device name request (opcode 0x10, no params)
+		//    send_command(fd, 0x10, (uint8_t[]){0x00}, 1);
+
+        send_command(fd, 0x0D, (uint8_t[]){0x00}, 1);
+
             }
         }
     }
