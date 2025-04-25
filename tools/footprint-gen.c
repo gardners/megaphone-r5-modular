@@ -734,7 +734,7 @@ int main(int argc, char **argv)
 		 path,footprint_name,
 		 panelised?"-PANEL":"",
 		 castellated?"":"-NIBBLE",
-		 sparepad?"":"-SPAREPAD");
+		 sparepad?"-SPAREPAD":"");
 	out = fopen(filename,"w");
 	if (!out) {
 	  fprintf(stderr,"ERROR: Failed to create file '%s'\n",filename);
@@ -1108,15 +1108,15 @@ int main(int argc, char **argv)
 
 	      if (sparepad) 
 		fprintf(out,
-			"              (pad \"%d\" thru_hole circle\n"
-			"                       (at %f %f 180)\n"
-			"                       (size 1.25 1.25)\n"
-			"                       (drill 0.75)\n"
-			"                       (layers \"*.Cu\" \"*.Mask\" )\n"
-			"                       (remove_unused_layers no)\n"
-			"                       (thermal_bridge_angle 45)\n"		  
-			"                       (uuid \"78a0f889-0c8d-4398-9bd5-55e879a094cf\")\n"
-			"              )\n",
+			"       (pad \"%d\" thru_hole circle\n"
+			"                (at %f %f 180)\n"
+			"                (size 1.25 1.25)\n"
+			"                (drill 0.75)\n"
+			"                (layers \"*.Cu\" \"*.Mask\" )\n"
+			"                (remove_unused_layers no)\n"
+			"                (thermal_bridge_angle 45)\n"		  
+			"                (uuid \"78a0f889-0c8d-4398-9bd5-55e879a094cf\")\n"
+			"       )\n",
 			i+1,
 			-module_width/2+SPARE_HOLE_DISPLACEMENT,
 			-module_height/2 + 2.54/2.0 + 2.54*i
@@ -1138,7 +1138,7 @@ int main(int argc, char **argv)
 		      "                (remove_unused_layers no)\n"
 		      "                (thermal_bridge_angle 45)\n"
 		      "                (uuid \"f85e55df-ccf1-4a29-ab8b-2b081b1da284\")\n"
-		      "        )\n",
+		      "       )\n",
 		      i+1+half_pin_count,
 		      module_width/2,
 		      -module_height/2 + 2.54/2.0 + 2.54*i
@@ -1146,15 +1146,15 @@ int main(int argc, char **argv)
 
 	      if (sparepad) 
 		fprintf(out,
-			"              (pad \"%d\" thru_hole circle\n"
-			"                       (at %f %f 180)\n"
-			"                       (size 1.25 1.25)\n"
-			"                       (drill 0.75)\n"
-			"                       (layers \"*.Cu\" \"*.Mask\" )\n"
-			"                       (remove_unused_layers no)\n"
-			"                       (thermal_bridge_angle 45)\n"		  
-			"                       (uuid \"78a0f889-0c8d-4398-9bd5-55e879a094cf\")\n"
-			"              )\n",
+			"       (pad \"%d\" thru_hole circle\n"
+			"                (at %f %f 180)\n"
+			"                (size 1.25 1.25)\n"
+			"                (drill 0.75)\n"
+			"                (layers \"*.Cu\" \"*.Mask\" )\n"
+			"                (remove_unused_layers no)\n"
+			"                (thermal_bridge_angle 45)\n"		  
+			"                (uuid \"78a0f889-0c8d-4398-9bd5-55e879a094cf\")\n"
+			"       )\n",
 			i+1,
 			module_width/2-SPARE_HOLE_DISPLACEMENT,
 			-module_height/2 + 2.54/2.0 + 2.54*i
@@ -1172,10 +1172,10 @@ int main(int argc, char **argv)
        Module Bay footprint (internal to PCB)
 
        ------------------------------------------------------------------------------ */
-
+    
     for(int edge_type=0;edge_type<2;edge_type++) {
       for(int with_cutout=0;with_cutout<2;with_cutout++) {
-
+	
 	snprintf(filename,8192,"%s/MegaCastle.pretty/%s%s%s.kicad_mod",
 		 path,
 		 bay_footprint_name,
