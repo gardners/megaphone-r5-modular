@@ -4,6 +4,7 @@
 #include <string.h>
 #include <strings.h>
 #include <stdbool.h>
+#include <time.h>
 
 #define MAX_M 64  // Limit to 64-bit for unsigned long long
 
@@ -48,6 +49,63 @@ bool is_unique(unsigned long long value, unsigned long long *unique_set, int cou
   return true;
 }
 
+/*
+  Efficiently find all valid combinations.
+ */
+long long binomial(int n, int k) {
+    if (k < 0 || k > n) return 0;
+    if (k == 0 || k == n) return 1;
+    long long res = 1;
+    for (int i = 1; i <= k; ++i) {
+        res = res * (n - i + 1) / i;
+    }
+    return res;
+}
+
+#define MAX_N 1024
+long long binom_table[MAX_N][MAX_N];
+
+void build_binomial(int n)
+{
+  if (n>=MAX_N) {
+    fprintf(stderr,"FATAL: number of free positions too large. Increase MAX_N, or make your module a more sensible size!\n");
+    exit(-1);
+  }
+    for (int i = 0; i <= n; ++i) {
+        binom_table[i][0] = binom_table[i][i] = 1;
+        for (int j = 1; j < i; ++j) {
+            binom_table[i][j] = binom_table[i-1][j-1] + binom_table[i-1][j];
+        }
+    }
+}
+
+
+int combination(int n, int m, int idx, int *out) {
+    long long total = binomial(n, m);
+    if (idx < 0 || idx >= total) {
+        return -1;
+    }
+    
+    int curr = 0;
+    for (int i = 0; i < m; ++i) {
+        for (;;) {
+            long long b = binom_table[n - curr - 1][m - i - 1];
+            if (idx < b) {
+                out[i] = curr;
+                curr++;
+                break;
+            } else {
+                idx -= b;
+                curr++;
+            }
+        }
+    }
+    return 0;
+}
+
+
+
+
 // Function to generate the n-th unique valid vector
 unsigned long long find_nth_valid_vector(int m, int n, int target_index) {
 
@@ -60,43 +118,62 @@ unsigned long long find_nth_valid_vector(int m, int n, int target_index) {
   int num_fixed = 4;
   int num_free_positions = m - num_fixed;
   int num_select = n - num_fixed;
-    
+
+  build_binomial(num_free_positions);
+  
   if (num_select > num_free_positions) {
     fprintf(stderr,"ERROR: Not enough free positions to select %d additional pins.\n", num_select);
     exit(-1);
   }
-    
-  unsigned long long unique_vectors[10000]; // Store unique solutions
+
+  long long cases = binomial(num_free_positions,num_select);
+  
+  if (cases>1000000)
+    fprintf(stderr,"WARNING: There are %lld cases to be considered. This might take a while.\n",
+	    cases);
+  if (cases>500000000) {
+    fprintf(stderr,"WARNING: Solution space too large (%lld) -- restricting to first 500 million.\n",cases);
+    cases = 500000000;
+  }
+  
+  unsigned long long *unique_vectors=calloc(cases,sizeof(unsigned long long)); // Store unique solutions
+  if (!unique_vectors) {
+    perror("calloc()");
+    exit(-1);
+  }
   int unique_count = 0;
-    
+  
   // Iterate through all bit combinations for the free positions
-  for (unsigned long long mask = 0; mask < (1ULL << num_free_positions); mask++) {
-    if (__builtin_popcountll(mask) == num_select) {
+  fprintf(stderr,"DEBUG: num_free_positions = %d, num_select = %d\n",num_free_positions,num_select);
+
+  int selected_pins[num_select];
+
+  int valid_variants=0;
+  
+  //  for(int variant = 0; variant <= target_index; variant++)
+  time_t last_time = 0;
+  for(int variant = 0; variant <= cases; variant++)
+    {
+      int selection[num_select];
+      combination(num_free_positions, num_select, variant, selection);
+
       unsigned long long vector = 0;
-            
+      
       // Place the fixed positions
       for (int i = 0; i < num_fixed; i++) {
 	vector |= (1ULL << fixed_positions[i]);
       }
-            
-      // Map selected positions to the bitmask
-      int free_idx = 0;
-      for (int i = 0; i < m; i++) {
-	bool is_fixed = false;
-	for (int j = 0; j < num_fixed; j++) {
-	  if (i == fixed_positions[j]) {
-	    is_fixed = true;
-	    break;
-	  }
+
+      // Then place the selection
+      for(int i=0;i<num_select;i++) {
+	// Compute true index, taking into account fixed pin positions.
+	int index = selection[i];
+	for(int j=0;j<4;j++) {
+	  if (index>=fixed_positions[j]) index++;
 	}
-	if (!is_fixed && (mask & (1ULL << free_idx))) {
-	  vector |= (1ULL << i);
-	}
-	if (!is_fixed) {
-	  free_idx++;
-	}
+	vector |= (1ULL << index);
       }
-            
+
       // Check if it's a unique configuration
       if (is_unique(vector, unique_vectors, unique_count, m)) {
 	unique_vectors[unique_count++] = vector;
@@ -104,8 +181,15 @@ unsigned long long find_nth_valid_vector(int m, int n, int target_index) {
 	  return vector;
 	}
       }
+      
+      // fprintf(stderr,"DEBUG: Selection #%d = %016llx\n",variant, vector);
+      
+      if (last_time!=time(0)) {
+	fprintf(stderr,"INFO: Checked %d of %lld cases.\n",
+		variant,cases);
+	last_time=time(0);
+      }
     }
-  }
     
   fprintf(stderr,"FATAL: Could not find the %d-th unique vector.\n", target_index);
   exit(-1);
