@@ -1108,12 +1108,13 @@ int main(int argc, char **argv)
 
 	      if (sparepad) 
 		fprintf(out,
-			"       (pad \"%d\" thru_hole circle\n"
+			"       (pad \"%d\" thru_hole roundrect\n"
 			"                (at %f %f 180)\n"
 			"                (size 1.25 1.25)\n"
 			"                (drill 0.75)\n"
 			"                (layers \"*.Cu\" \"*.Mask\" )\n"
 			"                (remove_unused_layers no)\n"
+			"                (roundrec_rratio 0.2)\n"
 			"                (thermal_bridge_angle 45)\n"		  
 			"                (uuid \"78a0f889-0c8d-4398-9bd5-55e879a094cf\")\n"
 			"       )\n",
@@ -1121,6 +1122,7 @@ int main(int argc, char **argv)
 			-module_width/2+SPARE_HOLE_DISPLACEMENT,
 			-module_height/2 + 2.54/2.0 + 2.54*i
 			);
+	      
 	    }
 	    
 	  }
@@ -1152,6 +1154,7 @@ int main(int argc, char **argv)
 			"                (drill 0.75)\n"
 			"                (layers \"*.Cu\" \"*.Mask\" )\n"
 			"                (remove_unused_layers no)\n"
+			"                (roundrec_rratio 0.2)\n"
 			"                (thermal_bridge_angle 45)\n"		  
 			"                (uuid \"78a0f889-0c8d-4398-9bd5-55e879a094cf\")\n"
 			"       )\n",
