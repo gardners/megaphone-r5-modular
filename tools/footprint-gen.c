@@ -139,7 +139,7 @@ unsigned long long find_variant(int half_pin_count,int pins_used,char *variant_s
     // We should support both hex (since its how the files get named) and binary forms.
     // But for now, we'll just take hex.
     v = strtoll(&variant_str[1],NULL,16);
-    fprintf(stderr,"INFO: Explicitly selected pin_mask = 0x%x. No sanity checks made on this.\n",
+    fprintf(stderr,"INFO: Explicitly selected pin_mask = 0x%llx. No sanity checks made on this.\n",
 	    v);
     if (half_pin_count&1) v=v>>2;
     
@@ -732,6 +732,11 @@ int main(int argc, char **argv)
 	       panelised?"-PANEL":"",
 	       castellated?"":"-NIBBLE");
       out = fopen(filename,"w");
+      if (!out) {
+	fprintf(stderr,"ERROR: Failed to create file '%s'\n",filename);
+	perror("fopen");
+	exit(-1);
+      }
       
       fprintf(stderr,"INFO: Creating %s\n",filename);
     
