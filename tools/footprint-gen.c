@@ -725,671 +725,676 @@ int main(int argc, char **argv)
   char filename[8192];
 
   const float SPARE_HOLE_DISPLACEMENT = 1.7;
-  
-  for(int castellated=0;castellated<2;castellated++) {
-    for(int panelised=0;panelised<2;panelised++) {
-      
-      snprintf(filename,8192,"%s/MegaCastle.pretty/%s%s%s.kicad_mod",
-	       path,footprint_name,
-	       panelised?"-PANEL":"",
-	       castellated?"":"-NIBBLE");
-      out = fopen(filename,"w");
-      if (!out) {
-	fprintf(stderr,"ERROR: Failed to create file '%s'\n",filename);
-	perror("fopen");
-	exit(-1);
-      }
-      
-      fprintf(stderr,"INFO: Creating %s\n",filename);
-    
-      fprintf(out,
-	      "(footprint \"%s%s\"\n"
-	      "        (version 20240108)\n"
-	      "	    (generator \"pcbnew\")\n"
-	      "        (generator_version \"8.0\")\n"
-	      "        (layer \"F.Cu\")\n"
-	      "        (property \"Reference\" \"REF**\"\n"
-	      "                (at 0 %f 0)\n"   // XXX - Set position of REF**
-	      "                (unlocked yes)\n"
-	      "	 (layer \"F.SilkS\")\n"
-	      "                (uuid \"08d1cbd6-6dbd-4696-9477-43e1380128be\")\n"
-	      "                (effects\n"
-	      "                        (font\n"
-	      "                                (size 1 1)\n"
-	      "                                (thickness 0.1)\n"
-	      "                        )\n"
-	      "                )\n"
-	      "        )\n",
-	      footprint_name,panelised?"-PANEL":"",
-	      module_height/2 + 2 + panelised * 4
-	      );
-    
-      fprintf(out,
-	      "        (property \"Value\" \"%s%s\"\n"
-	      "                (at 0 %f 0)\n"
-	      "                (unlocked yes)\n"
-	      "                (layer \"F.Fab\")\n"
-	      "                (uuid \"7848b12f-b698-40ff-9b18-5d3dc1ad63e0\")\n"
-	      "                (effects\n"
-	      "                        (font\n"
-	      "                                (size 1 1)\n"
-	      "                                (thickness 0.15)\n"
-	      "                        )\n"
-	      "                )\n"
-	      "        )\n",
-	      footprint_name,panelised?"-PANEL":"",
-	      module_height/2 + 4 + panelised * 4
-	      );
-    
-      fprintf(out,"        (property \"Footprint\" \"\"\n"
-	      "                (at 0 0 0)\n"
-	      "                (layer \"F.Fab\")\n"
-	      "                (hide yes)\n"
-	      "                (uuid \"24d79921-7c8a-4bf5-b40a-0bc77c603d9c\")\n"
-	      "                (effects\n"
-	      "                        (font\n"
-	      "                                (size 1.27 1.27)\n"
-	      "                                (thickness 0.15)\n"
-	      "                        )\n"
-	      "                )\n"
-	      "        )\n"
-	      );
-    
-      fprintf(out,
-	      "        (property \"Datasheet\" \"\"\n"
-	      "                (at 0 0 0)\n"
-	      "                (layer \"F.Fab\")\n"
-	      "                (hide yes)\n"
-	      "                (uuid \"1a070192-ad50-44fd-8acb-aa45a22d9533\")\n"
-	      "                (effects\n"
-	      "                        (font\n"
-	      "                                (size 1.27 1.27)\n"
-	      "                                (thickness 0.15)\n"
-	      "                        )\n"
-	      "                )\n"
-	      "       )\n"
-	      );
-    
-      fprintf(out,
-	      "                (property \"Description\" \"Generated using footprint-gen %s %s %s %s %s\"\n"
-	      "                (at 0 0 0)\n"
-	      "                (layer \"F.Fab\")\n"
-	      "                (hide yes)\n"
-	      "                (uuid \"d6dd6c62-1d04-4d09-a07a-575c94e93110\")\n"
-	      "                (effects\n"
-	      "                        (font\n"
-	      "                                (size 1.27 1.27)\n"
-	      "                                (thickness 0.15)\n"
-	      "                        )\n"
-	      "                )\n"
-	      "        )\n"
-	      "        (attr smd)\n",
-	      argv[1],argv[2],argv[3],argv[4],suffix
-	      );
 
-      // Add 1/16th of an inch to castellated pads if fabricating for nibbling the edges to make the castellations.
-      float cut_width = module_width/2;
-      if (!castellated) cut_width += 25.4/16.0;
-    
-      if (panelised) {
-	float tab_width =  ( .1 + .6 + .3975 + .45 + .35 + .45 + .35 + .45 + .35 + .45 + .3975 + .6 + .1 );
-	int num_tabs=2;
-	// If not room for two tabs, have just one
-	if (module_width < ( 2+ tab_width + 2 + tab_width + 2 ) ) num_tabs=1;
-	float first_tab_offset= 2;
-	float second_tab_offset = module_width - 2 - tab_width;
-	if (num_tabs == 1 ) {
-	  first_tab_offset = module_width/2 - tab_width/2;
-	  second_tab_offset = first_tab_offset;
+  for(int sparepad=0;sparepad<2;sparepad++) {
+    for(int castellated=0;castellated<2;castellated++) {
+      for(int panelised=0;panelised<2;panelised++) {
+	
+	snprintf(filename,8192,"%s/MegaCastle.pretty/%s%s%s%s.kicad_mod",
+		 path,footprint_name,
+		 panelised?"-PANEL":"",
+		 castellated?"":"-NIBBLE",
+		 sparepad?"":"-SPAREPAD");
+	out = fopen(filename,"w");
+	if (!out) {
+	  fprintf(stderr,"ERROR: Failed to create file '%s'\n",filename);
+	  perror("fopen");
+	  exit(-1);
 	}
+	
+	fprintf(stderr,"INFO: Creating %s\n",filename);
+	
+	fprintf(out,
+		"(footprint \"%s%s\"\n"
+		"        (version 20240108)\n"
+		"	    (generator \"pcbnew\")\n"
+		"        (generator_version \"8.0\")\n"
+		"        (layer \"F.Cu\")\n"
+		"        (property \"Reference\" \"REF**\"\n"
+		"                (at 0 %f 0)\n"   // XXX - Set position of REF**
+		"                (unlocked yes)\n"
+		"	 (layer \"F.SilkS\")\n"
+		"                (uuid \"08d1cbd6-6dbd-4696-9477-43e1380128be\")\n"
+		"                (effects\n"
+		"                        (font\n"
+		"                                (size 1 1)\n"
+		"                                (thickness 0.1)\n"
+		"                        )\n"
+		"                )\n"
+		"        )\n",
+		footprint_name,panelised?"-PANEL":"",
+		module_height/2 + 2 + panelised * 4
+		);
+	
+	fprintf(out,
+		"        (property \"Value\" \"%s%s\"\n"
+		"                (at 0 %f 0)\n"
+		"                (unlocked yes)\n"
+		"                (layer \"F.Fab\")\n"
+		"                (uuid \"7848b12f-b698-40ff-9b18-5d3dc1ad63e0\")\n"
+		"                (effects\n"
+		"                        (font\n"
+		"                                (size 1 1)\n"
+		"                                (thickness 0.15)\n"
+		"                        )\n"
+		"                )\n"
+		"        )\n",
+		footprint_name,panelised?"-PANEL":"",
+		module_height/2 + 4 + panelised * 4
+		);
+    
+	fprintf(out,"        (property \"Footprint\" \"\"\n"
+		"                (at 0 0 0)\n"
+		"                (layer \"F.Fab\")\n"
+		"                (hide yes)\n"
+		"                (uuid \"24d79921-7c8a-4bf5-b40a-0bc77c603d9c\")\n"
+		"                (effects\n"
+		"                        (font\n"
+		"                                (size 1.27 1.27)\n"
+		"                                (thickness 0.15)\n"
+		"                        )\n"
+		"                )\n"
+		"        )\n"
+		);
+    
+	fprintf(out,
+		"        (property \"Datasheet\" \"\"\n"
+		"                (at 0 0 0)\n"
+		"                (layer \"F.Fab\")\n"
+		"                (hide yes)\n"
+		"                (uuid \"1a070192-ad50-44fd-8acb-aa45a22d9533\")\n"
+		"                (effects\n"
+		"                        (font\n"
+		"                                (size 1.27 1.27)\n"
+		"                                (thickness 0.15)\n"
+		"                        )\n"
+		"                )\n"
+		"       )\n"
+		);
+    
+	fprintf(out,
+		"                (property \"Description\" \"Generated using footprint-gen %s %s %s %s %s\"\n"
+		"                (at 0 0 0)\n"
+		"                (layer \"F.Fab\")\n"
+		"                (hide yes)\n"
+		"                (uuid \"d6dd6c62-1d04-4d09-a07a-575c94e93110\")\n"
+		"                (effects\n"
+		"                        (font\n"
+		"                                (size 1.27 1.27)\n"
+		"                                (thickness 0.15)\n"
+		"                        )\n"
+		"                )\n"
+		"        )\n"
+		"        (attr smd)\n",
+		argv[1],argv[2],argv[3],argv[4],suffix
+		);
 
-	// Draw lines either side of the tab(s)
-	draw_line(out,"Edge.Cuts",-cut_width,module_height/2,-module_width/2 + first_tab_offset,module_height/2,0.05);
-	if (num_tabs == 2) {
-	  draw_line(out,"Edge.Cuts",
-		    -module_width/2 + first_tab_offset + tab_width,module_height/2,
-		    -module_width/2 + second_tab_offset,module_height/2, 0.05);
-	  draw_line(out,"Edge.Cuts",
-		    -module_width/2 + second_tab_offset + tab_width,module_height/2,
-		    cut_width,module_height/2, 0.05);
+	// Add 1/16th of an inch to castellated pads if fabricating for nibbling the edges to make the castellations.
+	float cut_width = module_width/2;
+	if (!castellated) cut_width += 25.4/16.0;
+    
+	if (panelised) {
+	  float tab_width =  ( .1 + .6 + .3975 + .45 + .35 + .45 + .35 + .45 + .35 + .45 + .3975 + .6 + .1 );
+	  int num_tabs=2;
+	  // If not room for two tabs, have just one
+	  if (module_width < ( 2+ tab_width + 2 + tab_width + 2 ) ) num_tabs=1;
+	  float first_tab_offset= 2;
+	  float second_tab_offset = module_width - 2 - tab_width;
+	  if (num_tabs == 1 ) {
+	    first_tab_offset = module_width/2 - tab_width/2;
+	    second_tab_offset = first_tab_offset;
+	  }
+
+	  // Draw lines either side of the tab(s)
+	  draw_line(out,"Edge.Cuts",-cut_width,module_height/2,-module_width/2 + first_tab_offset,module_height/2,0.05);
+	  if (num_tabs == 2) {
+	    draw_line(out,"Edge.Cuts",
+		      -module_width/2 + first_tab_offset + tab_width,module_height/2,
+		      -module_width/2 + second_tab_offset,module_height/2, 0.05);
+	    draw_line(out,"Edge.Cuts",
+		      -module_width/2 + second_tab_offset + tab_width,module_height/2,
+		      cut_width,module_height/2, 0.05);
+	  } else {
+	    draw_line(out,"Edge.Cuts",
+		      -module_width/2 + first_tab_offset + tab_width,module_height/2,
+		      cut_width,module_height/2,0.05);		
+	  }
+
+	  for(int tab = 0;tab < num_tabs ; tab++ ) {
+	    float tab_offset = first_tab_offset;
+	    if (tab) tab_offset = second_tab_offset;
+
+	    // Draw parallel lines around groove
+	    draw_line(out,"Edge.Cuts",
+		      -module_width/2 + tab_offset, module_height/2,
+		      -module_width/2 + tab_offset + (.1 + 0.6/2), module_height/2,0.05);
+	    draw_line(out,"Edge.Cuts",
+		      -module_width/2 + tab_offset, module_height/2 + 1.6,
+		      -module_width/2 + tab_offset + (.1 + 0.6/2), module_height/2 + 1.6,
+		      0.05
+		      );
+	    draw_line(out,"Edge.Cuts",
+		      -module_width/2 + tab_offset + tab_width, module_height/2,
+		      -module_width/2 + tab_offset + tab_width - (.1 + 0.6/2), module_height/2, 0.05);
+	    draw_line(out,"Edge.Cuts",
+		      -module_width/2 + tab_offset + tab_width, module_height/2 + 1.6,
+		      -module_width/2 + tab_offset + tab_width - (.1 + 0.6/2), module_height/2 + 1.6,
+		      0.05
+		      );
+
+	    // Draw arcs connecting the lower and upper sides of the groove
+	    draw_arc(out,"Edge.Cuts",
+		     -module_width/2 + tab_offset + .4, module_height/2,
+		     -module_width/2 + tab_offset + .4 + 0.8, module_height/2 + 0.8,		 
+		     -module_width/2 + tab_offset + .4, module_height/2 + 1.6,
+		     0.05);
+	    draw_arc(out,"Edge.Cuts",
+		     -module_width/2 + tab_offset + tab_width - 0.4, module_height/2,
+		     -module_width/2 + tab_offset + tab_width - 0.4 - 0.8, module_height/2 + 0.8,		 
+		     -module_width/2 + tab_offset + tab_width - 0.4, module_height/2 + 1.6,
+		     0.05);
+
+	    float circle_offsets[6]={.9225,.8,.8,.8,.9225,0};
+	    float diameters[6]={.6,.45,.45,.45,.45,.6};
+	    float offset=0.1 + diameters[0]/2;
+	    for(int i=0;i<6;i++) {
+	      draw_drill_hole(out,
+			      -module_width/2 + tab_offset + offset,
+			      module_height/2,
+			      diameters[i]);
+	      offset += circle_offsets[i];
+	    }		 
+	  }
+      
 	} else {
-	  draw_line(out,"Edge.Cuts",
-		    -module_width/2 + first_tab_offset + tab_width,module_height/2,
-		    cut_width,module_height/2,0.05);		
+	  // Non-panelised, so just draw the line at the bottom
+	  draw_line(out,"Edge.Cuts",-module_width/2,module_height/2,module_width/2,module_height/2,0.05);
 	}
 
-	for(int tab = 0;tab < num_tabs ; tab++ ) {
-	  float tab_offset = first_tab_offset;
-	  if (tab) tab_offset = second_tab_offset;
 
-	  // Draw parallel lines around groove
-	  draw_line(out,"Edge.Cuts",
-		    -module_width/2 + tab_offset, module_height/2,
-		    -module_width/2 + tab_offset + (.1 + 0.6/2), module_height/2,0.05);
-	  draw_line(out,"Edge.Cuts",
-		    -module_width/2 + tab_offset, module_height/2 + 1.6,
-		    -module_width/2 + tab_offset + (.1 + 0.6/2), module_height/2 + 1.6,
-		    0.05
-		    );
-	  draw_line(out,"Edge.Cuts",
-		    -module_width/2 + tab_offset + tab_width, module_height/2,
-		    -module_width/2 + tab_offset + tab_width - (.1 + 0.6/2), module_height/2, 0.05);
-	  draw_line(out,"Edge.Cuts",
-		    -module_width/2 + tab_offset + tab_width, module_height/2 + 1.6,
-		    -module_width/2 + tab_offset + tab_width - (.1 + 0.6/2), module_height/2 + 1.6,
-		    0.05
-		    );
+	// Top Edge cut
+	draw_line(out,"Edge.Cuts",-cut_width,-module_height/2,cut_width,-module_height/2,0.05);
 
-	  // Draw arcs connecting the lower and upper sides of the groove
-	  draw_arc(out,"Edge.Cuts",
-		   -module_width/2 + tab_offset + .4, module_height/2,
-		   -module_width/2 + tab_offset + .4 + 0.8, module_height/2 + 0.8,		 
-		   -module_width/2 + tab_offset + .4, module_height/2 + 1.6,
-		   0.05);
-	  draw_arc(out,"Edge.Cuts",
-		   -module_width/2 + tab_offset + tab_width - 0.4, module_height/2,
-		   -module_width/2 + tab_offset + tab_width - 0.4 - 0.8, module_height/2 + 0.8,		 
-		   -module_width/2 + tab_offset + tab_width - 0.4, module_height/2 + 1.6,
-		   0.05);
-
-	  float circle_offsets[6]={.9225,.8,.8,.8,.9225,0};
-	  float diameters[6]={.6,.45,.45,.45,.45,.6};
-	  float offset=0.1 + diameters[0]/2;
-	  for(int i=0;i<6;i++) {
-	    draw_drill_hole(out,
-			    -module_width/2 + tab_offset + offset,
-			    module_height/2,
-			    diameters[i]);
-	    offset += circle_offsets[i];
-	  }		 
-	}
-      
-      } else {
-	// Non-panelised, so just draw the line at the bottom
-	draw_line(out,"Edge.Cuts",-module_width/2,module_height/2,module_width/2,module_height/2,0.05);
-      }
-
-
-      // Top Edge cut
-      draw_line(out,"Edge.Cuts",-cut_width,-module_height/2,cut_width,-module_height/2,0.05);
-
-      // Sides
-      draw_line(out,"Edge.Cuts",cut_width,-module_height/2,cut_width,module_height/2,0.05);
-      draw_line(out,"Edge.Cuts",-cut_width,-module_height/2,-cut_width,module_height/2,0.05);
+	// Sides
+	draw_line(out,"Edge.Cuts",cut_width,-module_height/2,cut_width,module_height/2,0.05);
+	draw_line(out,"Edge.Cuts",-cut_width,-module_height/2,-cut_width,module_height/2,0.05);
     
-      // Labels for PRY zones
-      fprintf(out,
-	      "        (fp_text user \"PRY\"\n"
-	      "                (at 0 %.2f 0)\n"
-	      "                (unlocked yes)\n"
-	      "                (layer \"B.SilkS\")\n"
-	      "                (uuid \"1c67120b-cd38-4dc1-b421-22e46cf03846\")\n"
-	      "                (effects\n"
-	      "                        (font\n"
-	      "                                (size 0.8 0.8)\n"
-	      "                                (thickness 0.1)\n"
-	      "                        )\n"
-	      "                        (justify bottom mirror)\n"
-	      "                )\n"
-	      "        )\n",
-	      -module_height/2.0 + 0.8 + 0.5
-	      );
-      fprintf(out,
-	      "        (fp_text user \"PRY\"\n"
-	      "                (at 0 %.2f 0)\n"
-	      "                (unlocked yes)\n"
-	      "                (layer \"B.SilkS\")\n"
-	      "                (uuid \"1c67120b-cd38-4dc1-b421-22e46cf03846\")\n"
-	      "                (effects\n"
-	      "                        (font\n"
-	      "                                (size 0.8 0.8)\n"
-	      "                                (thickness 0.1)\n"
-	      "                        )\n"
-	      "                        (justify bottom mirror)\n"
-	      "                )\n"
-	      "        )\n",
-	      module_height/2.0 - 0.3
-	      );
-    
-      // Rectangles for PRY zones
-      float pry_height = 6.268592 - 4.8;
-      fprintf(out,
-	      "	 (fp_rect\n"
-	      "                (start -1.984241 %.3f)\n"
-	      "                (end 2.019516 %.3f)\n"
-	      "                (stroke\n"
-	      "                        (width 0.1)\n"
-	      "                        (type default)\n"
-	      "                )\n"
-	      "                (fill none)\n"
-	      "                (layer \"B.SilkS\")\n"
-	      "                (uuid \"966a509b-00f8-4763-8fcb-dbbd2ac08dcd\")\n"
-	      "        )\n",
-	      module_height/2 - 0.08 - pry_height,
-	      module_height/2 - 0.08
-	      );
-      fprintf(out,
-	      "	 (fp_rect\n"
-	      "                (start -1.984241 %.3f)\n"
-	      "                (end 2.019516 %.3f)\n"
-	      "                (stroke\n"
-	      "                        (width 0.1)\n"
-	      "                        (type default)\n"
-	      "                )\n"
-	      "                (fill none)\n"
-	      "                (layer \"B.SilkS\")\n"
-	      "                (uuid \"966a509b-00f8-4763-8fcb-dbbd2ac08dcd\")\n"
-	      "        )\n",
-	      -module_height/2 + 0.08 + pry_height,
-	      -module_height/2 + 0.08
-	      );
-    
-      // Component and track exclusion zones for pry zones
-      fprintf(out,
-	      "	 (zone\n"
-	      "                (net 0)\n"
-	      "                (net_name \"\")\n"
-	      "                (layer \"B.Cu\")\n"
-	      "                (uuid \"2d931374-edf7-43e7-92d4-bb3e10af8b39\")\n"
-	      "                (name \"Upper Pry Zone\")\n"
-	      "                (hatch edge 0.5)\n"
-	      "                (connect_pads\n"
-	      "                        (clearance 0)\n"
-	      "                )\n"
-	      "                (min_thickness 0.25)\n"
-	      "                (filled_areas_thickness no)\n"
-	      "                (keepout\n"
-	      "                        (tracks not_allowed)\n"
-	      "                        (vias not_allowed)\n"
-	      "                        (pads not_allowed)\n"
-	      "                        (copperpour allowed)\n"
-	      "                        (footprints not_allowed)\n"
-	      "                )\n"
-	      "                (fill\n"
-	      "                        (thermal_gap 0.5)\n"
-	      "                        (thermal_bridge_width 0.5)\n"
-	      "                )\n"
-	      "                (polygon\n"
-	      "                        (pts\n"
-	      "                                (xy -1.984241 %f) (xy -1.984241 %f) (xy 2.019516 %f) (xy 2.019516 %f)\n"
-	      "                        )\n"
-	      "                )\n"
-	      "        )\n",
-	      module_height/2 - 0.08 - pry_height,
-	      module_height/2 - 0.08,
-	      module_height/2 - 0.08,
-	      module_height/2 - 0.08 - pry_height		
-	      );
-    
-      fprintf(out,
-	      "	 (zone\n"
-	      "                (net 0)\n"
-	      "                (net_name \"\")\n"
-	      "                (layer \"B.Cu\")\n"
-	      "                (uuid \"2d931374-edf7-43e7-92d4-bb3e10af8b39\")\n"
-	      "                (name \"Upper Pry Zone\")\n"
-	      "                (hatch edge 0.5)\n"
-	      "                (connect_pads\n"
-	      "                        (clearance 0)\n"
-	      "                )\n"
-	      "                (min_thickness 0.25)\n"
-	      "                (filled_areas_thickness no)\n"
-	      "                (keepout\n"
-	      "                        (tracks not_allowed)\n"
-	      "                        (vias not_allowed)\n"
-	      "                        (pads not_allowed)\n"
-	      "                        (copperpour allowed)\n"
-	      "                        (footprints not_allowed)\n"
-	      "                )\n"
-	      "                (fill\n"
-	      "                        (thermal_gap 0.5)\n"
-	      "                        (thermal_bridge_width 0.5)\n"
-	      "                )\n"
-	      "                (polygon\n"
-	      "                        (pts\n"
-	      "                                (xy -1.984241 %f) (xy -1.984241 %f) (xy 2.019516 %f) (xy 2.019516 %f)\n"
-	      "                        )\n"
-	      "                )\n"
-	      "        )\n",
-	      -module_height/2 + 0.08 + pry_height,
-	      -module_height/2 + 0.08,
-	      -module_height/2 + 0.08,
-	      -module_height/2 + 0.08 + pry_height		
-	      );
-    
-      // Exclusion zone for footprints outside of cut-out on rear
-      footprint_exclusion_zone(out,-module_width/2,module_height/2,
-			       -co_width/2,-module_height/2);
-      footprint_exclusion_zone(out,module_width/2,module_height/2,
-			       co_width/2,-module_height/2);
-      footprint_exclusion_zone(out,-co_width/2,module_height/2,
-			       co_width/2,co_height/2);
-      footprint_exclusion_zone(out,-co_width/2,-module_height/2,
-			       co_width/2,-co_height/2);
-    
-    
-      // Draw rectangle for component area on rear for cut-out
-      fprintf(out,
-	      "         (fp_rect\n"
-	      "                (start %.2f %.2f)\n"
-	      "                (end %.2f %.2f)\n"
-	      "                (stroke\n"
-	      "                        (width 0.05)\n"
-	      "                        (type default)\n"
-	      "                )\n"
-	      "                (fill none)\n"
-	      "                (layer \"B.SilkS\")\n"
-	      "                (uuid \"a267cc7c-3519-453e-849e-e978b46e7c98\")\n"
-	      "	   )\n",
-	      -co_width/2,co_height/2,
-	      co_width/2,-co_height/2
-	      );
-    
-      for(int i=0;i<half_pin_count;i++)
-	{
-	  if (pin_present(i+1,pin_mask)) {
-	    fprintf(out,
-		    "       (pad \"%d\" thru_hole rect\n"
-		    "                (at %f %f)\n"
-		    "                (size 2.54 2)\n"
-		    "                (drill oval 2 1.5)\n"
-		    "                (property pad_prop_castellated)\n"
-		    "                (layers \"*.Cu\" \"*.Mask\")\n"
-		    "                (remove_unused_layers no)\n"
-		    "                (thermal_bridge_angle 45)\n"
-		    "                (uuid \"f85e55df-ccf1-4a29-ab8b-2b081b1da284\")\n"
-		    "        )\n",
-		    i+1,
-		    -module_width/2,
-		    -module_height/2 + 2.54/2.0 + 2.54*i
-		    );
-
-	    fprintf(out,
-		    "              (pad \"%d\" thru_hole circle\n"
-		    "                       (at %f %f 180)\n"
-		    "                       (size 1 1)\n"
-		    "                       (drill 0.75)\n"
-		    "                       (layers \"*.Cu\" \"*.Mask\" )\n"
-		    "                       (remove_unused_layers no)\n"
-		    "                       (thermal_bridge_angle 45)\n"		  
-		    "                       (uuid \"78a0f889-0c8d-4398-9bd5-55e879a094cf\")\n"
-		    "              )\n",
-		    i+1,
-		    -module_width/2+SPARE_HOLE_DISPLACEMENT,
-		    -module_height/2 + 2.54/2.0 + 2.54*i
-		    );
-	  }
-	  
-	}
-    
-      for(int i=0;i<half_pin_count;i++)
-	{
-	  if (pin_present(i+half_pin_count+1,pin_mask)) {
-	    fprintf(out,
-		    "       (pad \"%d\" thru_hole rect\n"
-		    "                (at %f %f)\n"
-		    "                (size 2.54 2)\n"
-		    "                (drill oval 2 1.5)\n"
-		    "                (property pad_prop_castellated)\n"
-		    "                (layers \"*.Cu\" \"*.Mask\")\n"
-		    "                (remove_unused_layers no)\n"
-		    "                (thermal_bridge_angle 45)\n"
-		    "                (uuid \"f85e55df-ccf1-4a29-ab8b-2b081b1da284\")\n"
-		    "        )\n",
-		    i+1+half_pin_count,
-		    module_width/2,
-		    -module_height/2 + 2.54/2.0 + 2.54*i
-		    );
-
-	    fprintf(out,
-		    "              (pad \"%d\" thru_hole circle\n"
-		    "                       (at %f %f 180)\n"
-		    "                       (size 1 1)\n"
-		    "                       (drill 0.75)\n"
-		    "                       (layers \"*.Cu\" \"*.Mask\" )\n"
-		    "                       (remove_unused_layers no)\n"
-		    "                       (thermal_bridge_angle 45)\n"		  
-		    "                       (uuid \"78a0f889-0c8d-4398-9bd5-55e879a094cf\")\n"
-		    "              )\n",
-		    i+1,
-		    module_width/2-SPARE_HOLE_DISPLACEMENT,
-		    -module_height/2 + 2.54/2.0 + 2.54*i
-		    );
-	  }
-	}
-    
-      fprintf(out,")\n");
-      fclose(out);
-    }
-  }
-    
-  /* ------------------------------------------------------------------------------
-
-     Module Bay footprint (internal to PCB)
-
-     ------------------------------------------------------------------------------ */
-
-  for(int edge_type=0;edge_type<2;edge_type++) {
-    for(int with_cutout=0;with_cutout<2;with_cutout++) {
-
-      snprintf(filename,8192,"%s/MegaCastle.pretty/%s%s%s.kicad_mod",
-	       path,
-	       bay_footprint_name,
-	       with_cutout?"":"-NOCUTOUT",
-	       edge_type?"-EDGE":""
-	       );
-      out = fopen(filename,"w");
-
-      fprintf(stderr,"INFO: Creating %s\n",filename);
-    
-      fprintf(out,
-	      "(footprint \"%s\" (version 20221018) (generator pcbnew)\n"
-	      "  (layer \"F.Cu\")\n"
-	      "  (attr smd)\n",
-	      bay_footprint_name
-	      );
-    
-      fprintf(out,
-	      " (fp_text reference \"REF**\" (at %f %f 90 unlocked) (layer \"F.SilkS\")\n"
-	      "      (effects (font (size 1 1) (thickness 0.1)))\n"
-	      "    (tstamp 08d1cbd6-6dbd-4696-9477-43e1380128be)\n"
-	      "  )\n",
-	      -module_width/2 - 2.54 * 0.8,
-	      module_height/2
-	      );
-    
-      fprintf(out,
-	      "  (fp_text value \"%s\" (at %f 0 90 unlocked) (layer \"F.Fab\")\n"
-	      "      (effects (font (size 1 1) (thickness 0.15)))\n"
-	      "    (tstamp 7848b12f-b698-40ff-9b18-5d3dc1ad63e0)\n"
-	      "  )\n",
-	      bay_footprint_name,
-	      module_width/2 + 2.54* 0.8
-	      );
-
-      if (!edge_type) {
+	// Labels for PRY zones
 	fprintf(out,
-		"  (fp_text user \"VCC Bridge\" (at -3.81 %f unlocked) (layer \"F.SilkS\")\n"
-		"      (effects (font (size 1 1) (thickness 0.1)) (justify left bottom))\n"
-		"    (tstamp c3f3f8b2-4d95-4798-a62c-fde882be7a8f)\n"
-		"  )\n",
-		-(module_height/2 + 4.6)
+		"        (fp_text user \"PRY\"\n"
+		"                (at 0 %.2f 0)\n"
+		"                (unlocked yes)\n"
+		"                (layer \"B.SilkS\")\n"
+		"                (uuid \"1c67120b-cd38-4dc1-b421-22e46cf03846\")\n"
+		"                (effects\n"
+		"                        (font\n"
+		"                                (size 0.8 0.8)\n"
+		"                                (thickness 0.1)\n"
+		"                        )\n"
+		"                        (justify bottom mirror)\n"
+		"                )\n"
+		"        )\n",
+		-module_height/2.0 + 0.8 + 0.5
 		);
-      }
-    
-      fprintf(out,
-	      "  (fp_text user \"GND Bridge\" (at -4.226381 %f unlocked) (layer \"F.SilkS\")\n"
-	      "      (effects (font (size 1 1) (thickness 0.1)) (justify left bottom))\n"
-	      "    (tstamp ececdf77-5944-4d0f-945c-855ee7843a28)\n"
-	      "  )\n",
-	      module_height/2 + 4.6 + 1
-	      );
-      fprintf(out,
-	      "  (fp_text user \"${REFERENCE}\" (at %f %f 90 unlocked) (layer \"F.Fab\")\n"
-	      "      (effects (font (size 1 1) (thickness 0.15)))\n"
-	      "    (tstamp 515e6e66-058b-44a5-b9cf-9ec3e273dd1c)\n"
-	      "  )\n",
-	      -module_width/2 - 2.54 * 0.8,
-	      0.0
-	      );
-    
-      // VCC and GND bridge silkscreen marks
-      if (!edge_type) {
-	draw_line(out,"F.SilkS",
-		  -module_width/2,-(module_height/2+2.54*1.75+0),
-		  -module_width/2,-(module_height/2+2.54*1.75+1.4),0.1);
-	draw_line(out,"F.SilkS",
-		  -module_width/2,-(module_height/2+2.54*1.75+1.4),
-		  module_width/2,-(module_height/2+2.54*1.75+1.4),0.1);
-	draw_line(out,"F.SilkS",
-		  module_width/2,-(module_height/2+2.54*1.75+0),
-		  module_width/2,-(module_height/2+2.54*1.75+1.4),0.1);
-      }
-    
-      draw_line(out,"F.SilkS",
-		-module_width/2,(module_height/2+2.54*1.75+0),
-		-module_width/2,(module_height/2+2.54*1.75+1.4),0.1);
-      draw_line(out,"F.SilkS",
-		-module_width/2,(module_height/2+2.54*1.75+1.4),
-		module_width/2,(module_height/2+2.54*1.75+1.4),0.1);
-      draw_line(out,"F.SilkS",
-		module_width/2,(module_height/2+2.54*1.75+0),
-		module_width/2,(module_height/2+2.54*1.75+1.4),0.1);
-    
-      // Module outline silkscreen
-      fprintf(out,
-	      "   (fp_rect (start %f %f) (end %f %f)\n"
-	      "    (stroke (width 0.1) (type default)) (fill none) (layer \"F.SilkS\") (tstamp 1b929847-1a5f-4d05-bc4e-9961861a32f5))\n",
-	      -module_width/2,-module_height/2,
-	      module_width/2,module_height/2
-	      );
-    
-      // Draw QR-code style registration boxes
-      if (!edge_type) {
-	draw_qr_corner(out,-module_width/2-2.54,-module_height/2,1);
-	draw_qr_corner(out,module_width/2+2.54*2.5,-module_height/2,1);
-      } else {
-	draw_qr_corner(out,-module_width/2-2.54,-module_height/2 + 3.81,1);
-	draw_qr_corner(out,module_width/2+2.54*2.5,-module_height/2 + 3.81,1);
-      }
-      draw_qr_corner(out,-module_width/2-2.54,module_height/2+3.81,0);
-      draw_qr_corner(out,module_width/2+2.54*2.5,module_height/2+3.81,1);
-    
-      // Cut-outs for pry zones and component area
-      if (with_cutout)
 	fprintf(out,
-		"     (fp_rect (start %f %f) (end %f %f)\n"
-		"    (stroke (width 0.05) (type default)) (fill none) (layer \"Edge.Cuts\") (tstamp 0442aa54-1eb9-4247-b784-158a997ff791))\n",
-		-co_width/2,-co_height/2,
-		co_width/2,co_height/2);
-      if (edge_type) {
-	fprintf(out,
-		"  (fp_rect (start -2 %f) (end 2 %f)\n"
-		"    (stroke (width 0.05) (type default)) (fill none) (layer \"Edge.Cuts\") (tstamp 7fe4220e-eec5-4f8b-b02e-8e7654d86bc8))\n",
-		-module_height/2 + 1.27,
-		-module_height/2
+		"        (fp_text user \"PRY\"\n"
+		"                (at 0 %.2f 0)\n"
+		"                (unlocked yes)\n"
+		"                (layer \"B.SilkS\")\n"
+		"                (uuid \"1c67120b-cd38-4dc1-b421-22e46cf03846\")\n"
+		"                (effects\n"
+		"                        (font\n"
+		"                                (size 0.8 0.8)\n"
+		"                                (thickness 0.1)\n"
+		"                        )\n"
+		"                        (justify bottom mirror)\n"
+		"                )\n"
+		"        )\n",
+		module_height/2.0 - 0.3
 		);
-      } else {
+    
+	// Rectangles for PRY zones
+	float pry_height = 6.268592 - 4.8;
 	fprintf(out,
-		"  (fp_rect (start -2 %f) (end 2 %f)\n"
-		"    (stroke (width 0.05) (type default)) (fill none) (layer \"Edge.Cuts\") (tstamp 7fe4220e-eec5-4f8b-b02e-8e7654d86bc8))\n",
-		-module_height/2 + 1.27,
-		-module_height/2 + 1.27 - 4
+		"	 (fp_rect\n"
+		"                (start -1.984241 %.3f)\n"
+		"                (end 2.019516 %.3f)\n"
+		"                (stroke\n"
+		"                        (width 0.1)\n"
+		"                        (type default)\n"
+		"                )\n"
+		"                (fill none)\n"
+		"                (layer \"B.SilkS\")\n"
+		"                (uuid \"966a509b-00f8-4763-8fcb-dbbd2ac08dcd\")\n"
+		"        )\n",
+		module_height/2 - 0.08 - pry_height,
+		module_height/2 - 0.08
 		);
-      }
-      fprintf(out,
-	      "  (fp_rect (start -2 %f) (end 2 %f)\n"
-	      "    (stroke (width 0.05) (type default)) (fill none) (layer \"Edge.Cuts\") (tstamp 47058791-feaf-409b-812c-7a0cb6797c8a))\n",
-	      module_height/2 - 1.27,
-	      module_height/2 - 1.27 + 4
+	fprintf(out,
+		"	 (fp_rect\n"
+		"                (start -1.984241 %.3f)\n"
+		"                (end 2.019516 %.3f)\n"
+		"                (stroke\n"
+		"                        (width 0.1)\n"
+		"                        (type default)\n"
+		"                )\n"
+		"                (fill none)\n"
+		"                (layer \"B.SilkS\")\n"
+		"                (uuid \"966a509b-00f8-4763-8fcb-dbbd2ac08dcd\")\n"
+		"        )\n",
+		-module_height/2 + 0.08 + pry_height,
+		-module_height/2 + 0.08
+		);
+    
+	// Component and track exclusion zones for pry zones
+	fprintf(out,
+		"	 (zone\n"
+		"                (net 0)\n"
+		"                (net_name \"\")\n"
+		"                (layer \"B.Cu\")\n"
+		"                (uuid \"2d931374-edf7-43e7-92d4-bb3e10af8b39\")\n"
+		"                (name \"Upper Pry Zone\")\n"
+		"                (hatch edge 0.5)\n"
+		"                (connect_pads\n"
+		"                        (clearance 0)\n"
+		"                )\n"
+		"                (min_thickness 0.25)\n"
+		"                (filled_areas_thickness no)\n"
+		"                (keepout\n"
+		"                        (tracks not_allowed)\n"
+		"                        (vias not_allowed)\n"
+		"                        (pads not_allowed)\n"
+		"                        (copperpour allowed)\n"
+		"                        (footprints not_allowed)\n"
+		"                )\n"
+		"                (fill\n"
+		"                        (thermal_gap 0.5)\n"
+		"                        (thermal_bridge_width 0.5)\n"
+		"                )\n"
+		"                (polygon\n"
+		"                        (pts\n"
+		"                                (xy -1.984241 %f) (xy -1.984241 %f) (xy 2.019516 %f) (xy 2.019516 %f)\n"
+		"                        )\n"
+		"                )\n"
+		"        )\n",
+		module_height/2 - 0.08 - pry_height,
+		module_height/2 - 0.08,
+		module_height/2 - 0.08,
+		module_height/2 - 0.08 - pry_height		
+		);
+    
+	fprintf(out,
+		"	 (zone\n"
+		"                (net 0)\n"
+		"                (net_name \"\")\n"
+		"                (layer \"B.Cu\")\n"
+		"                (uuid \"2d931374-edf7-43e7-92d4-bb3e10af8b39\")\n"
+		"                (name \"Upper Pry Zone\")\n"
+		"                (hatch edge 0.5)\n"
+		"                (connect_pads\n"
+		"                        (clearance 0)\n"
+		"                )\n"
+		"                (min_thickness 0.25)\n"
+		"                (filled_areas_thickness no)\n"
+		"                (keepout\n"
+		"                        (tracks not_allowed)\n"
+		"                        (vias not_allowed)\n"
+		"                        (pads not_allowed)\n"
+		"                        (copperpour allowed)\n"
+		"                        (footprints not_allowed)\n"
+		"                )\n"
+		"                (fill\n"
+		"                        (thermal_gap 0.5)\n"
+		"                        (thermal_bridge_width 0.5)\n"
+		"                )\n"
+		"                (polygon\n"
+		"                        (pts\n"
+		"                                (xy -1.984241 %f) (xy -1.984241 %f) (xy 2.019516 %f) (xy 2.019516 %f)\n"
+		"                        )\n"
+		"                )\n"
+		"        )\n",
+		-module_height/2 + 0.08 + pry_height,
+		-module_height/2 + 0.08,
+		-module_height/2 + 0.08,
+		-module_height/2 + 0.08 + pry_height		
+		);
+    
+	// Exclusion zone for footprints outside of cut-out on rear
+	footprint_exclusion_zone(out,-module_width/2,module_height/2,
+				 -co_width/2,-module_height/2);
+	footprint_exclusion_zone(out,module_width/2,module_height/2,
+				 co_width/2,-module_height/2);
+	footprint_exclusion_zone(out,-co_width/2,module_height/2,
+				 co_width/2,co_height/2);
+	footprint_exclusion_zone(out,-co_width/2,-module_height/2,
+				 co_width/2,-co_height/2);
+    
+    
+	// Draw rectangle for component area on rear for cut-out
+	fprintf(out,
+		"         (fp_rect\n"
+		"                (start %.2f %.2f)\n"
+		"                (end %.2f %.2f)\n"
+		"                (stroke\n"
+		"                        (width 0.05)\n"
+		"                        (type default)\n"
+		"                )\n"
+		"                (fill none)\n"
+		"                (layer \"B.SilkS\")\n"
+		"                (uuid \"a267cc7c-3519-453e-849e-e978b46e7c98\")\n"
+		"	   )\n",
+		-co_width/2,co_height/2,
+		co_width/2,-co_height/2
+		);
+    
+	for(int i=0;i<half_pin_count;i++)
+	  {
+	    if (pin_present(i+1,pin_mask)) {
+	      fprintf(out,
+		      "       (pad \"%d\" thru_hole rect\n"
+		      "                (at %f %f)\n"
+		      "                (size 2.54 2)\n"
+		      "                (drill oval 2 1.5)\n"
+		      "                (property pad_prop_castellated)\n"
+		      "                (layers \"*.Cu\" \"*.Mask\")\n"
+		      "                (remove_unused_layers no)\n"
+		      "                (thermal_bridge_angle 45)\n"
+		      "                (uuid \"f85e55df-ccf1-4a29-ab8b-2b081b1da284\")\n"
+		      "        )\n",
+		      i+1,
+		      -module_width/2,
+		      -module_height/2 + 2.54/2.0 + 2.54*i
+		      );
+
+	      if (sparepad) 
+		fprintf(out,
+			"              (pad \"%d\" thru_hole circle\n"
+			"                       (at %f %f 180)\n"
+			"                       (size 1.25 1.25)\n"
+			"                       (drill 0.75)\n"
+			"                       (layers \"*.Cu\" \"*.Mask\" )\n"
+			"                       (remove_unused_layers no)\n"
+			"                       (thermal_bridge_angle 45)\n"		  
+			"                       (uuid \"78a0f889-0c8d-4398-9bd5-55e879a094cf\")\n"
+			"              )\n",
+			i+1,
+			-module_width/2+SPARE_HOLE_DISPLACEMENT,
+			-module_height/2 + 2.54/2.0 + 2.54*i
+			);
+	    }
 	    
-	      );
-    
+	  }
+	
+	for(int i=0;i<half_pin_count;i++)
+	  {
+	    if (pin_present(i+half_pin_count+1,pin_mask)) {
+	      fprintf(out,
+		      "       (pad \"%d\" thru_hole rect\n"
+		      "                (at %f %f)\n"
+		      "                (size 2.54 2)\n"
+		      "                (drill oval 2 1.5)\n"
+		      "                (property pad_prop_castellated)\n"
+		      "                (layers \"*.Cu\" \"*.Mask\")\n"
+		      "                (remove_unused_layers no)\n"
+		      "                (thermal_bridge_angle 45)\n"
+		      "                (uuid \"f85e55df-ccf1-4a29-ab8b-2b081b1da284\")\n"
+		      "        )\n",
+		      i+1+half_pin_count,
+		      module_width/2,
+		      -module_height/2 + 2.54/2.0 + 2.54*i
+		      );
 
-      if (!edge_type) {
-	fprintf(out,
-		"  (pad \"A1\" smd roundrect (at %f %f) (size 2.54 2.54) (layers \"F.Cu\" \"F.Paste\" \"F.Mask\") (roundrect_rratio 0.25)\n"
-		"    (thermal_bridge_angle 45) (tstamp ae5fa498-358c-4c43-a1ea-5a55b816d453))\n",
-		-module_width/2,-(module_height/2+3)
-		);
-	fprintf(out,
-		"  (pad \"A2\" smd roundrect (at %f %f) (size 2.54 2.54) (layers \"F.Cu\" \"F.Paste\" \"F.Mask\") (roundrect_rratio 0.25)\n"
-		"    (thermal_bridge_angle 45) (tstamp 77e20813-8ea5-4ba4-b0e8-526d94c0eb31))\n",
-		module_width/2,-(module_height/2+3)
-		);
+	      if (sparepad) 
+		fprintf(out,
+			"              (pad \"%d\" thru_hole circle\n"
+			"                       (at %f %f 180)\n"
+			"                       (size 1.25 1.25)\n"
+			"                       (drill 0.75)\n"
+			"                       (layers \"*.Cu\" \"*.Mask\" )\n"
+			"                       (remove_unused_layers no)\n"
+			"                       (thermal_bridge_angle 45)\n"		  
+			"                       (uuid \"78a0f889-0c8d-4398-9bd5-55e879a094cf\")\n"
+			"              )\n",
+			i+1,
+			module_width/2-SPARE_HOLE_DISPLACEMENT,
+			-module_height/2 + 2.54/2.0 + 2.54*i
+			);
+	    }
+	  }
+	
+	fprintf(out,")\n");
+	fclose(out);
       }
-      fprintf(out,
-	      "  (pad \"B1\" smd roundrect (at %f %f) (size 2.54 2.54) (layers \"F.Cu\" \"F.Paste\" \"F.Mask\") (roundrect_rratio 0.25)\n"
-	      "    (thermal_bridge_angle 45) (tstamp 91b8277f-56f9-4a55-be1f-442d27436309))\n",
-	      -module_width/2,(module_height/2+3)
-	      );
-      fprintf(out,
-	      "  (pad \"B2\" smd roundrect (at %f %f) (size 2.54 2.54) (layers \"F.Cu\" \"F.Paste\" \"F.Mask\") (roundrect_rratio 0.25)\n"
-	      "    (thermal_bridge_angle 45) (tstamp 83e83792-c3a6-4e3b-a658-764e96850587))\n",
-	      module_width/2,(module_height/2+3)
-	      );
+    }
+    
+    /* ------------------------------------------------------------------------------
 
-      // Draw front courtyard outline
-      draw_line(out,"F.CrtYd",
-		-(module_width/2+2.54*1.0),-(module_height/2+2.54*1.75*(1-edge_type)+0),
-		-(module_width/2+2.54*1.0),(module_height/2+2.54*1.75+0),0.05
+       Module Bay footprint (internal to PCB)
+
+       ------------------------------------------------------------------------------ */
+
+    for(int edge_type=0;edge_type<2;edge_type++) {
+      for(int with_cutout=0;with_cutout<2;with_cutout++) {
+
+	snprintf(filename,8192,"%s/MegaCastle.pretty/%s%s%s.kicad_mod",
+		 path,
+		 bay_footprint_name,
+		 with_cutout?"":"-NOCUTOUT",
+		 edge_type?"-EDGE":""
+		 );
+	out = fopen(filename,"w");
+
+	fprintf(stderr,"INFO: Creating %s\n",filename);
+    
+	fprintf(out,
+		"(footprint \"%s\" (version 20221018) (generator pcbnew)\n"
+		"  (layer \"F.Cu\")\n"
+		"  (attr smd)\n",
+		bay_footprint_name
+		);
+    
+	fprintf(out,
+		" (fp_text reference \"REF**\" (at %f %f 90 unlocked) (layer \"F.SilkS\")\n"
+		"      (effects (font (size 1 1) (thickness 0.1)))\n"
+		"    (tstamp 08d1cbd6-6dbd-4696-9477-43e1380128be)\n"
+		"  )\n",
+		-module_width/2 - 2.54 * 0.8,
+		module_height/2
+		);
+    
+	fprintf(out,
+		"  (fp_text value \"%s\" (at %f 0 90 unlocked) (layer \"F.Fab\")\n"
+		"      (effects (font (size 1 1) (thickness 0.15)))\n"
+		"    (tstamp 7848b12f-b698-40ff-9b18-5d3dc1ad63e0)\n"
+		"  )\n",
+		bay_footprint_name,
+		module_width/2 + 2.54* 0.8
 		);
 
-      draw_line(out,"F.CrtYd",
-		-(module_width/2+2.54*1.0),(module_height/2+2.54*1.75+0),
-		(module_width/2+2.54*1.0),(module_height/2+2.54*1.75+0),0.05
-		);    
+	if (!edge_type) {
+	  fprintf(out,
+		  "  (fp_text user \"VCC Bridge\" (at -3.81 %f unlocked) (layer \"F.SilkS\")\n"
+		  "      (effects (font (size 1 1) (thickness 0.1)) (justify left bottom))\n"
+		  "    (tstamp c3f3f8b2-4d95-4798-a62c-fde882be7a8f)\n"
+		  "  )\n",
+		  -(module_height/2 + 4.6)
+		  );
+	}
     
-      draw_line(out,"F.CrtYd",
-		(module_width/2+2.54*1.0),-(module_height/2+2.54*1.75*(1-edge_type)+0),
-		(module_width/2+2.54*1.0),(module_height/2+2.54*1.75+0),0.05
+	fprintf(out,
+		"  (fp_text user \"GND Bridge\" (at -4.226381 %f unlocked) (layer \"F.SilkS\")\n"
+		"      (effects (font (size 1 1) (thickness 0.1)) (justify left bottom))\n"
+		"    (tstamp ececdf77-5944-4d0f-945c-855ee7843a28)\n"
+		"  )\n",
+		module_height/2 + 4.6 + 1
+		);
+	fprintf(out,
+		"  (fp_text user \"${REFERENCE}\" (at %f %f 90 unlocked) (layer \"F.Fab\")\n"
+		"      (effects (font (size 1 1) (thickness 0.15)))\n"
+		"    (tstamp 515e6e66-058b-44a5-b9cf-9ec3e273dd1c)\n"
+		"  )\n",
+		-module_width/2 - 2.54 * 0.8,
+		0.0
+		);
+    
+	// VCC and GND bridge silkscreen marks
+	if (!edge_type) {
+	  draw_line(out,"F.SilkS",
+		    -module_width/2,-(module_height/2+2.54*1.75+0),
+		    -module_width/2,-(module_height/2+2.54*1.75+1.4),0.1);
+	  draw_line(out,"F.SilkS",
+		    -module_width/2,-(module_height/2+2.54*1.75+1.4),
+		    module_width/2,-(module_height/2+2.54*1.75+1.4),0.1);
+	  draw_line(out,"F.SilkS",
+		    module_width/2,-(module_height/2+2.54*1.75+0),
+		    module_width/2,-(module_height/2+2.54*1.75+1.4),0.1);
+	}
+    
+	draw_line(out,"F.SilkS",
+		  -module_width/2,(module_height/2+2.54*1.75+0),
+		  -module_width/2,(module_height/2+2.54*1.75+1.4),0.1);
+	draw_line(out,"F.SilkS",
+		  -module_width/2,(module_height/2+2.54*1.75+1.4),
+		  module_width/2,(module_height/2+2.54*1.75+1.4),0.1);
+	draw_line(out,"F.SilkS",
+		  module_width/2,(module_height/2+2.54*1.75+0),
+		  module_width/2,(module_height/2+2.54*1.75+1.4),0.1);
+    
+	// Module outline silkscreen
+	fprintf(out,
+		"   (fp_rect (start %f %f) (end %f %f)\n"
+		"    (stroke (width 0.1) (type default)) (fill none) (layer \"F.SilkS\") (tstamp 1b929847-1a5f-4d05-bc4e-9961861a32f5))\n",
+		-module_width/2,-module_height/2,
+		module_width/2,module_height/2
+		);
+    
+	// Draw QR-code style registration boxes
+	if (!edge_type) {
+	  draw_qr_corner(out,-module_width/2-2.54,-module_height/2,1);
+	  draw_qr_corner(out,module_width/2+2.54*2.5,-module_height/2,1);
+	} else {
+	  draw_qr_corner(out,-module_width/2-2.54,-module_height/2 + 3.81,1);
+	  draw_qr_corner(out,module_width/2+2.54*2.5,-module_height/2 + 3.81,1);
+	}
+	draw_qr_corner(out,-module_width/2-2.54,module_height/2+3.81,0);
+	draw_qr_corner(out,module_width/2+2.54*2.5,module_height/2+3.81,1);
+    
+	// Cut-outs for pry zones and component area
+	if (with_cutout)
+	  fprintf(out,
+		  "     (fp_rect (start %f %f) (end %f %f)\n"
+		  "    (stroke (width 0.05) (type default)) (fill none) (layer \"Edge.Cuts\") (tstamp 0442aa54-1eb9-4247-b784-158a997ff791))\n",
+		  -co_width/2,-co_height/2,
+		  co_width/2,co_height/2);
+	if (edge_type) {
+	  fprintf(out,
+		  "  (fp_rect (start -2 %f) (end 2 %f)\n"
+		  "    (stroke (width 0.05) (type default)) (fill none) (layer \"Edge.Cuts\") (tstamp 7fe4220e-eec5-4f8b-b02e-8e7654d86bc8))\n",
+		  -module_height/2 + 1.27,
+		  -module_height/2
+		  );
+	} else {
+	  fprintf(out,
+		  "  (fp_rect (start -2 %f) (end 2 %f)\n"
+		  "    (stroke (width 0.05) (type default)) (fill none) (layer \"Edge.Cuts\") (tstamp 7fe4220e-eec5-4f8b-b02e-8e7654d86bc8))\n",
+		  -module_height/2 + 1.27,
+		  -module_height/2 + 1.27 - 4
+		  );
+	}
+	fprintf(out,
+		"  (fp_rect (start -2 %f) (end 2 %f)\n"
+		"    (stroke (width 0.05) (type default)) (fill none) (layer \"Edge.Cuts\") (tstamp 47058791-feaf-409b-812c-7a0cb6797c8a))\n",
+		module_height/2 - 1.27,
+		module_height/2 - 1.27 + 4
+	    
+		);
+    
+
+	if (!edge_type) {
+	  fprintf(out,
+		  "  (pad \"A1\" smd roundrect (at %f %f) (size 2.54 2.54) (layers \"F.Cu\" \"F.Paste\" \"F.Mask\") (roundrect_rratio 0.25)\n"
+		  "    (thermal_bridge_angle 45) (tstamp ae5fa498-358c-4c43-a1ea-5a55b816d453))\n",
+		  -module_width/2,-(module_height/2+3)
+		  );
+	  fprintf(out,
+		  "  (pad \"A2\" smd roundrect (at %f %f) (size 2.54 2.54) (layers \"F.Cu\" \"F.Paste\" \"F.Mask\") (roundrect_rratio 0.25)\n"
+		  "    (thermal_bridge_angle 45) (tstamp 77e20813-8ea5-4ba4-b0e8-526d94c0eb31))\n",
+		  module_width/2,-(module_height/2+3)
+		  );
+	}
+	fprintf(out,
+		"  (pad \"B1\" smd roundrect (at %f %f) (size 2.54 2.54) (layers \"F.Cu\" \"F.Paste\" \"F.Mask\") (roundrect_rratio 0.25)\n"
+		"    (thermal_bridge_angle 45) (tstamp 91b8277f-56f9-4a55-be1f-442d27436309))\n",
+		-module_width/2,(module_height/2+3)
+		);
+	fprintf(out,
+		"  (pad \"B2\" smd roundrect (at %f %f) (size 2.54 2.54) (layers \"F.Cu\" \"F.Paste\" \"F.Mask\") (roundrect_rratio 0.25)\n"
+		"    (thermal_bridge_angle 45) (tstamp 83e83792-c3a6-4e3b-a658-764e96850587))\n",
+		module_width/2,(module_height/2+3)
 		);
 
-      draw_line(out,"F.CrtYd",
-		(module_width/2+2.54*1.0),-(module_height/2+2.54*1.75*(1-edge_type)+0),
-		-(module_width/2+2.54*1.0),-(module_height/2+2.54*1.75*(1-edge_type)+0), 0.05
-		);    
+	// Draw front courtyard outline
+	draw_line(out,"F.CrtYd",
+		  -(module_width/2+2.54*1.0),-(module_height/2+2.54*1.75*(1-edge_type)+0),
+		  -(module_width/2+2.54*1.0),(module_height/2+2.54*1.75+0),0.05
+		  );
+
+	draw_line(out,"F.CrtYd",
+		  -(module_width/2+2.54*1.0),(module_height/2+2.54*1.75+0),
+		  (module_width/2+2.54*1.0),(module_height/2+2.54*1.75+0),0.05
+		  );    
+    
+	draw_line(out,"F.CrtYd",
+		  (module_width/2+2.54*1.0),-(module_height/2+2.54*1.75*(1-edge_type)+0),
+		  (module_width/2+2.54*1.0),(module_height/2+2.54*1.75+0),0.05
+		  );
+
+	draw_line(out,"F.CrtYd",
+		  (module_width/2+2.54*1.0),-(module_height/2+2.54*1.75*(1-edge_type)+0),
+		  -(module_width/2+2.54*1.0),-(module_height/2+2.54*1.75*(1-edge_type)+0), 0.05
+		  );    
     
     
-      for(int i=0;i<half_pin_count;i++)
-	{
-	  if (pin_present(i+1,pin_mask))
-	    fprintf(out,
-		    "       (pad \"%d\" smd roundrect\n"
-		    "                (at %f %f)\n"
-		    "                (size 2.54 2)\n"
-		    "                (layers \"F.Cu\" \"F.Paste\" \"F.Mask\")\n"
-		    "                (roundrect_rratio 0.25)\n"
-		    "                (thermal_bridge_angle 45) (tstamp 93e18f82-86ef-4410-989e-eb27a6ef3dd8)\n"
-		    "        )\n",
-		    i+1,
-		    -module_width/2,
-		    -module_height/2 + 2.54/2.0 + 2.54*i
-		    );
-	}
+	for(int i=0;i<half_pin_count;i++)
+	  {
+	    if (pin_present(i+1,pin_mask))
+	      fprintf(out,
+		      "       (pad \"%d\" smd roundrect\n"
+		      "                (at %f %f)\n"
+		      "                (size 2.54 2)\n"
+		      "                (layers \"F.Cu\" \"F.Paste\" \"F.Mask\")\n"
+		      "                (roundrect_rratio 0.25)\n"
+		      "                (thermal_bridge_angle 45) (tstamp 93e18f82-86ef-4410-989e-eb27a6ef3dd8)\n"
+		      "        )\n",
+		      i+1,
+		      -module_width/2,
+		      -module_height/2 + 2.54/2.0 + 2.54*i
+		      );
+	  }
     
-      for(int i=0;i<half_pin_count;i++)
-	{
-	  if (pin_present(i+half_pin_count+1,pin_mask))
-	    fprintf(out,
-		    "       (pad \"%d\" smd roundrect\n"
-		    "                (at %f %f)\n"
-		    "                (size 2.54 2)\n"
-		    "                (layers \"F.Cu\" \"F.Paste\" \"F.Mask\")\n"
-		    "                (roundrect_rratio 0.25)\n"
-		    "                (thermal_bridge_angle 45) (tstamp 93e18f82-86ef-4410-989e-eb27a6ef3dd8)\n"
-		    "        )\n",
-		    i+1+half_pin_count,
-		    module_width/2,
-		    -module_height/2 + 2.54/2.0 + 2.54*i
-		    );
-	}
+	for(int i=0;i<half_pin_count;i++)
+	  {
+	    if (pin_present(i+half_pin_count+1,pin_mask))
+	      fprintf(out,
+		      "       (pad \"%d\" smd roundrect\n"
+		      "                (at %f %f)\n"
+		      "                (size 2.54 2)\n"
+		      "                (layers \"F.Cu\" \"F.Paste\" \"F.Mask\")\n"
+		      "                (roundrect_rratio 0.25)\n"
+		      "                (thermal_bridge_angle 45) (tstamp 93e18f82-86ef-4410-989e-eb27a6ef3dd8)\n"
+		      "        )\n",
+		      i+1+half_pin_count,
+		      module_width/2,
+		      -module_height/2 + 2.54/2.0 + 2.54*i
+		      );
+	  }
     
-      fprintf(out,")\n");  
-      fclose(out);
+	fprintf(out,")\n");  
+	fclose(out);
+      }
     }
   }
-
+    
   /* ---------------------------------------------------------------------------------------------------------
 
      Now create symbol entities.
@@ -1489,3 +1494,4 @@ int main(int argc, char **argv)
   
   return 0;
 }
+
