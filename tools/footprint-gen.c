@@ -724,6 +724,8 @@ int main(int argc, char **argv)
   FILE *out=NULL;
   char filename[8192];
 
+  const float SPARE_HOLE_DISPLACEMENT = 1.7;
+  
   for(int castellated=0;castellated<2;castellated++) {
     for(int panelised=0;panelised<2;panelised++) {
       
@@ -1113,7 +1115,7 @@ int main(int argc, char **argv)
 		    "                       (uuid \"78a0f889-0c8d-4398-9bd5-55e879a094cf\")\n"
 		    "              )\n",
 		    i+1,
-		    -module_width/2+0.5,
+		    -module_width/2+SPARE_HOLE_DISPLACEMENT,
 		    -module_height/2 + 2.54/2.0 + 2.54*i
 		    );
 	  }
@@ -1150,7 +1152,7 @@ int main(int argc, char **argv)
 		    "                       (uuid \"78a0f889-0c8d-4398-9bd5-55e879a094cf\")\n"
 		    "              )\n",
 		    i+1,
-		    module_width/2-0.5,
+		    module_width/2-SPARE_HOLE_DISPLACEMENT,
 		    -module_height/2 + 2.54/2.0 + 2.54*i
 		    );
 	  }
