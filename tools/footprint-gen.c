@@ -1080,7 +1080,7 @@ int main(int argc, char **argv)
     
       for(int i=0;i<half_pin_count;i++)
 	{
-	  if (pin_present(i+1,pin_mask))
+	  if (pin_present(i+1,pin_mask)) {
 	    fprintf(out,
 		    "       (pad \"%d\" thru_hole rect\n"
 		    "                (at %f %f)\n"
@@ -1096,11 +1096,28 @@ int main(int argc, char **argv)
 		    -module_width/2,
 		    -module_height/2 + 2.54/2.0 + 2.54*i
 		    );
+
+	    fprintf(out,
+		    "              (pad \"%d\" thru_hole circle\n"
+		    "                       (at %f %f 180)\n"
+		    "                       (size 1 1)\n"
+		    "                       (drill 0.75)\n"
+		    "                       (layers \"*.Cu\" \"*.Mask\" )\n"
+		    "                       (remove_unused_layers no)\n"
+		    "                       (thermal_bridge_angle 45)\n"		  
+		    "                       (uuid \"78a0f889-0c8d-4398-9bd5-55e879a094cf\")\n"
+		    "              )\n",
+		    i+1,
+		    -module_width/2+0.5,
+		    -module_height/2 + 2.54/2.0 + 2.54*i
+		    );
+	  }
+	  
 	}
     
       for(int i=0;i<half_pin_count;i++)
 	{
-	  if (pin_present(i+half_pin_count+1,pin_mask))
+	  if (pin_present(i+half_pin_count+1,pin_mask)) {
 	    fprintf(out,
 		    "       (pad \"%d\" thru_hole rect\n"
 		    "                (at %f %f)\n"
@@ -1116,6 +1133,22 @@ int main(int argc, char **argv)
 		    module_width/2,
 		    -module_height/2 + 2.54/2.0 + 2.54*i
 		    );
+
+	    fprintf(out,
+		    "              (pad \"%d\" thru_hole circle\n"
+		    "                       (at %f %f 180)\n"
+		    "                       (size 1 1)\n"
+		    "                       (drill 0.75)\n"
+		    "                       (layers \"*.Cu\" \"*.Mask\" )\n"
+		    "                       (remove_unused_layers no)\n"
+		    "                       (thermal_bridge_angle 45)\n"		  
+		    "                       (uuid \"78a0f889-0c8d-4398-9bd5-55e879a094cf\")\n"
+		    "              )\n",
+		    i+1,
+		    module_width/2-0.5,
+		    -module_height/2 + 2.54/2.0 + 2.54*i
+		    );
+	  }
 	}
     
       fprintf(out,")\n");
