@@ -1114,7 +1114,7 @@ int main(int argc, char **argv)
 			"                (drill 0.75)\n"
 			"                (layers \"*.Cu\" \"*.Mask\" )\n"
 			"                (remove_unused_layers no)\n"
-			"                (roundrec_rratio 0.2)\n"
+			"                (roundrect_rratio 0.2)\n"
 			"                (thermal_bridge_angle 45)\n"		  
 			"                (uuid \"78a0f889-0c8d-4398-9bd5-55e879a094cf\")\n"
 			"       )\n",
@@ -1154,7 +1154,7 @@ int main(int argc, char **argv)
 			"                (drill 0.75)\n"
 			"                (layers \"*.Cu\" \"*.Mask\" )\n"
 			"                (remove_unused_layers no)\n"
-			"                (roundrec_rratio 0.2)\n"
+			"                (roundrect_rratio 0.2)\n"
 			"                (thermal_bridge_angle 45)\n"		  
 			"                (uuid \"78a0f889-0c8d-4398-9bd5-55e879a094cf\")\n"
 			"       )\n",
