@@ -765,8 +765,11 @@ int main(int argc, char **argv)
   // variant now gets parsed as a string
   // int variant=atoi(argv[5]);
 
-  double module_height = co_height + 2.4 + 2.4;
-  double module_width = co_width + 1.8 + 1.8;
+  // Why on earth am I adding 2.4 x 2 to the module height!??
+  // Likewise, the width. We should just trust the user to set the outside dimensions
+  // (including the half-cut castellated pads).
+  double module_height = co_height; // + 2.4 + 2.4;
+  double module_width = co_width; // + 1.8 + 1.8;
 
   // Make module size integer 10ths of an inch
   double frac =  module_height - ((int)(module_height / 2.54))*2.54;
