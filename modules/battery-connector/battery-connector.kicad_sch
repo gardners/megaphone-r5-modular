@@ -1,7 +1,7 @@
 (kicad_sch
-	(version 20231120)
+	(version 20250114)
 	(generator "eeschema")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(uuid "de625f4d-017d-4e61-aaaf-647862dae6d9")
 	(paper "A4")
 	(lib_symbols
@@ -171,17 +171,6 @@
 						(type none)
 					)
 				)
-				(circle
-					(center 0 -1.27)
-					(radius 0.508)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
 				(polyline
 					(pts
 						(xy -2.54 -1.778) (xy -2.54 -2.54)
@@ -200,6 +189,17 @@
 					)
 					(stroke
 						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0 -1.27)
+					(radius 0.508)
+					(stroke
+						(width 0.254)
 						(type default)
 					)
 					(fill
@@ -267,8 +267,9 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
-		(symbol "MegaCastle:MegaCastle2x5-Module-I7.0x7.9-M8CC"
+		(symbol "MegaCastle:MegaCastle2x5-Module-I7.0x7.9-M8CC-EDGE"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -315,7 +316,7 @@
 					(hide yes)
 				)
 			)
-			(symbol "MegaCastle2x5-Module-I7.0x7.9-M8CC_0_1"
+			(symbol "MegaCastle2x5-Module-I7.0x7.9-M8CC-EDGE_0_1"
 				(rectangle
 					(start -6.35 7.62)
 					(end 7.62 -7.62)
@@ -339,7 +340,15 @@
 					)
 				)
 			)
-			(symbol "MegaCastle2x5-Module-I7.0x7.9-M8CC_1_1"
+			(symbol "MegaCastle2x5-Module-I7.0x7.9-M8CC-EDGE_1_1"
+				(text " BOARD EDGE"
+					(at 0 8.89 0)
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
 				(text "REAR ZONE"
 					(at 0.5 0 900)
 					(effects
@@ -351,24 +360,6 @@
 				(pin bidirectional line
 					(at -6.35 5.08 0)
 					(length 2.54)
-					(name "VCC"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at 7.62 -5.08 180)
-					(length 2.54)
 					(name ""
 						(effects
 							(font
@@ -376,7 +367,7 @@
 							)
 						)
 					)
-					(number "10"
+					(number "1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -438,7 +429,26 @@
 						)
 					)
 				)
+				(pin bidirectional line
+					(at 7.62 -5.08 180)
+					(length 2.54)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
 			)
+			(embedded_fonts no)
 		)
 	)
 	(no_connect
@@ -542,7 +552,7 @@
 		)
 	)
 	(symbol
-		(lib_id "MegaCastle:MegaCastle2x5-Module-I7.0x7.9-M8CC")
+		(lib_id "MegaCastle:MegaCastle2x5-Module-I7.0x7.9-M8CC-EDGE")
 		(at 105.41 39.37 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -552,7 +562,7 @@
 		(fields_autoplaced yes)
 		(uuid "7ef47e3b-b0b4-4ac0-8130-7f89292cbdb0")
 		(property "Reference" "M1"
-			(at 106.045 27.94 0)
+			(at 105.9138 25.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -560,14 +570,14 @@
 			)
 		)
 		(property "Value" "~"
-			(at 106.045 30.48 0)
+			(at 105.9138 27.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" "MegaCastle:MegaCastle2x5-Module-I7.0x7.9-M8CC-PANEL-NIBBLE"
+		(property "Footprint" "MegaCastle:MegaCastle2x5-Module-I15.0x7.9-M8CC-SPAREPAD"
 			(at 105.41 52.07 0)
 			(effects
 				(font
@@ -646,7 +656,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "footprints:691210910002"
+		(property "Footprint" "MegaCastle:691210910002"
 			(at 125.73 55.88 0)
 			(effects
 				(font
@@ -784,4 +794,5 @@
 			(page "1")
 		)
 	)
+	(embedded_fonts no)
 )

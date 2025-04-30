@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "MegaCastle")(type "KiCad")(uri "${KIPRJMOD}/footprints/MegaCastle.kicad_sym")(options "")(descr ""))
+)

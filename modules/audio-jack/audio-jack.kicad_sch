@@ -1,13 +1,15 @@
 (kicad_sch
-	(version 20231120)
+	(version 20250114)
 	(generator "eeschema")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(uuid "11c40d59-ce80-46cc-9a27-56abc67b9c9a")
 	(paper "A4")
 	(lib_symbols
 		(symbol "Jumper:Jumper_2_Bridged"
 			(pin_names
-				(offset 0) hide)
+				(offset 0)
+				(hide yes)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -98,9 +100,9 @@
 			)
 			(symbol "Jumper_2_Bridged_0_1"
 				(arc
-					(start 1.524 0.254)
+					(start -1.524 0.254)
 					(mid 0 0.762)
-					(end -1.524 0.254)
+					(end 1.524 0.254)
 					(stroke
 						(width 0)
 						(type default)
@@ -148,13 +150,14 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
-		(symbol "MegaCastle:MegaCastle2x7-Module-I12.7x13.0-M8314-NOCUTOUT-EDGE"
+		(symbol "MegaCastle:MegaCastle2x5-Module-I15.0x7.9-M8CC"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
 			(property "Reference" "M"
-				(at 0 -12.7 0)
+				(at 0 -10.16 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -169,8 +172,8 @@
 					)
 				)
 			)
-			(property "Footprint" "MegaCastle:MegaCastle2x7-Module-I12.7x13.0-M8314"
-				(at 0 -15.24 0)
+			(property "Footprint" "MegaCastle:MegaCastle2x5-Module-I15.0x7.9-M8CC"
+				(at 0 -12.7 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -187,7 +190,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Generated using footprint-gen .. 12.7 11.5 5 2"
+			(property "Description" "Generated using footprint-gen ../ 15 15 5 M8CC"
 				(at 0 0 0)
 				(effects
 					(font
@@ -196,10 +199,21 @@
 					(hide yes)
 				)
 			)
-			(symbol "MegaCastle2x7-Module-I12.7x13.0-M8314-NOCUTOUT-EDGE_0_1"
+			(symbol "MegaCastle2x5-Module-I15.0x7.9-M8CC_0_1"
 				(rectangle
-					(start -6.35 10.16)
-					(end 7.62 -10.16)
+					(start -6.35 7.62)
+					(end 7.62 -7.62)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -3.35 2.54)
+					(end 4.62 -2.54)
 					(stroke
 						(width 0)
 						(type default)
@@ -209,17 +223,53 @@
 					)
 				)
 			)
-			(symbol "MegaCastle2x7-Module-I12.7x13.0-M8314-NOCUTOUT-EDGE_1_1"
-				(text " BOARD EDGE"
-					(at 0 11.43 0)
+			(symbol "MegaCastle2x5-Module-I15.0x7.9-M8CC_1_1"
+				(text "REAR ZONE"
+					(at 0.5 0 900)
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1 1)
 						)
 					)
 				)
 				(pin bidirectional line
-					(at -6.35 7.62 0)
+					(at -6.35 5.08 0)
+					(length 2.54)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -6.35 -5.08 0)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 7.62 5.08 180)
 					(length 2.54)
 					(name ""
 						(effects
@@ -228,7 +278,7 @@
 							)
 						)
 					)
-					(number "1"
+					(number "6"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -246,7 +296,7 @@
 							)
 						)
 					)
-					(number "12"
+					(number "9"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -255,7 +305,7 @@
 					)
 				)
 				(pin bidirectional line
-					(at 7.62 -7.62 180)
+					(at 7.62 -5.08 180)
 					(length 2.54)
 					(name ""
 						(effects
@@ -264,43 +314,7 @@
 							)
 						)
 					)
-					(number "14"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -6.35 -7.62 0)
-					(length 2.54)
-					(name "GND"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "7"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at 7.62 7.62 180)
-					(length 2.54)
-					(name ""
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "8"
+					(number "10"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -309,10 +323,13 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
 		(symbol "SJ-43514-SMT-TR:SJ-43514-SMT-TR"
 			(pin_names
-				(offset 1.016) hide)
+				(offset 1.016)
+				(hide yes)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -435,7 +452,7 @@
 				)
 				(polyline
 					(pts
-						(xy -6.096 -7.493) (xy -4.064 -7.493)
+						(xy -6.096 -0.381) (xy -6.096 -7.493)
 					)
 					(stroke
 						(width 0.254)
@@ -447,7 +464,7 @@
 				)
 				(polyline
 					(pts
-						(xy -6.096 -0.381) (xy -6.096 -7.493)
+						(xy -6.096 -7.493) (xy -4.064 -7.493)
 					)
 					(stroke
 						(width 0.254)
@@ -483,7 +500,7 @@
 				)
 				(polyline
 					(pts
-						(xy -4.064 -7.493) (xy -4.064 -0.381)
+						(xy -4.064 -0.381) (xy -6.096 -0.381)
 					)
 					(stroke
 						(width 0.254)
@@ -495,7 +512,7 @@
 				)
 				(polyline
 					(pts
-						(xy -4.064 -0.381) (xy -6.096 -0.381)
+						(xy -4.064 -7.493) (xy -4.064 -0.381)
 					)
 					(stroke
 						(width 0.254)
@@ -632,7 +649,7 @@
 					)
 				)
 				(pin passive line
-					(at 12.7 -7.62 180)
+					(at 12.7 2.54 180)
 					(length 5.08)
 					(name "~"
 						(effects
@@ -641,7 +658,7 @@
 							)
 						)
 					)
-					(number "2"
+					(number "4"
 						(effects
 							(font
 								(size 1.016 1.016)
@@ -668,7 +685,7 @@
 					)
 				)
 				(pin passive line
-					(at 12.7 2.54 180)
+					(at 12.7 -7.62 180)
 					(length 5.08)
 					(name "~"
 						(effects
@@ -677,7 +694,7 @@
 							)
 						)
 					)
-					(number "4"
+					(number "2"
 						(effects
 							(font
 								(size 1.016 1.016)
@@ -686,6 +703,7 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
 		(symbol "power:GND"
 			(power)
@@ -765,7 +783,8 @@
 			(symbol "GND_1_1"
 				(pin power_in line
 					(at 0 0 270)
-					(length 0) hide
+					(length 0)
+					(hide yes)
 					(name "GND"
 						(effects
 							(font
@@ -782,15 +801,16 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
 	)
 	(no_connect
-		(at 114.3 45.72)
+		(at 114.3 48.26)
 		(uuid "b0aa6e17-5f1d-4f10-852b-93b6e78accb0")
 	)
 	(wire
 		(pts
-			(xy 109.22 60.96) (xy 114.3 60.96)
+			(xy 109.22 58.42) (xy 114.3 58.42)
 		)
 		(stroke
 			(width 0)
@@ -820,7 +840,7 @@
 	)
 	(global_label "LEFT"
 		(shape input)
-		(at 128.27 45.72 0)
+		(at 128.27 48.26 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -830,7 +850,7 @@
 		)
 		(uuid "323f7d08-e0fa-4fd9-9a83-55fa2935a8e5")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 135.4885 45.72 0)
+			(at 135.4885 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -886,7 +906,7 @@
 	)
 	(global_label "RIGHT"
 		(shape input)
-		(at 128.27 60.96 0)
+		(at 128.27 58.42 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -896,7 +916,7 @@
 		)
 		(uuid "8ffadc52-f368-4b45-98ba-2b5b1091e0ac")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 136.6981 60.96 0)
+			(at 136.6981 58.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1250,7 +1270,7 @@
 				)
 			)
 		)
-		(property "Footprint" "CUI_SJ-43514-SMT-TR"
+		(property "Footprint" "audio-jack:CUI_SJ-43514-SMT-TR"
 			(at 67.31 57.15 0)
 			(effects
 				(font
@@ -1418,7 +1438,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 109.22 60.96 0)
+		(at 109.22 58.42 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1427,7 +1447,7 @@
 		(fields_autoplaced yes)
 		(uuid "e82e648d-d09b-4d77-8c01-53cc223b7d33")
 		(property "Reference" "#PWR02"
-			(at 109.22 67.31 0)
+			(at 109.22 64.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1436,7 +1456,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 109.22 66.04 0)
+			(at 109.22 63.5 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1444,7 +1464,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 109.22 60.96 0)
+			(at 109.22 58.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1453,7 +1473,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 109.22 60.96 0)
+			(at 109.22 58.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1462,7 +1482,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 109.22 60.96 0)
+			(at 109.22 58.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1483,7 +1503,7 @@
 		)
 	)
 	(symbol
-		(lib_id "MegaCastle:MegaCastle2x7-Module-I12.7x13.0-M8314-NOCUTOUT-EDGE")
+		(lib_id "MegaCastle:MegaCastle2x5-Module-I15.0x7.9-M8CC")
 		(at 120.65 53.34 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -1493,7 +1513,7 @@
 		(fields_autoplaced yes)
 		(uuid "f8c995de-9e6d-468e-92f7-a07ca18b5738")
 		(property "Reference" "M1"
-			(at 121.1538 36.83 0)
+			(at 121.285 41.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1501,15 +1521,15 @@
 			)
 		)
 		(property "Value" "~"
-			(at 121.1538 39.37 0)
+			(at 121.285 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" "MegaCastle:MegaCastle2x7-Module-I12.7x13.0-M8314-PANEL-NIBBLE"
-			(at 120.65 68.58 0)
+		(property "Footprint" "MegaCastle:MegaCastle2x7-Module-I15.0x13.0-M8314-SPAREPAD"
+			(at 120.65 66.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1526,7 +1546,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Generated using footprint-gen .. 12.7 11.5 5 2"
+		(property "Description" "Generated using footprint-gen ../ 15 15 5 M8CC"
 			(at 120.65 53.34 0)
 			(effects
 				(font
@@ -1535,19 +1555,19 @@
 				(hide yes)
 			)
 		)
-		(pin "8"
+		(pin "6"
 			(uuid "a138fed3-fd7f-47ca-a7a5-2f172c2d6757")
 		)
-		(pin "12"
+		(pin "5"
 			(uuid "7c1a9377-fb81-4931-8f42-1b8a50039ad6")
 		)
 		(pin "1"
 			(uuid "e962aafc-8154-4b1f-9f37-450cb7936e92")
 		)
-		(pin "14"
+		(pin "9"
 			(uuid "e48316e3-7d80-43d6-bf45-23b974ddfdec")
 		)
-		(pin "7"
+		(pin "10"
 			(uuid "a5738b2b-75dc-4d85-9e75-03fb7e7c9bc6")
 		)
 		(instances
@@ -1564,4 +1584,5 @@
 			(page "1")
 		)
 	)
+	(embedded_fonts no)
 )
