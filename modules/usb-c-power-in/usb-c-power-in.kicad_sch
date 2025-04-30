@@ -1,13 +1,15 @@
 (kicad_sch
-	(version 20231120)
+	(version 20250114)
 	(generator "eeschema")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(uuid "1ab374f1-1696-497e-a408-710496bc66f3")
 	(paper "A4")
 	(lib_symbols
 		(symbol "Connector_Generic:Conn_01x02"
 			(pin_names
-				(offset 1.016) hide)
+				(offset 1.016)
+				(hide yes)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -74,14 +76,14 @@
 			)
 			(symbol "Conn_01x02_1_1"
 				(rectangle
-					(start -1.27 -2.413)
-					(end 0 -2.667)
+					(start -1.27 1.27)
+					(end 1.27 -3.81)
 					(stroke
-						(width 0.1524)
+						(width 0.254)
 						(type default)
 					)
 					(fill
-						(type none)
+						(type background)
 					)
 				)
 				(rectangle
@@ -96,14 +98,14 @@
 					)
 				)
 				(rectangle
-					(start -1.27 1.27)
-					(end 1.27 -3.81)
+					(start -1.27 -2.413)
+					(end 0 -2.667)
 					(stroke
-						(width 0.254)
+						(width 0.1524)
 						(type default)
 					)
 					(fill
-						(type background)
+						(type none)
 					)
 				)
 				(pin passive line
@@ -143,6 +145,7 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
 		(symbol "MegaCastle:MegaCastle2x13-Module-I14.0x28.2-M800C00C-NOCUTOUT-EDGE"
 			(exclude_from_sim no)
@@ -304,7 +307,19 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
+	)
+	(text "These USB-C Power Delivery modules that are available on AliExpress, \nAmazon and lots of other places are pretty good, but more variable than\nthe share-price of snake oil.\n\nWATCH ESPECIALLY FOR POLARITY SWITCHING OF THE POWER OUTPUT PINS!\n\nYou shouldn't need to change anything on this schematic, as it really\nis just connecting the power and GND pins. To support other variants\nyou will instead need to go to the PCB layout, and select the footprint\nthere and then press E, and then select \"open in footprint editor\" to\nmunge it to suit your module."
+		(exclude_from_sim no)
+		(at 29.21 34.544 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "546cacd9-a031-49a2-8ee0-8f2b096d7d15")
 	)
 	(no_connect
 		(at 54.61 83.82)
@@ -317,17 +332,6 @@
 	(no_connect
 		(at 54.61 55.88)
 		(uuid "b1de8904-4a76-4547-a687-50b083a9f514")
-	)
-	(text "These USB-C Power Delivery modules that are available on AliExpress, \nAmazon and lots of other places are pretty good, but more variable than\nthe share-price of snake oil.\n\nWATCH ESPECIALLY FOR POLARITY SWITCHING OF THE POWER OUTPUT PINS!\n\nYou shouldn't need to change anything on this schematic, as it really\nis just connecting the power and GND pins. To support other variants\nyou will instead need to go to the PCB layout, and select the footprint\nthere and then press E, and then select \"open in footprint editor\" to\nmunge it to suit your module."
-		(exclude_from_sim no)
-		(at 29.21 34.544 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "546cacd9-a031-49a2-8ee0-8f2b096d7d15")
 	)
 	(global_label "GND"
 		(shape input)
@@ -443,7 +447,7 @@
 				)
 			)
 		)
-		(property "Footprint" "MegaCastle:MegaCastle2x13-Module-I14.0x28.2-M800C00C-PANEL-NIBBLE"
+		(property "Footprint" "MegaCastle:MegaCastle2x13-Module-I20.0x28.2-M800C00C-SPAREPAD"
 			(at 46.99 93.98 0)
 			(effects
 				(font
@@ -569,4 +573,5 @@
 			(page "1")
 		)
 	)
+	(embedded_fonts no)
 )
