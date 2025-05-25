@@ -5,7 +5,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-#define HEIGHT 15
+#define HEIGHT 17
 #define OUTPUT_HEIGHT 16
 #define BASELINE 13
 #define MAX_WIDTH 1024
