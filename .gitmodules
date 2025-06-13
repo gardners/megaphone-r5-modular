@@ -4,3 +4,6 @@
 [submodule "modules/megaphone-low-current-dc-dc-converter"]
 	path = modules/megaphone-low-current-dc-dc-converter
 	url = git@github.com:gardners/megaphone-low-current-dc-dc-converter.git
+[submodule "src/mega65-libc"]
+	path = src/mega65-libc
+	url = git@github.com:MEGA65/mega65-libc.git
