@@ -35,7 +35,8 @@ void main(void)
 
   {
     unsigned int b = 0;
-    printf("Found text file\n");
+    printf("Found README.md\n");
+    shseek(&dirent,-200,SEEK_END);
     while(b = shread(buffer,128,&dirent)) {
       for(i=0;i<b;i++) {
 	if (buffer[i]==0x0a) putchar(0x0d); else putchar(buffer[i]);
