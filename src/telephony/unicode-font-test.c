@@ -46,9 +46,10 @@ void main(void)
       unsigned int b = 0;
       printf("Found text file\n");
       while(b = shread(buffer,128,&dirent)) {
-	printf(">>>");
-	for(i=0;i<b;i++) putchar(buffer[i]);
-	printf("<<<");
+	for(i=0;i<b;i++) {
+	  if (buffer[i]==0x0a) putchar(0x0d); else putchar(buffer[i]);
+	}
+
       }
     }
     
