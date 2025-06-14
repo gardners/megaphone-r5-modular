@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
@@ -11,6 +12,30 @@
 #define MAX_WIDTH 1024
 
 char output[OUTPUT_HEIGHT][MAX_WIDTH + 1];
+
+FILE *outfile=NULL;
+
+void record_glyph(uint32_t codepoint, unsigned char data[256])
+{
+  if (outfile) {
+    fseek(outfile,codepoint << 8, SEEK_SET);
+    fwrite(data,256,1,outfile);
+  }
+}
+
+
+int dump_bytes(char *msg, unsigned char *bytes, int length)
+{
+  fprintf(stdout, "%s:\n", msg);
+  for (int i = 0; i < length; i += 16) {
+    fprintf(stdout, "%04X: ", i);
+    for (int j = 0; j < 16; j++)
+      if (i + j < length)
+        fprintf(stdout, " %02X", bytes[i + j]);
+    fprintf(stdout, "\n");
+  }
+  return 0;
+}
 
 void clear_output() {
     for (int y = 0; y < OUTPUT_HEIGHT; y++) {
@@ -54,6 +79,75 @@ char intensity_to_ascii(uint8_t intensity) {
     return ramp[index];
 }
 
+int calc_colour_error(int is_color, int is_wide, uint8_t original, uint8_t substitute) {
+    if (is_color) {
+        // 332 RGB: RRR GGG BB
+        int ro = (original >> 5) & 0x07;
+        int go = (original >> 2) & 0x07;
+        int bo = (original >> 0) & 0x03;
+
+        int rs = (substitute >> 5) & 0x07;
+        int gs = (substitute >> 2) & 0x07;
+        int bs = (substitute >> 0) & 0x03;
+
+        int dr = ro - rs;
+        int dg = go - gs;
+        int db = bo - bs;
+
+        return 3 * dr * dr + 6 * dg * dg + 1 * db * db;
+    } else if (is_wide) {
+        // 4-bit intensity packed into a byte: high and low nybbles
+        int hi_orig = (original >> 4) & 0x0F;
+        int lo_orig = original & 0x0F;
+
+        int hi_subs = (substitute >> 4) & 0x0F;
+        int lo_subs = substitute & 0x0F;
+
+        return abs(hi_orig - hi_subs) + abs(lo_orig - lo_subs);
+    } else {
+        // 8-bit grayscale intensity
+        int diff = (int)original - (int)substitute;
+        return diff * diff;
+    }
+}
+
+/*  Copy one glyph from pixel_data[][16] → data[256]
+ *
+ *  ┌───────────────  glyph columns ───────────────┐
+ *  row 0  pixel_data[0][ 0.. 7] → data[0.. 63]  (tile 0, row 0)
+ *         pixel_data[0][ 8..15] → data[64..127] (tile 1, row 0)
+ *  row 1  pixel_data[1][ 0.. 7] → data[128..191] (tile 2, row 0)
+ *         pixel_data[1][ 8..15] → data[192..255] (tile 3, row 0)
+ *  row 2  pixel_data[2][ 0.. 7] → data[0.. 63]  (tile 0, row 1)
+ *  ...
+ *
+ *  Layout recap
+ *  ┌─────┬─────┐         data[  0.. 63]  = tile 0 (even rows, left 8 bytes)
+ *  │ T0  │ T1  │         data[ 64..127]  = tile 1 (even rows, right 8 bytes)
+ *  ├─────┼─────┤
+ *  │ T2  │ T3  │         data[128..191]  = tile 2 (odd rows,  left 8 bytes)
+ *  └─────┴─────┘         data[192..255]  = tile 3 (odd rows,  right 8 bytes)
+ */
+static void
+pack_into_tiles(const uint8_t pixel_data[OUTPUT_HEIGHT][16], uint8_t data[256])
+{
+    memset(data, 0, 256);          /*  safety / predictable padding           */
+
+    for (int y = 0; y < OUTPUT_HEIGHT; ++y) {          /* 0‥15 */
+        const int tile_row     = y >> 1;               /* 0‥7   */
+        const int even_row     = !(y & 1);             /* true if 0,2,4…       */
+        const int even_offset  = even_row ?   0 : 128; /* tiles 0+1 or 2+3     */
+
+        for (int bx = 0; bx < 16; ++bx) {              /* byte-column 0‥15     */
+            const int right_half  = (bx >= 8);         /* 0 = left, 1 = right  */
+            const int base_offset = even_offset + (right_half ? 64 : 0);
+            const int dest_index  = base_offset + tile_row * 8 + (bx & 7);
+
+            data[dest_index] = pixel_data[y][bx];
+        }
+    }
+}
+
 void render_glyph(FT_Face face, uint32_t codepoint, int pen_x) {
     clear_output();
 
@@ -82,6 +176,11 @@ void render_glyph(FT_Face face, uint32_t codepoint, int pen_x) {
     int is_color = (bmp->pixel_mode == FT_PIXEL_MODE_BGRA);
     int is_wide = (width > 15);
 
+    if (width > 31 ) {
+      fprintf(stderr,"WARNING: U+%05x is %dpx wide. Will be truncated to 32px\n",codepoint, width);
+      width = 32;
+    }
+    
     uint8_t flag_byte = 0;
     if (is_color) flag_byte |= 0x01;
     if (is_wide) flag_byte |= 0x02;
@@ -89,7 +188,7 @@ void render_glyph(FT_Face face, uint32_t codepoint, int pen_x) {
     uint8_t glyph_width = width;  // For kerning-aware spacing
 
     // Allocate pixel buffer
-    uint8_t pixel_data[OUTPUT_HEIGHT][32] = {{0}}; // max 32px wide
+    uint8_t pixel_data[OUTPUT_HEIGHT][16] = {{0}}; // max 16px wide (or 32px with nybl packing, so 16 bytes, either way)
 
     int y_offset = BASELINE - face->glyph->bitmap_top;
 
@@ -158,6 +257,35 @@ void render_glyph(FT_Face face, uint32_t codepoint, int pen_x) {
     puts("");
 
     // TODO: Save `pixel_data`, `flag_byte`, `glyph_width` somewhere
+    unsigned char data[256];
+
+    pack_into_tiles(pixel_data, data);
+    
+    // Overwrite last byte with flags
+    // Width is in range 0..32, so just put it in 5 bits.
+    // is_wide can be implied from whether it's >15px wide, so doesn't need
+    // to be recorded explicitly.
+    int pixel_select = -1;
+    int colour_error = 0xfffffff;
+
+    int this_colour_error = calc_colour_error(is_color, is_wide, data[255],data[254]);
+    if (this_colour_error < colour_error) { pixel_select = 0; colour_error = 0; }
+    this_colour_error = calc_colour_error(is_color, is_wide, data[255],data[127]);
+    if (this_colour_error < colour_error) { pixel_select = 0; colour_error = 1; }
+    this_colour_error = calc_colour_error(is_color, is_wide, data[255],0);
+    if (this_colour_error < colour_error) { pixel_select = 0; colour_error = 2; }
+    this_colour_error = calc_colour_error(is_color, is_wide, data[255],255);
+    if (this_colour_error < colour_error) { pixel_select = 0; colour_error = 3; }
+        
+    data[255]
+      =( is_color ? 0x80 : 0x00 )
+      | (width>0 ? width - 1 : 0)
+      | ( pixel_select << 5);
+      
+    dump_bytes("Packed glyph",data,256);
+
+    record_glyph(codepoint, data);
+    
 }
 
 
@@ -169,6 +297,10 @@ int main(int argc, char** argv) {
 
     const char* font_path = argv[1];
 
+    char filename[8192];
+    snprintf(filename,8192,"%s.MRF",argv[1]);
+    outfile=fopen(filename,"wb");
+    
     FT_Library ft;
     if (FT_Init_FreeType(&ft)) {
         fprintf(stderr, "Could not initialize FreeType\n");
