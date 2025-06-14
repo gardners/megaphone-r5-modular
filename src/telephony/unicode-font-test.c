@@ -12,6 +12,8 @@ unsigned char buffer[128];
 
 unsigned char i;
 
+char filename_ascii[]={'r','e','a','d','m','e','.',0x6d,0x64,0};
+
 void main(void)
 {
   shared_resource_dir d;
@@ -25,34 +27,21 @@ void main(void)
     while(PEEK(0xD680)&0x3) continue;
     usleep(500000L);
   }
-  
-  printf("SD card status = 0x%02x\n",PEEK(0xD680));
 
-  printf("Opening SHRES dir\n");
-  d = shdopen(); 
-  
-  if (d==0xffff) {
-    fprintf(stdout,"ERROR: Failed shdopen() failed.\n");
-  printf("SD card status = 0x%02x\n",PEEK(0xD680));
+  if (shopen(filename_ascii,0,&dirent)) {
+    printf("ERROR: Failed to open README.md\n");
     return;
   }
 
-  printf("Now scanning directory.\n");
-  
-  while (!shdread(required_flags, &d,&dirent)) {
-    printf("File: '%s'\n",dirent.name);
-
-    if (dirent.name[0]==0x52||dirent.name[0]==0x72) {
-      unsigned int b = 0;
-      printf("Found text file\n");
-      while(b = shread(buffer,128,&dirent)) {
-	for(i=0;i<b;i++) {
-	  if (buffer[i]==0x0a) putchar(0x0d); else putchar(buffer[i]);
-	}
-
+  {
+    unsigned int b = 0;
+    printf("Found text file\n");
+    while(b = shread(buffer,128,&dirent)) {
+      for(i=0;i<b;i++) {
+	if (buffer[i]==0x0a) putchar(0x0d); else putchar(buffer[i]);
       }
+      
     }
-    
   }
 
   return;
