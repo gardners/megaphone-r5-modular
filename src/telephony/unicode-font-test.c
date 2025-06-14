@@ -9,6 +9,10 @@
 
 
 #define NUM_FONTS 4
+#define FONT_EMOJI_COLOUR 0
+#define FONT_EMOJI_MONO 1
+#define FONT_TEXT 2
+#define FONT_UI 3
 char *font_files[NUM_FONTS]={"NotoColorEmoji","NotoEmoji", "NotoSans", "Nokia Pixel Large"};
 struct shared_resource fonts[NUM_FONTS];
 unsigned long required_flags = SHRES_FLAG_FONT | SHRES_FLAG_16x16 | SHRES_FLAG_UNICODE;
@@ -72,6 +76,43 @@ void screen_clear(void)
   // Clear colour RAM
   lfill(colour_ram,0x01,(90*30*2));
   
+}
+
+// 128KB buffer for 128KB / 256 bytes per glyph = 512 unique unicode glyphs on screen at once
+#define GLYPH_DATA_START 0x40000
+#define GLYPH_CACHE_SIZE 512
+#define BYTES_PER_GLYPH 256
+unsigned long cached_codepoints[GLYPH_CACHE_SIZE];
+unsigned char cached_fontnums[GLYPH_CACHE_SIZE];
+unsigned char glyph_buffer[BYTES_PER_GLYPH];
+
+void reset_glyph_cache(void)
+{
+  lfill(GLYPH_DATA_START,0x00,GLYPH_CACHE_SIZE * BYTES_PER_GLYPH);
+  lfill((unsigned long)cached_codepoints,0x00,GLYPH_CACHE_SIZE*sizeof(unsigned long));
+}
+
+void load_glyph(int font, unsigned long codepoint, unsigned int cache_slot)
+{
+  shseek(&fonts[font],codepoint<<8,SEEK_SET);
+  shread(glyph_buffer,256,&fonts[font]);
+  // XXX Extract glyph flags etc
+  lcopy((unsigned long)glyph_buffer,GLYPH_DATA_START + ((unsigned long)cache_slot<<8), BYTES_PER_GLYPH);
+  cached_codepoints[cache_slot]=codepoint;
+  cached_fontnums[cache_slot]=font;
+}
+
+void draw_glyph(int x, int y, int font, unsigned long codepoint)
+{
+  unsigned int i;
+  for(i=0;i<GLYPH_CACHE_SIZE;i++) {
+    if (!cached_codepoints[i]) break;
+    if (cached_codepoints[i]==codepoint&&cached_fontnums[i]==font) break;
+  }
+  if (cached_codepoints[i]!=codepoint) {
+    load_glyph(font, codepoint, i);
+  }
+
 }
 
 void main(void)
