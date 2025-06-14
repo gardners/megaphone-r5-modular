@@ -43,9 +43,45 @@ void draw_bitmap(FT_Bitmap *bitmap, int bitmap_top, int pen_x) {
     }
 }
 
+void render_glyph(FT_Face face, uint32_t codepoint, int pen_x) {
+    clear_output();
+
+    FT_UInt glyph_index = FT_Get_Char_Index(face, codepoint);
+    if (glyph_index == 0) {
+        fprintf(stderr, "Warning: Glyph not found for U+%04X\n", codepoint);
+        return;
+    }
+
+    if (FT_Load_Glyph(face, glyph_index, FT_LOAD_TARGET_MONO | FT_LOAD_RENDER)) {
+        fprintf(stderr, "Warning: Could not render U+%04X\n", codepoint);
+        return;
+    }
+
+    draw_bitmap(&face->glyph->bitmap, face->glyph->bitmap_top, pen_x);
+
+    int glyph_width = face->glyph->advance.x >> 6;
+    if (glyph_width > 16) {
+        fprintf(stderr, "Warning: Glyph U+%04X exceeds 16px width (%d px)\n", codepoint, glyph_width);
+    }
+
+    // Print label
+    if (codepoint >= 32 && codepoint < 127) {
+        printf("U+%04X ('%c')\n", codepoint, (char)codepoint);
+    } else {
+        printf("U+%04X\n", codepoint);
+    }
+
+    for (int y = 0; y < OUTPUT_HEIGHT; y++) {
+        output[y][pen_x + glyph_width] = '\0';
+        puts(output[y]);
+    }
+    puts("");
+}
+
+
 int main(int argc, char** argv) {
-    if (argc < 3) {
-        fprintf(stderr, "Usage: %s <font_file.otf> <+hex_codepoint or ascii> [...]\n", argv[0]);
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s <font_file.otf> [+hex_codepoint or ascii] [...]\n", argv[0]);
         return 1;
     }
 
@@ -68,51 +104,39 @@ int main(int argc, char** argv) {
 
     clear_output();
 
-    FT_UInt previous_glyph = 0;
     int pen_x = 0;
 
-    for (int i = 2; i < argc; i++) {
+    if (argc==2) {
+      FT_ULong charcode;
+      FT_UInt glyph_index;
+      int pen_x = 0;
+      
+      charcode = FT_Get_First_Char(face, &glyph_index);
+      while (glyph_index != 0) {
+	render_glyph(face, charcode, pen_x);
+	// Optionally: pen_x += face->glyph->advance.x >> 6; (not used in per-glyph rendering)
+	charcode = FT_Get_Next_Char(face, charcode, &glyph_index);
+      }      
+    } else {
+      for (int i = 2; i < argc; i++) {
         const char* arg = argv[i];
         size_t len = strlen(arg);
         for (size_t j = 0; j < len; j++) {
-            uint32_t codepoint;
-            if (j == 0 && arg[0] == '+') {
-                codepoint = (uint32_t)strtol(arg + 1, NULL, 16);
-                j = len;  // skip rest of string
-            } else {
-                codepoint = (uint8_t)arg[j];
-            }
-
-            FT_UInt glyph_index = FT_Get_Char_Index(face, codepoint);
-            if (glyph_index == 0) {
-                fprintf(stderr, "Warning: Glyph not found for U+%04X\n", codepoint);
-                continue;
-            }
-
-            // Kerning from previous glyph
-            if (previous_glyph && glyph_index) {
-                FT_Vector delta;
-                FT_Get_Kerning(face, previous_glyph, glyph_index, FT_KERNING_DEFAULT, &delta);
-                pen_x += delta.x >> 6;  // convert from 26.6 fixed to pixels
-            }
-
-            // Load and render glyph
-            if (FT_Load_Glyph(face, glyph_index, FT_LOAD_TARGET_MONO | FT_LOAD_RENDER)) {
-                fprintf(stderr, "Warning: Could not render U+%04X\n", codepoint);
-                continue;
-            }
-
-            draw_bitmap(&face->glyph->bitmap, face->glyph->bitmap_top, pen_x);
-
-            pen_x += face->glyph->advance.x >> 6;
-            previous_glyph = glyph_index;
+	  uint32_t codepoint;
+	  if (j == 0 && arg[0] == '+') {
+	    codepoint = (uint32_t)strtol(arg + 1, NULL, 16);
+	    j = len;  // skip rest of string
+	  } else {
+	    codepoint = (uint8_t)arg[j];
+	  }
+	  
+	  
+	  render_glyph(face, codepoint,pen_x);
+	  
+	  // pen_x += face->glyph->advance.x >> 6;
         }
-    }
-
-    // Trim and print the output
-    for (int y = 0; y < OUTPUT_HEIGHT; y++) {
-        output[y][pen_x] = '\0';  // cut line at last glyph
-        puts(output[y]);
+      }
+      
     }
 
     FT_Done_Face(face);
