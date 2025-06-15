@@ -32,8 +32,8 @@ void screen_setup(void)
   // H640 + fast CPU
   POKE(0xD031,0xc0);  
   
-  // 16-bit text mode 
-  POKE(0xD054,0x05);
+  // 16-bit text mode, alpha compositor, 40MHz
+  POKE(0xD054,0xC5);
 
   // PAL
   POKE(0xD06f,0x00);
@@ -142,7 +142,9 @@ void load_glyph(int font, unsigned long codepoint, unsigned int cache_slot)
 {
   unsigned char glyph_flags;
   shseek(&fonts[font],codepoint<<8,SEEK_SET);
-  shread(glyph_buffer,256,&fonts[font]);
+  for(glyph_flags=0;glyph_flags<255;glyph_flags++) glyph_buffer[glyph_flags]=glyph_flags;
+  glyph_buffer[0xff]=0xf;
+  //  shread(glyph_buffer,256,&fonts[font]);
 
   // Extract glyph flags
   glyph_flags = glyph_buffer[0xff];
@@ -231,7 +233,7 @@ char draw_glyph(int x, int y, int font, unsigned long codepoint,unsigned char co
   lpoke(colour_ram + row1_offset + 1, colour_ram_1[table_index]+colour);
 
   // And the 2nd column, if required
-  if (cached_glyph_flags[i]&0x10) {
+  if (cached_glyph_flags[i]&0x18) {
     // Screen RAM
     lpoke(screen_ram + row0_offset + 2, ((i&0x3f)<<2) + 1 );
     lpoke(screen_ram + row0_offset + 3, screen_ram_1_right[table_index] + (i>>6) + 0x10);
@@ -282,7 +284,7 @@ void main(void)
   }
 
   // Try drawing a unicode glyph
-  draw_glyph(0,0, FONT_UI, 0x0041,0x01);  
+  draw_glyph(0,0, FONT_UI, 0x0021,0x01);  
   
   return;
 }
