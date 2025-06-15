@@ -221,28 +221,28 @@ char draw_glyph(int x, int y, int font, unsigned long codepoint,unsigned char co
   // Set screen RAM
   lpoke(screen_ram + row0_offset + 0, ((i&0x3f)<<2) + 0 );
   lpoke(screen_ram + row1_offset + 0, ((i&0x3f)<<2) + 2 );
-  lpoke(screen_ram + row0_offset + 1, screen_ram_1_left[table_index] + (i>>6));
-  lpoke(screen_ram + row1_offset + 1, screen_ram_1_left[table_index] + (i>>6));
+  lpoke(screen_ram + row0_offset + 1, screen_ram_1_left[table_index] + (i>>6) + 0x10);
+  lpoke(screen_ram + row1_offset + 1, screen_ram_1_left[table_index] + (i>>6) + 0x10);
 
   // Set colour RAM
-  lpoke(screen_ram + row0_offset + 0, colour_ram_0_left[table_index]);
-  lpoke(screen_ram + row1_offset + 0, colour_ram_0_left[table_index]);
-  lpoke(screen_ram + row0_offset + 1, colour_ram_1[table_index]+colour);
-  lpoke(screen_ram + row1_offset + 1, colour_ram_1[table_index]+colour);
+  lpoke(colour_ram + row0_offset + 0, colour_ram_0_left[table_index]);
+  lpoke(colour_ram + row1_offset + 0, colour_ram_0_left[table_index]);
+  lpoke(colour_ram + row0_offset + 1, colour_ram_1[table_index]+colour);
+  lpoke(colour_ram + row1_offset + 1, colour_ram_1[table_index]+colour);
 
   // And the 2nd column, if required
   if (cached_glyph_flags[i]&0x10) {
     // Screen RAM
     lpoke(screen_ram + row0_offset + 2, ((i&0x3f)<<2) + 1 );
-    lpoke(screen_ram + row0_offset + 3, screen_ram_1_right[table_index] + (i>>6));
+    lpoke(screen_ram + row0_offset + 3, screen_ram_1_right[table_index] + (i>>6) + 0x10);
     lpoke(screen_ram + row1_offset + 2, ((i&0x3f)<<2) + 3);
-    lpoke(screen_ram + row1_offset + 3, screen_ram_1_right[table_index] + (i>>6));
+    lpoke(screen_ram + row1_offset + 3, screen_ram_1_right[table_index] + (i>>6) + 0x10);
 
     // Colour Ram
-    lpoke(screen_ram + row0_offset + 2, colour_ram_0_right[table_index]);
-    lpoke(screen_ram + row1_offset + 2, colour_ram_0_right[table_index]);
-    lpoke(screen_ram + row0_offset + 3, colour_ram_1[table_index]+colour);
-    lpoke(screen_ram + row1_offset + 3, colour_ram_1[table_index]+colour);
+    lpoke(colour_ram + row0_offset + 2, colour_ram_0_right[table_index]);
+    lpoke(colour_ram + row1_offset + 2, colour_ram_0_right[table_index]);
+    lpoke(colour_ram + row0_offset + 3, colour_ram_1[table_index]+colour);
+    lpoke(colour_ram + row1_offset + 3, colour_ram_1[table_index]+colour);
 
     // Rendered as 2 chars wide
     // XXX also report number of pixels consumed
