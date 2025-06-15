@@ -281,7 +281,8 @@ void main(void)
     }
   }
 
-  
+  // Try drawing a unicode glyph
+  draw_glyph(0,0, FONT_UI, 0x0041,0x01);  
   
   return;
 }
