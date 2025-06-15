@@ -7,7 +7,6 @@
 #include "mega65/shres.h"
 #include "mega65/memory.h"
 
-
 #define NUM_FONTS 4
 #define FONT_EMOJI_COLOUR 0
 #define FONT_EMOJI_MONO 1
@@ -163,9 +162,21 @@ void load_glyph(int font, unsigned long codepoint, unsigned int cache_slot)
   cached_glyph_flags[cache_slot]=glyph_flags;
 }
 
-char draw_glyph(int x, int y, int font, unsigned long codepoint)
+extern unsigned char screen_ram_1_left[64];
+extern unsigned char screen_ram_1_right[64];
+extern unsigned char colour_ram_0_left[64];
+extern unsigned char colour_ram_0_right[64];
+extern unsigned char colour_ram_1[64];
+
+unsigned int row0_offset,row1_offset;
+
+char draw_glyph(int x, int y, int font, unsigned long codepoint,unsigned char colour)
 {
   unsigned int i;
+  unsigned char table_index; 
+
+  colour &= 0x0f;
+  
   for(i=0;i<GLYPH_CACHE_SIZE;i++) {
     if (!cached_codepoints[i]) break;
     if (cached_codepoints[i]==codepoint&&cached_fontnums[i]==font) break;
@@ -178,12 +189,12 @@ char draw_glyph(int x, int y, int font, unsigned long codepoint)
     // Should we reserve an entry in the cache slot for "unprintable glyph"?
     // (maybe just show it as [+HEX] for now? But that would be up to the calling
     // function to decide).
-    return 1;
+    return 0;
   }
 
   if (cached_codepoints[i]!=codepoint) {
     load_glyph(font, codepoint, i);
-  }
+  } 
 
   /*
     Draw the glyph in the indicated position in the screen RAM.
@@ -199,7 +210,48 @@ char draw_glyph(int x, int y, int font, unsigned long codepoint)
   
   // XXX -- Actually set the character pointers here
 
-  return 0;
+  // Construct 6-bit table index entry
+  table_index = cached_glyph_flags[i]&0x1f;
+  table_index |= (cached_glyph_flags[i]>>2)&0x20;
+
+  // Get offset within screen and colour RAM for both rows of chars
+  row0_offset = (y<<9) + (x<<1);
+  row1_offset = row0_offset + 512;
+
+  // Set screen RAM
+  lpoke(screen_ram + row0_offset + 0, ((i&0x3f)<<2) + 0 );
+  lpoke(screen_ram + row1_offset + 0, ((i&0x3f)<<2) + 2 );
+  lpoke(screen_ram + row0_offset + 1, screen_ram_1_left[table_index] + (i>>6));
+  lpoke(screen_ram + row1_offset + 1, screen_ram_1_left[table_index] + (i>>6));
+
+  // Set colour RAM
+  lpoke(screen_ram + row0_offset + 0, colour_ram_0_left[table_index]);
+  lpoke(screen_ram + row1_offset + 0, colour_ram_0_left[table_index]);
+  lpoke(screen_ram + row0_offset + 1, colour_ram_1[table_index]+colour);
+  lpoke(screen_ram + row1_offset + 1, colour_ram_1[table_index]+colour);
+
+  // And the 2nd column, if required
+  if (cached_glyph_flags[i]&0x10) {
+    // Screen RAM
+    lpoke(screen_ram + row0_offset + 2, ((i&0x3f)<<2) + 1 );
+    lpoke(screen_ram + row0_offset + 3, screen_ram_1_right[table_index] + (i>>6));
+    lpoke(screen_ram + row1_offset + 2, ((i&0x3f)<<2) + 3);
+    lpoke(screen_ram + row1_offset + 3, screen_ram_1_right[table_index] + (i>>6));
+
+    // Colour Ram
+    lpoke(screen_ram + row0_offset + 2, colour_ram_0_right[table_index]);
+    lpoke(screen_ram + row1_offset + 2, colour_ram_0_right[table_index]);
+    lpoke(screen_ram + row0_offset + 3, colour_ram_1[table_index]+colour);
+    lpoke(screen_ram + row1_offset + 3, colour_ram_1[table_index]+colour);
+
+    // Rendered as 2 chars wide
+    // XXX also report number of pixels consumed
+    return 2;
+  }
+
+  // Rendered as 1 char wide
+  // XXX also report number of pixels consumed
+  return 1;
 }
 
 void main(void)
