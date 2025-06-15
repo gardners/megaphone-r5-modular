@@ -210,6 +210,8 @@ void main(void)
 
   screen_setup();
   screen_clear();
+
+  generate_rgb332_palette();
   
   // Make sure SD card is idle
   if (PEEK(0xD680)&0x03) {
