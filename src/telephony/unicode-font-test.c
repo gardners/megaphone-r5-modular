@@ -26,6 +26,10 @@ unsigned long colour_ram = 0xff80800L;
 
 void screen_setup(void)
 {
+  // Blue background, black border
+  POKE(0xD020,0);
+  POKE(0xD021,6);
+
   // 16-bit text mode 
   POKE(0xD054,0x05);
 
@@ -78,12 +82,55 @@ void screen_clear(void)
   
 }
 
+
+unsigned char nybl_swap(unsigned char v) {
+    return ((v & 0x0F) << 4) | ((v & 0xF0) >> 4);
+}
+
+void generate_rgb332_palette(void)
+{
+  unsigned int i;
+  
+  // Select Palette 1 for access at $D100-$D3FF
+  POKE(0xD070,0x40);
+  
+  for (i = 0; i < 256; i++) {
+    // RGB332 bit layout:
+    // Bits 7-5: Red (3 bits)
+    // Bits 4-2: Green (3 bits)
+    // Bits 1-0: Blue (2 bits)
+    
+    // Extract components and scale to 8-bit
+    unsigned char red   = ((i >> 5) & 0x07) * 255 / 7;
+    unsigned char green = ((i >> 2) & 0x07) * 255 / 7;
+    unsigned char blue  = ( i       & 0x03) * 255 / 3;
+    
+    // Nybl-swap each value
+    unsigned char red_swapped   = nybl_swap(red);
+    unsigned char green_swapped = nybl_swap(green);
+    unsigned char blue_swapped  = nybl_swap(blue);
+    
+    // Write to MEGA65 palette memory
+    POKE(0xD100L + i, red_swapped);
+    POKE(0xD200L + i, green_swapped);
+    POKE(0xD300L + i, blue_swapped);
+  }
+
+  // Select Palette 0 for access at $D100-$D3FF,
+  // use Palette 1 (set above) for alternate colour palette
+  // (this is what we will use for unicode colour glyphs)
+  POKE(0xD070,0x01);
+
+}
+
+
 // 128KB buffer for 128KB / 256 bytes per glyph = 512 unique unicode glyphs on screen at once
 #define GLYPH_DATA_START 0x40000
 #define GLYPH_CACHE_SIZE 512
 #define BYTES_PER_GLYPH 256
 unsigned long cached_codepoints[GLYPH_CACHE_SIZE];
 unsigned char cached_fontnums[GLYPH_CACHE_SIZE];
+unsigned char cached_glyph_flags[GLYPH_CACHE_SIZE];
 unsigned char glyph_buffer[BYTES_PER_GLYPH];
 
 void reset_glyph_cache(void)
@@ -94,25 +141,65 @@ void reset_glyph_cache(void)
 
 void load_glyph(int font, unsigned long codepoint, unsigned int cache_slot)
 {
+  unsigned char glyph_flags;
   shseek(&fonts[font],codepoint<<8,SEEK_SET);
   shread(glyph_buffer,256,&fonts[font]);
-  // XXX Extract glyph flags etc
+
+  // Extract glyph flags
+  glyph_flags = glyph_buffer[0xff];
+
+  // Replace glyph flag byte with indicated pixel value
+  switch((glyph_flags>>5)&0x03) {
+  case 0: glyph_buffer[0xff]=glyph_buffer[0xfe];
+  case 1: glyph_buffer[0xff]=glyph_buffer[0x7f];
+  case 2: glyph_buffer[0xff]=0;
+  case 3: glyph_buffer[0xff]=0xff;
+  }
+
+  // Store glyph in the cache
   lcopy((unsigned long)glyph_buffer,GLYPH_DATA_START + ((unsigned long)cache_slot<<8), BYTES_PER_GLYPH);
   cached_codepoints[cache_slot]=codepoint;
   cached_fontnums[cache_slot]=font;
+  cached_glyph_flags[cache_slot]=glyph_flags;
 }
 
-void draw_glyph(int x, int y, int font, unsigned long codepoint)
+char draw_glyph(int x, int y, int font, unsigned long codepoint)
 {
   unsigned int i;
   for(i=0;i<GLYPH_CACHE_SIZE;i++) {
     if (!cached_codepoints[i]) break;
     if (cached_codepoints[i]==codepoint&&cached_fontnums[i]==font) break;
   }
+
+  if (i==GLYPH_CACHE_SIZE) {
+    // Cache full! We cannot draw this glyph.
+    // XXX - Consider cache purging mechanisms, e.g., checking if all
+    // glyphs in the cache are currently still on screen?
+    // Should we reserve an entry in the cache slot for "unprintable glyph"?
+    // (maybe just show it as [+HEX] for now? But that would be up to the calling
+    // function to decide).
+    return 1;
+  }
+
   if (cached_codepoints[i]!=codepoint) {
     load_glyph(font, codepoint, i);
   }
 
+  /*
+    Draw the glyph in the indicated position in the screen RAM.
+    Note that it is not the actual pixel coordinates on the screen.
+    (Recall that we are using GOTOX after drawing the base layer of the screen, to then
+     draw the variable-width parts of the interface over the top.)
+
+    What we do do here, though, is set the glyph width bits in the screen RAM.
+    We want this routine to be as fast as possible, so we maintain a cache of the colour RAM
+    byte values based on every possible glyph_flags byte value.
+    
+  */
+  
+  // XXX -- Actually set the character pointers here
+
+  return 0;
 }
 
 void main(void)
