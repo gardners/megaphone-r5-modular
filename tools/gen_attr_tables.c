@@ -53,7 +53,7 @@ int main(int argc,char **argv)
       int width_subtract = 0;
       if (width<16) width_subtract = 16 - width;
       else if (width<32) width_subtract = 32 - width;
-      if (width_subtract >= 8) width_subtract = 7;
+      if (width_subtract >= 16) width_subtract = 15;
 
       if (width<8) width_subtract = 0;
       
@@ -76,8 +76,8 @@ int main(int argc,char **argv)
       
       unsigned char val = 0x00;
       val |= is_colour? 0x00 : 0x20;
-      val |= (width>15)? 0x04 : 0x00;
-      val |= (width_subtract&8) ? 0x01 : 0x00;
+      val |= (width>15)? 0x08 : 0x00;
+      val |= (width_subtract&8) ? 0x04 : 0x00;
       
       emit_val(val);
     }
@@ -92,12 +92,12 @@ int main(int argc,char **argv)
       if (width<16) width_subtract = 16 - width;
       else if (width<32) width_subtract = 32 - width;
       // zero-width glyphs don't exist
-      if (width_subtract >= 8) width_subtract = 7;
+      if (width_subtract >= 16) width_subtract = 15;
       
       unsigned char val = 0x00;
       val |= is_colour? 0x00 : 0x20;
-      val |= (width>15)? 0x04 : 0x00;
-      val |= (width_subtract&8) ? 0x01 : 0x00;
+      val |= (width>15)? 0x08 : 0x00;
+      val |= (width_subtract&8) ? 0x04 : 0x00;
       
       emit_val(val);
     }

@@ -23,6 +23,10 @@ unsigned char i;
 unsigned long screen_ram = 0x12000;
 unsigned long colour_ram = 0xff80800L;
 
+#define RENDER_COLUMNS 128
+
+void draw_goto(int x,int y, int goto_pos);
+
 void screen_setup(void)
 {
   // Blue background, black border
@@ -43,11 +47,11 @@ void screen_setup(void)
   POKE(0xD048,0x41); POKE(0xD049,0x00);
   POKE(0xD04A,0x20); POKE(0xD04B,0x02);  
 
-  // 90 columns wide (but with virtual line length of 255)
+  // 90 columns wide (but with virtual line length of 256)
   // Advance 512 bytes per line
   POKE(0xD058,0x00); POKE(0xD059,0x02);
   // XXX -- We can display more than 128, but then we need to insert GOTOX tokens to prevent RRB wrap-around
-  POKE(0xD05E,0x80); // display 128 
+  POKE(0xD05E,RENDER_COLUMNS); // display 255 
   
   // 30 rows
   POKE(0xD07B,30 - 1);
@@ -70,17 +74,6 @@ void screen_setup(void)
   POKE(0xD062,((unsigned long)screen_ram)>>16);
 
 }
-
-void screen_clear(void)
-{
-  // Clear screen RAM
-  lfill(screen_ram,0x00,(90*30*2));
-
-  // Clear colour RAM
-  lfill(colour_ram,0x01,(90*30*2));
-  
-}
-
 
 unsigned char nybl_swap(unsigned char v) {
     return ((v & 0x0F) << 4) | ((v & 0xF0) >> 4);
@@ -141,10 +134,16 @@ void reset_glyph_cache(void)
 void load_glyph(int font, unsigned long codepoint, unsigned int cache_slot)
 {
   unsigned char glyph_flags;
-  shseek(&fonts[font],codepoint<<8,SEEK_SET);
+
+#if 0
+  // XXX DEBUG show gradiant glyph
   for(glyph_flags=0;glyph_flags<255;glyph_flags++) glyph_buffer[glyph_flags]=glyph_flags;
-  glyph_buffer[0xff]=0xf;
-  //  shread(glyph_buffer,256,&fonts[font]);
+  glyph_buffer[0xff]=codepoint&0x1f;
+#else
+  // Seek to and load glyph from font in shared resources
+  shseek(&fonts[font],codepoint<<8,SEEK_SET);
+   shread(glyph_buffer,256,&fonts[font]);
+#endif
 
   // Extract glyph flags
   glyph_flags = glyph_buffer[0xff];
@@ -171,6 +170,39 @@ extern unsigned char colour_ram_0_right[64];
 extern unsigned char colour_ram_1[64];
 
 unsigned int row0_offset,row1_offset;
+
+void draw_goto(int x,int y, int goto_pos)
+{
+  // Get offset within screen and colour RAM for both rows of chars
+  row0_offset = (y<<9) + (x<<1);
+  row1_offset = row0_offset + 512;
+
+  lpoke(screen_ram + row0_offset + 0, goto_pos);
+  lpoke(screen_ram + row0_offset + 1, 0x00 + ((goto_pos>>8)&0x3));
+  lpoke(colour_ram + row0_offset + 0, 0x10);
+  lpoke(colour_ram + row0_offset + 1, 0x00);
+  
+}
+
+void screen_clear(void)
+{
+  unsigned char y;
+  
+  // Clear screen RAM
+  lfill(screen_ram,0x00,(90*30*2));
+
+  // Clear colour RAM
+  lfill(colour_ram,0x01,(90*30*2));
+
+  // Fill off-screen with GOTOX's to right edge, so that we don't overflow the 1024px RRB size
+  for(y=0;y<30;y++) {
+    // Draw one GOTOX
+    draw_goto(RENDER_COLUMNS - 1,y,720);
+  }
+  
+}
+
+
 
 char draw_glyph(int x, int y, int font, unsigned long codepoint,unsigned char colour)
 {
@@ -233,7 +265,7 @@ char draw_glyph(int x, int y, int font, unsigned long codepoint,unsigned char co
   lpoke(colour_ram + row1_offset + 1, colour_ram_1[table_index]+colour);
 
   // And the 2nd column, if required
-  if (cached_glyph_flags[i]&0x18) {
+  if ((cached_glyph_flags[i]&0x1f)>8) {
     // Screen RAM
     lpoke(screen_ram + row0_offset + 2, ((i&0x3f)<<2) + 1 );
     lpoke(screen_ram + row0_offset + 3, screen_ram_1_right[table_index] + (i>>6) + 0x10);
@@ -284,7 +316,16 @@ void main(void)
   }
 
   // Try drawing a unicode glyph
-  draw_glyph(0,0, FONT_UI, 0x0021,0x01);  
+  i=0x21;
+  while(1) {
+    screen_clear();
+    draw_glyph(0,0, FONT_UI, i,0x01);
+    lpoke(screen_ram + 1024,i&0x1f);
+    while(PEEK(0xD610)) POKE(0xD610,0);
+    while(!PEEK(0xD610)) continue;
+    if (PEEK(0xD610)==',') i--;
+    if (PEEK(0xD610)=='.') i++;
+  }
   
   return;
 }
