@@ -157,7 +157,14 @@ void load_glyph(int font, unsigned long codepoint, unsigned int cache_slot)
   }
 
   // Store glyph in the cache
+#ifdef FONT_CARD_ORDER_FIXED
   lcopy((unsigned long)glyph_buffer,GLYPH_DATA_START + ((unsigned long)cache_slot<<8), BYTES_PER_GLYPH);
+#else
+  lcopy((unsigned long)glyph_buffer,GLYPH_DATA_START + ((unsigned long)cache_slot<<8), 64);
+  lcopy((unsigned long)glyph_buffer + 64 ,GLYPH_DATA_START + ((unsigned long)cache_slot<<8) + 128, 64);
+  lcopy((unsigned long)glyph_buffer + 128,GLYPH_DATA_START + ((unsigned long)cache_slot<<8) + 64, 64);
+  lcopy((unsigned long)glyph_buffer + 192,GLYPH_DATA_START + ((unsigned long)cache_slot<<8)+ 192, 64);
+#endif
   cached_codepoints[cache_slot]=codepoint;
   cached_fontnums[cache_slot]=font;
   cached_glyph_flags[cache_slot]=glyph_flags;
@@ -169,13 +176,12 @@ extern unsigned char colour_ram_0_left[64];
 extern unsigned char colour_ram_0_right[64];
 extern unsigned char colour_ram_1[64];
 
-unsigned int row0_offset,row1_offset;
+unsigned int row0_offset;
 
 void draw_goto(int x,int y, int goto_pos)
 {
   // Get offset within screen and colour RAM for both rows of chars
   row0_offset = (y<<9) + (x<<1);
-  row1_offset = row0_offset + 512;
 
   lpoke(screen_ram + row0_offset + 0, goto_pos);
   lpoke(screen_ram + row0_offset + 1, 0x00 + ((goto_pos>>8)&0x3));
@@ -187,9 +193,13 @@ void draw_goto(int x,int y, int goto_pos)
 void screen_clear(void)
 {
   unsigned char y;
-  
-  // Clear screen RAM
-  lfill(screen_ram,0x00,(90*30*2));
+
+  // Clear screen RAM using overlapping DMA  
+  lpoke(screen_ram + 0,0x20);
+  lpoke(screen_ram + 1,0x00);
+  lpoke(screen_ram + 2,0x20);
+  lpoke(screen_ram + 3,0x00);
+  lcopy(screen_ram, screen_ram + 4,(90*30*2) - 4);
 
   // Clear colour RAM
   lfill(colour_ram,0x01,(90*30*2));
@@ -250,33 +260,24 @@ char draw_glyph(int x, int y, int font, unsigned long codepoint,unsigned char co
 
   // Get offset within screen and colour RAM for both rows of chars
   row0_offset = (y<<9) + (x<<1);
-  row1_offset = row0_offset + 512;
 
   // Set screen RAM
   lpoke(screen_ram + row0_offset + 0, ((i&0x3f)<<2) + 0 );
-  lpoke(screen_ram + row1_offset + 0, ((i&0x3f)<<2) + 2 );
   lpoke(screen_ram + row0_offset + 1, screen_ram_1_left[table_index] + (i>>6) + 0x10);
-  lpoke(screen_ram + row1_offset + 1, screen_ram_1_left[table_index] + (i>>6) + 0x10);
 
   // Set colour RAM
   lpoke(colour_ram + row0_offset + 0, colour_ram_0_left[table_index]);
-  lpoke(colour_ram + row1_offset + 0, colour_ram_0_left[table_index]);
   lpoke(colour_ram + row0_offset + 1, colour_ram_1[table_index]+colour);
-  lpoke(colour_ram + row1_offset + 1, colour_ram_1[table_index]+colour);
 
   // And the 2nd column, if required
   if ((cached_glyph_flags[i]&0x1f)>8) {
     // Screen RAM
-    lpoke(screen_ram + row0_offset + 2, ((i&0x3f)<<2) + 1 );
+    lpoke(screen_ram + row0_offset + 2, ((i&0x3f)<<2) + 2 );
     lpoke(screen_ram + row0_offset + 3, screen_ram_1_right[table_index] + (i>>6) + 0x10);
-    lpoke(screen_ram + row1_offset + 2, ((i&0x3f)<<2) + 3);
-    lpoke(screen_ram + row1_offset + 3, screen_ram_1_right[table_index] + (i>>6) + 0x10);
 
     // Colour Ram
     lpoke(colour_ram + row0_offset + 2, colour_ram_0_right[table_index]);
-    lpoke(colour_ram + row1_offset + 2, colour_ram_0_right[table_index]);
     lpoke(colour_ram + row0_offset + 3, colour_ram_1[table_index]+colour);
-    lpoke(colour_ram + row1_offset + 3, colour_ram_1[table_index]+colour);
 
     // Rendered as 2 chars wide
     // XXX also report number of pixels consumed
@@ -315,11 +316,15 @@ void main(void)
     }
   }
 
+  // Load blank glyph into address that is assumed by spaces
+  draw_glyph(0,0, FONT_UI, 0x20,0x01);
+
+  
   // Try drawing a unicode glyph
   i=0x21;
   while(1) {
     screen_clear();
-    draw_glyph(0,0, FONT_UI, i,0x01);
+    draw_glyph(0,1, FONT_UI, i,0x01);
     lpoke(screen_ram + 1024,i&0x1f);
     while(PEEK(0xD610)) POKE(0xD610,0);
     while(!PEEK(0xD610)) continue;
