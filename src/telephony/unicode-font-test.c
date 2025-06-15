@@ -29,6 +29,9 @@ void screen_setup(void)
   POKE(0xD020,0);
   POKE(0xD021,6);
 
+  // H640 + fast CPU
+  POKE(0xD031,0xc0);  
+  
   // 16-bit text mode 
   POKE(0xD054,0x05);
 
@@ -37,12 +40,9 @@ void screen_setup(void)
   
   // Retract borders to be 1px
   POKE(0xD05C,0x3B);
-  POKE(0xD048,0x3B); POKE(0xD049,0x00);
-  POKE(0xD04A,0x1c); POKE(0xD04B,0x02);  
+  POKE(0xD048,0x41); POKE(0xD049,0x00);
+  POKE(0xD04A,0x20); POKE(0xD04B,0x02);  
 
-  // H640 + fast CPU
-  POKE(0xD031,0xc0);  
-  
   // 90 columns wide (but with virtual line length of 255)
   // Advance 512 bytes per line
   POKE(0xD058,0x00); POKE(0xD059,0x02);
@@ -55,7 +55,7 @@ void screen_setup(void)
   // Chargen vertically centred for 30 rows, and at left-edge of 720px display
   // (We _could_ use all 800px horizontally on the phone display, but then we can't see it on VGA output for development/debugging)
   POKE(0xD04C,0x3B); POKE(0xD04D,0x00);
-  POKE(0xD04E,0x39); POKE(0xD04F,0x00);
+  POKE(0xD04E,0x41); POKE(0xD04F,0x00);
   
   // Double-height char mode
   POKE(0xD07A,0x10);
