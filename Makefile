@@ -26,11 +26,18 @@ tools/bomtool:	tools/bomtool.c tools/parts-library.c tools/parts-library.h
 tools/showglyph:	tools/showglyph.c
 	gcc -o tools/showglyph tools/showglyph.c -I/usr/include/freetype2 -lfreetype
 
-bin65/unicode-font-test.prg:	src/telephony/unicode-font-test.c
+tools/gen_attr_tables:	tools/gen_attr_tables.c
+	gcc -o tools/gen_attr_tables tools/gen_attr_tables.c
+
+src/telephony/attr_tables.c:	tools/gen_attr_tables
+	$< > $@
+
+bin65/unicode-font-test.prg:	src/telephony/unicode-font-test.c src/telephony/attr_tables.c
 	mkdir -p bin65
 	$(CC65) -Iinclude -Isrc/mega65-libc/include src/telephony/unicode-font-test.c
+	$(CC65) -Iinclude -Isrc/mega65-libc/include src/telephony/attr_tables.c
 	$(CC65) -Iinclude -Isrc/mega65-libc/include src/mega65-libc/src/shres.c
 	$(CC65) -Iinclude -Isrc/mega65-libc/include src/mega65-libc/src/memory.c
 	$(CC65) -Iinclude -Isrc/mega65-libc/include src/mega65-libc/src/hal.c
-	$(CL65) -o bin65/unicode-font-test.prg -Iinclude -Isrc/mega65-libc/include src/telephony/unicode-font-test.s src/mega65-libc/src/shres.s src/mega65-libc/src/cc65/shres_asm.s src/mega65-libc/src/memory.s src/mega65-libc/src/cc65/memory_asm.s src/mega65-libc/src/hal.s
+	$(CL65) -o bin65/unicode-font-test.prg -Iinclude -Isrc/mega65-libc/include src/telephony/unicode-font-test.s src/telephony/attr_tables.s src/mega65-libc/src/shres.s src/mega65-libc/src/cc65/shres_asm.s src/mega65-libc/src/memory.s src/mega65-libc/src/cc65/memory_asm.s src/mega65-libc/src/hal.s
 
