@@ -53,13 +53,14 @@ void screen_setup(void)
   // XXX -- We can display more than 128, but then we need to insert GOTOX tokens to prevent RRB wrap-around
   POKE(0xD05E,RENDER_COLUMNS); // display 255 
   
-  // 30 rows
+  // 30+1 rows (because row 0 of text glitches when using interlaced)
   POKE(0xD07B,30 - 1);
   
   // Chargen vertically centred for 30 rows, and at left-edge of 720px display
   // (We _could_ use all 800px horizontally on the phone display, but then we can't see it on VGA output for development/debugging)
+  // We have a hidden first row of text that we don't show, to avoid glitching of top raster in first row of text when interlaced text mode is enabled.
   POKE(0xD04C,0x3B); POKE(0xD04D,0x00);
-  POKE(0xD04E,0x41); POKE(0xD04F,0x00);
+  POKE(0xD04E,0x41 - 16); POKE(0xD04F,0x00);
   
   // Double-height char mode
   POKE(0xD07A,0x10);
@@ -200,10 +201,10 @@ void screen_clear(void)
   lpoke(screen_ram + 1,0x00);
   lpoke(screen_ram + 2,0x20);
   lpoke(screen_ram + 3,0x00);
-  lcopy(screen_ram, screen_ram + 4,(90*30*2) - 4);
+  lcopy(screen_ram, screen_ram + 4,(256*31*2) - 4);
 
   // Clear colour RAM
-  lfill(colour_ram,0x01,(90*30*2));
+  lfill(colour_ram,0x01,(256*31*2));
 
   // Fill off-screen with GOTOX's to right edge, so that we don't overflow the 1024px RRB size
   for(y=0;y<30;y++) {
