@@ -12,7 +12,7 @@
 #define FONT_EMOJI_MONO 1
 #define FONT_TEXT 2
 #define FONT_UI 3
-char *font_files[NUM_FONTS]={"NotoColorEmoji","NotoEmoji", "NotoSans", "Nokia Pixel Large"};
+char *font_files[NUM_FONTS]={"EmojiColour","EmojiMono", "Sans", "UI"};
 struct shared_resource fonts[NUM_FONTS];
 unsigned long required_flags = SHRES_FLAG_FONT | SHRES_FLAG_16x16 | SHRES_FLAG_UNICODE;
 
@@ -142,7 +142,7 @@ void load_glyph(int font, unsigned long codepoint, unsigned int cache_slot)
 #else
   // Seek to and load glyph from font in shared resources
   shseek(&fonts[font],codepoint<<8,SEEK_SET);
-   shread(glyph_buffer,256,&fonts[font]);
+  shread(glyph_buffer,256,&fonts[font]);
 #endif
 
   // Extract glyph flags
@@ -157,6 +157,7 @@ void load_glyph(int font, unsigned long codepoint, unsigned int cache_slot)
   }
 
   // Store glyph in the cache
+#define FONT_CARD_ORDER_FIXED
 #ifdef FONT_CARD_ORDER_FIXED
   lcopy((unsigned long)glyph_buffer,GLYPH_DATA_START + ((unsigned long)cache_slot<<8), BYTES_PER_GLYPH);
 #else
@@ -317,19 +318,21 @@ void main(void)
   }
 
   // Load blank glyph into address that is assumed by spaces
-  draw_glyph(0,0, FONT_UI, 0x20,0x01);
+  //  draw_glyph(0,0, FONT_UI, 0x20,0x01);
 
   
   // Try drawing a unicode glyph
-  i=0x21;
-  while(1) {
-    screen_clear();
-    draw_glyph(0,1, FONT_UI, i,0x01);
-    lpoke(screen_ram + 1024,i&0x1f);
-    while(PEEK(0xD610)) POKE(0xD610,0);
-    while(!PEEK(0xD610)) continue;
-    if (PEEK(0xD610)==',') i--;
-    if (PEEK(0xD610)=='.') i++;
+  {
+    unsigned long codepoint = 0x1f600L;
+    while(1) {
+      screen_clear();
+      draw_glyph(0,1, FONT_EMOJI_COLOUR, codepoint,0x01);
+      lpoke(screen_ram + 1024,codepoint&0x1f);
+      while(PEEK(0xD610)) POKE(0xD610,0);
+      while(!PEEK(0xD610)) continue;
+      if (PEEK(0xD610)==',') codepoint--;
+      if (PEEK(0xD610)=='.') codepoint++;
+    }
   }
   
   return;

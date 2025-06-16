@@ -7,3 +7,6 @@
 [submodule "src/mega65-libc"]
 	path = src/mega65-libc
 	url = git@github.com:MEGA65/mega65-libc.git
+[submodule "twemoji"]
+	path = fonts/twemoji
+	url = https://github.com/twitter/twemoji.git

@@ -192,13 +192,30 @@ void render_glyph(FT_Face face, uint32_t codepoint, int pen_x) {
 
     int y_offset = BASELINE - face->glyph->bitmap_top;
 
+    fprintf(stdout,"DEBUG: pixel mode = ");
+    switch(bmp->pixel_mode) {
+    case FT_PIXEL_MODE_NONE: printf("FT_PIXEL_MODE_NONE"); break;
+    case FT_PIXEL_MODE_MONO: printf("FT_PIXEL_MODE_MONO"); break;
+    case FT_PIXEL_MODE_GRAY: printf("FT_PIXEL_MODE_GRAY"); break;
+    case FT_PIXEL_MODE_GRAY2: printf("FT_PIXEL_MODE_GRAY2"); break;
+    case FT_PIXEL_MODE_GRAY4: printf("FT_PIXEL_MODE_GRAY4"); break;
+    case FT_PIXEL_MODE_LCD: printf("FT_PIXEL_MODE_LCD"); break;
+    case FT_PIXEL_MODE_LCD_V: printf("FT_PIXEL_MODE_LCD_V"); break;
+    case FT_PIXEL_MODE_BGRA: printf("FT_PIXEL_MODE_BGRA"); break;
+    default: printf("<unknown>");
+    }
+    printf("\n");
+
+    printf("bmp->width = %d, bmp->rows = %d\n", bmp->width, bmp->rows);
+    
     for (int y = 0; y < OUTPUT_HEIGHT; y++) {
         for (int x = 0; x < bmp->width && x < (is_wide ? 32 : 16); x++) {
             int by = y - y_offset;
             if (by < 0 || by >= bmp->rows) continue;
 
-            uint8_t value = 0;
-
+	    printf(".");
+	    
+            uint8_t value = 0;	    
             if (is_color && bmp->pixel_mode == FT_PIXEL_MODE_BGRA) {
                 uint8_t *p = &bmp->buffer[(by * bmp->width + x) * 4];
                 uint8_t a = p[3];
@@ -212,6 +229,7 @@ void render_glyph(FT_Face face, uint32_t codepoint, int pen_x) {
             }
             else if (bmp->pixel_mode == FT_PIXEL_MODE_GRAY) {
                 value = bmp->buffer[by * bmp->pitch + x];
+		printf("%02x ",value);
                 if (!is_wide) {
                     pixel_data[y][x] = value;
                 } else {
@@ -241,6 +259,9 @@ void render_glyph(FT_Face face, uint32_t codepoint, int pen_x) {
 		  }
                 }
             }
+	    else {
+	      fprintf(stderr,"WARNING: Unsupported FT_PIXEL_MODE = %d\n",bmp->pixel_mode);
+	    }
         }
     }
 

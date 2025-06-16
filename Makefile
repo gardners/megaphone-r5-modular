@@ -3,13 +3,16 @@ all:	tools/bomtool bin65/unicode-font-test.prg $(FONTS)
 CC65=cc65 -t c64
 CL65=cl65 -t c64
 
-FONTS=fonts/noto/NotoColorEmoji-Regular.ttf.MRF \
+FONTS=fonts/twemoji/twemoji.MRF \
 	fonts/noto/NotoEmoji-VariableFont_wght.ttf.MRF \
 	fonts/noto/NotoSans-VariableFont_wdth,wght.ttf.MRF \
 	fonts/nokia-pixel-large/nokia-pixel-large.otf.MRF
 
 fonts/noto/NotoColorEmoji-Regular.ttf:
 	echo "Read fonts/noto/README.txt"
+
+fonts/twemoji/twemoji.MRF:
+	python3 tools/twemoji2mega65font.py fonts/twemoji/assets/svg/ fonts/twemoji/twemoji.MRF
 
 %.otf.MRF:	%.otf tools/showglyph
 	tools/showglyph $<
