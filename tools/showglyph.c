@@ -97,11 +97,11 @@ int calc_colour_error(int is_color, int is_wide, uint8_t original, uint8_t subst
         return 3 * dr * dr + 6 * dg * dg + 1 * db * db;
     } else if (is_wide) {
         // 4-bit intensity packed into a byte: high and low nybbles
-        int hi_orig = (original >> 4) & 0x0F;
-        int lo_orig = original & 0x0F;
+        int lo_orig = (original >> 4) & 0x0F;
+        int hi_orig = original & 0x0F;
 
-        int hi_subs = (substitute >> 4) & 0x0F;
-        int lo_subs = substitute & 0x0F;
+        int lo_subs = (substitute >> 4) & 0x0F;
+        int hi_subs = substitute & 0x0F;
 
         return abs(hi_orig - hi_subs) + abs(lo_orig - lo_subs);
     } else {
@@ -115,17 +115,17 @@ int calc_colour_error(int is_color, int is_wide, uint8_t original, uint8_t subst
  *
  *  ┌───────────────  glyph columns ───────────────┐
  *  row 0  pixel_data[0][ 0.. 7] → data[0.. 63]  (tile 0, row 0)
- *         pixel_data[0][ 8..15] → data[64..127] (tile 1, row 0)
- *  row 1  pixel_data[1][ 0.. 7] → data[128..191] (tile 2, row 0)
+ *         pixel_data[0][ 8..15] → data[128..191] (tile 2, row 0)
+ *  row 1  pixel_data[1][ 0.. 7] → data[64..127] (tile 1, row 0)
  *         pixel_data[1][ 8..15] → data[192..255] (tile 3, row 0)
  *  row 2  pixel_data[2][ 0.. 7] → data[0.. 63]  (tile 0, row 1)
  *  ...
  *
  *  Layout recap
  *  ┌─────┬─────┐         data[  0.. 63]  = tile 0 (even rows, left 8 bytes)
- *  │ T0  │ T1  │         data[ 64..127]  = tile 1 (even rows, right 8 bytes)
+ *  │ T0  │ T2  │         data[128..191]  = tile 2 (even rows, right 8 bytes)
  *  ├─────┼─────┤
- *  │ T2  │ T3  │         data[128..191]  = tile 2 (odd rows,  left 8 bytes)
+ *  │ T1  │ T3  │         data[ 64..127]  = tile 1 (odd rows,  left 8 bytes)
  *  └─────┴─────┘         data[192..255]  = tile 3 (odd rows,  right 8 bytes)
  */
 static void
@@ -136,11 +136,11 @@ pack_into_tiles(const uint8_t pixel_data[OUTPUT_HEIGHT][16], uint8_t data[256])
     for (int y = 0; y < OUTPUT_HEIGHT; ++y) {          /* 0‥15 */
         const int tile_row     = y >> 1;               /* 0‥7   */
         const int even_row     = !(y & 1);             /* true if 0,2,4…       */
-        const int even_offset  = even_row ?   0 : 128; /* tiles 0+1 or 2+3     */
+        const int even_offset  = even_row ?   0 : 64; /* tiles 0+1 or 2+3     */
 
         for (int bx = 0; bx < 16; ++bx) {              /* byte-column 0‥15     */
             const int right_half  = (bx >= 8);         /* 0 = left, 1 = right  */
-            const int base_offset = even_offset + (right_half ? 64 : 0);
+            const int base_offset = even_offset + (right_half ? 128 : 0);
             const int dest_index  = base_offset + tile_row * 8 + (bx & 7);
 
             data[dest_index] = pixel_data[y][bx];
@@ -216,10 +216,12 @@ void render_glyph(FT_Face face, uint32_t codepoint, int pen_x) {
                     pixel_data[y][x] = value;
                 } else {
                     // 4-bit: pack 2 pixels per byte
-                    if (x % 2 == 0) {
-                        pixel_data[y][x / 2] = (value >> 4) << 4;
+                    if (x % 2 == 1) {
+		      pixel_data[y][x / 2] &= 0x0f;
+		      pixel_data[y][x / 2] |= (value >> 4) << 4;
                     } else {
-                        pixel_data[y][x / 2] |= (value >> 4);
+		      pixel_data[y][x / 2] &= 0xf0;
+		      pixel_data[y][x / 2] |= (value >> 4);
                     }
                 }
             }
@@ -230,11 +232,13 @@ void render_glyph(FT_Face face, uint32_t codepoint, int pen_x) {
                 if (!is_wide) {
                     pixel_data[y][x] = value;
                 } else {
-                    if (x % 2 == 0) {
-                        pixel_data[y][x / 2] = (value >> 4) << 4;
-                    } else {
-                        pixel_data[y][x / 2] |= (value >> 4);
-                    }
+		  if (x % 2 == 1) {
+		    pixel_data[y][x / 2] &= 0x0f;
+		    pixel_data[y][x / 2] |= (value >> 4) << 4;
+		  } else {
+		    pixel_data[y][x / 2] &= 0xf0;
+		    pixel_data[y][x / 2] |= (value >> 4);
+		  }
                 }
             }
         }
