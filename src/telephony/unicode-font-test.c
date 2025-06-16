@@ -318,10 +318,19 @@ void main(void)
     }
   }
 
-  // Load blank glyph into address that is assumed by spaces
-  //  draw_glyph(0,0, FONT_UI, 0x20,0x01);
+  // Say hello to the world!
+  draw_glyph(0,1, FONT_UI, 'E',0x01);
+  draw_glyph(1,1, FONT_UI, 'm',0x01);
+  draw_glyph(3,1, FONT_UI, 'o',0x01);
+  draw_glyph(4,1, FONT_UI, 'j',0x01);
+  draw_glyph(5,1, FONT_UI, 'i',0x01);
+  draw_glyph(6,1, FONT_UI, '!',0x01);
+  draw_glyph(7,1, FONT_UI, ' ',0x01);
+  draw_glyph(8,1, FONT_EMOJI_COLOUR, 0x1f929L,0x01);
 
-  
+  while(1) continue;
+
+#if 0
   // Try drawing a unicode glyph
   {
     unsigned long codepoint = 0x1f600L;
@@ -335,6 +344,7 @@ void main(void)
       if (PEEK(0xD610)=='.') codepoint++;
     }
   }
+#endif
   
   return;
 }
