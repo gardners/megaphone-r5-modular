@@ -109,7 +109,7 @@ int main(int argc,char **argv)
       int is_colour=i&32;
       
       unsigned char val = 0x00;
-      val |= is_colour? 0x40 : 0x00;  // Select alternate palette for colour glyphs
+      val |= is_colour? 0x60 : 0x00;  // Select alternate palette for colour glyphs
       
       emit_val(val);
     }
