@@ -33,8 +33,8 @@ void screen_setup(void)
   POKE(0xD020,0);
   POKE(0xD021,6);
 
-  // H640 + fast CPU
-  POKE(0xD031,0xc0);  
+  // H640 + fast CPU + VIC-III extended attributes
+  POKE(0xD031,0xE0);  
   
   // 16-bit text mode, alpha compositor, 40MHz
   POKE(0xD054,0xC5);
