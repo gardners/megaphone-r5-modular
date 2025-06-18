@@ -407,7 +407,7 @@ void main(void)
   draw_glyph(8,1, FONT_EMOJI_COLOUR, 0x1f929L,0x01);
 
   {
-    unsigned char *string="Ümlaute! 👀";
+    unsigned char *string="Ümlaute! 👀 😀 😎 🐶 🐙 🍕 🍣 ⚽️ 🎮 🛠️ 🚀 🎲 🧩 📚 🧪 🎵 🎯 💡 🔥 🌈 🪁";
     unsigned char *s=string;
     unsigned char x=0;
     unsigned long cp;
@@ -415,18 +415,7 @@ void main(void)
 
     while (cp = utf8_next_codepoint(&s)) {
       unsigned char f = pick_font_by_codepoint(cp);
-      if (cp > 0x100L) {
-	POKE(0x0800,cp>>0);
-	POKE(0x0801,cp>>8);
-	POKE(0x0802,cp>>16);
-	x += draw_glyph(x, 4, FONT_UI, hex(cp>>16), 0x0e);
-	x += draw_glyph(x, 4, FONT_UI, hex(cp>>12), 0x0e);
-	x += draw_glyph(x, 4, FONT_UI, hex(cp>>8), 0x0e);
-	x += draw_glyph(x, 4, FONT_UI, hex(cp>>4), 0x0e);
-	x += draw_glyph(x, 4, FONT_UI, hex(cp), 0x0e);
-      } else {
-	x += draw_glyph(x, 4, f, cp, 0x01);
-      }
+      x += draw_glyph(x, 4, f, cp, 0x01);
     }
   }
   
