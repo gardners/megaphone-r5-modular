@@ -24,6 +24,29 @@ unsigned long screen_ram = 0x12000;
 unsigned long colour_ram = 0xff80800L;
 
 #define RENDER_COLUMNS 128
+#define MAX_ROWS 30
+
+struct text_box {
+  // The UTF-8 text to be rendered
+  unsigned char *text;
+  // Text box position in characters
+  unsigned char cx,cy;
+  // Text box right most and lowest char position
+  unsigned char cx2,cy2;
+  // Width of the text box in pixels
+  // Note: Does not have to match the natural width of the underlying characters.
+  // Rather, it's quite normal for the width to be quite a bit narrower, to allow
+  // for many trimmed characters
+  unsigned int width;
+  // The current position of rendering
+  unsigned char cxpos;
+  unsigned int xpos;
+  unsigned char ypos;
+
+  // Pointers to each line of text
+  unsigned char rows;
+  unsigned char *line_breaks[MAX_ROWS];
+};
 
 void draw_goto(int x,int y, int goto_pos);
 
@@ -359,7 +382,7 @@ char pick_font_by_codepoint(unsigned long cp)
         (cp >= 0x1F1E6 && cp <= 0x1F1FF))    // Regional Indicator Symbols (🇦 – 🇿)
         return FONT_EMOJI_COLOUR;    
     
-    return FONT_UI;
+    return FONT_TEXT;
 }
 
 char hex(unsigned char c)
