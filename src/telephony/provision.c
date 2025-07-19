@@ -58,24 +58,24 @@ int main(int argc,char **argv)
     // cache, as there will be lots of directory traversals
     // going on.  Such is life.
     mega65_cdroot();
-    mega65_chdir("PHONES");
-    mega65_chdir("THREADS");
+    if (mega65_chdir("PHONE")) exit(-1);
+    if (mega65_chdir("THREADS")) exit(-1);
     hex[0]=to_hex(contact>>12);
     hex[1]=0;
     mega65_mkdir(hex);
-    mega65_chdir(hex);
+    if (mega65_chdir(hex)) exit (-1);
     hex[0]=to_hex(contact>>8);
     hex[1]=0;
     mega65_mkdir(hex);
-    mega65_chdir(hex);
+    if (mega65_chdir(hex)) exit (-1);
     hex[0]=to_hex(contact>>4);
     hex[1]=0;
     mega65_mkdir(hex);
-    mega65_chdir(hex);
+    if (mega65_chdir(hex)) exit (-1);
     hex[0]=to_hex(contact>>0);
     hex[1]=0;
     mega65_mkdir(hex);
-    mega65_chdir(hex);
+    if (mega65_chdir(hex)) exit (-1);
 
     create_d81("MESSAGES.D81");
     create_d81("MSGINDEX.D81");

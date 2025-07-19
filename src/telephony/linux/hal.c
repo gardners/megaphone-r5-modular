@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 
 unsigned char sector_buffer[512];
 
@@ -23,17 +24,28 @@ void hal_init(void)
 
 char mega65_mkdir(char *dir)
 {
+  char cwd[2048];
+  fprintf(stderr,"INFO: Making directory '%s' in '%s'\n",
+	  dir,getcwd(cwd,sizeof(cwd)));
   return mkdir(dir,0750);
 }
 
 char mega65_cdroot(void)
 {
+  char cwd[2048];
+  fprintf(stderr,"INFO: CDROOT: Changing directory to '%s'\n",
+	  working_directory);
   return chdir(working_directory);
 }
 
 char mega65_chdir(char *dir)
 {
-  return chdir(dir);
+  char cwd[2048];
+  fprintf(stderr,"INFO: Changing directory to '%s' in '%s'\n",
+	  dir,getcwd(cwd,sizeof(cwd)));
+  int r= chdir(dir);
+  if (r) perror("chdir()");
+  return r;
 }
 
 
@@ -107,6 +119,8 @@ char mount_d81(char *filename, unsigned char drive_id)
     return -1;
   }
 
+  fprintf(stderr,"INFO: Disk image '%s' mounted as drive %d\n",filename,drive_id);
+  
   return 0;
 }
 
@@ -126,18 +140,14 @@ char create_d81(char *filename)
     return -1;
   }
 
-  if (fseek(f,SEEK_SET,800*1024-1)) {
-    fprintf(stderr,"ERROR: Failed to seek to end of newly created disk image '%s'\n",filename);
-    perror("fseek()");
+  if (ftruncate(fileno(f), 800*1024)) {  
+    fprintf(stderr,"ERROR: Failed to set size of newly created disk image '%s'\n",filename);
+    perror("ftruncate()");
     return -1;
   }
 
-  unsigned char zero_byte = 0;
-  if (fwrite(&zero_byte,1,1,f)!=1) {
-    fprintf(stderr,"ERROR: Failed to write last byte of new D81 disk image '%s'\n",filename);
-    perror("fwrite()");
-    return -1;
-  }
 
+  fclose(f);
+  
   return 0;
 }
