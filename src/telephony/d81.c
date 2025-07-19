@@ -43,56 +43,74 @@ unsigned char all_sectors_filename[16]={
   0xa0,0xa0,0xa0,0xa0,0xa0
 };
 
+unsigned char ascii_to_petscii(unsigned char x)
+{
+  // a–z → 193–218
+  if (x >= 'a' && x <= 'z')
+    return x - 'a' + 193;
+  
+  // 0–9 and most common punctuation (ASCII 32–64 and 91–96)
+  if ((x >= 32 && x <= 64) || (x >= 91 && x <= 96))
+    return x;
+  
+  // A–Z → same in PETSCII
+  if (x >= 'A' && x <= 'Z')
+    return x;
+  
+  // default to question mark for unsupported characters
+  return '?';
+}
+
 /*
   Format a D81 disk image to contain a single file that
   occupies the entire disk. Allocate 24 directory entries.
 */
 void format_image_fully_allocated(char drive_id,char *header)  
 {
-  char i,j;
+  unsigned char i,j;
 
   /* Header + BAM Sector 1
      ---------------------------------------- */
   
   // Erase sector buffer
-  lfill(SECTOR_BUFFER_ADDRESS,0x00,512);
+  lfill((unsigned long)SECTOR_BUFFER_ADDRESS,0x00,512);
   // Clear header name
-  lfill(&header_template[4],0xa0,16);
+  lfill((unsigned long)&header_template[4],0xa0,16);
   // Set header name
   for(i=0;(i<16) && (header[i]);i++) {
     header_template[4+i] = ascii_to_petscii(header[i]);
   }
-  lcopy(header_template,SECTOR_BUFFER_ADDRESS, sizeof(header_template));
+  lcopy((unsigned long)header_template,(unsigned long)SECTOR_BUFFER_ADDRESS, sizeof(header_template));
 
   // BAM is easy: Just a valid header, and leave all bitmap bytes $00, to
   // indicate that there is no free space on the disk.
-  lcopy(bam_template,SECTOR_BUFFER_ADDRESS + 0x100,sizeof(bam_template));
+  lcopy((unsigned long)bam_template,(unsigned long)(SECTOR_BUFFER_ADDRESS + 0x100),sizeof(bam_template));
     
   write_sector(drive_id,40,0);
 
   /* BAM Sector 2 + First directory sector */
 
   // Erase sector buffer
-  lfill(SECTOR_BUFFER_ADDRESS,0x00,512);
+  lfill((unsigned long)SECTOR_BUFFER_ADDRESS,0x00,512);
 
   // BAM Sector 2 is the same as BAM Sector 1, except that as it is the last BAM Sector,
   // the link to the next sector is $00,$FF, to indicate end of "file", and that it uses
   // all the bytes.
-  lcopy(&bam_template[2],SECTOR_BUFFER_ADDRESS + 0x002,sizeof(bam_template));
-  lpoke(SECTOR_BUFFER_ADDRESS+0,0x00);
-  lpoke(SECTOR_BUFFER_ADDRESS+1,0xFF);
+  lcopy((unsigned long)&bam_template[2],(unsigned long)(SECTOR_BUFFER_ADDRESS + 0x002),sizeof(bam_template));
+  lpoke((unsigned long)(SECTOR_BUFFER_ADDRESS+0),0x00);
+  lpoke((unsigned long)(SECTOR_BUFFER_ADDRESS+1),0xFF);
 
   // We assume that we always need 16 directory entries, so setup sector link to
   // track 40 sector 4.
-  lpoke(SECTOR_BUFFER_ADDRESS+0x100,40);
-  lpoke(SECTOR_BUFFER_ADDRESS+0x101,4);
+  lpoke((unsigned long)(SECTOR_BUFFER_ADDRESS+0x100),40);
+  lpoke((unsigned long)(SECTOR_BUFFER_ADDRESS+0x101),4);
 
   // Set filename of "all sectors" file
-  lcopy(all_sectors_filename,&directory_entry_template[3],16);
+  lcopy((unsigned long)all_sectors_filename,(unsigned long)&directory_entry_template[3],16);
   // Create directory entry
-  lcopy(directory_entry_template,SECTOR_BUFFER_ADDRESS + 0x102, sizeof(directory_entry_template));
+  lcopy((unsigned long)directory_entry_template,(unsigned long)(SECTOR_BUFFER_ADDRESS + 0x102), sizeof(directory_entry_template));
   // Clean up after scribbling over the directory entry template
-  lfill(&directory_entry_template[3],0xa0,16);
+  lfill((unsigned long)&directory_entry_template[3],0xa0,16);
   
   write_sector(drive_id,40,1);
   

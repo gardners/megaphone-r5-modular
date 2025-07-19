@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
 
 unsigned char sector_buffer[512];
 
@@ -18,12 +21,38 @@ void hal_init(void)
   }
 }
 
+char mega65_mkdir(char *dir)
+{
+  return mkdir(dir,0750);
+}
+
+char mega65_cdroot(void)
+{
+  return chdir(working_directory);
+}
+
+char mega65_chdir(char *dir)
+{
+  return chdir(dir);
+}
+
+
+void lpoke(unsigned long long addr, unsigned char val)
+{
+  unsigned char *a = (unsigned char *)addr;
+  a[0]=val;
+}
+
+
 void lfill(unsigned long long addr, unsigned char val, unsigned int len)
 {
   if (!len) {
     fprintf(stderr,"FATAL: lfill() length = 0, which on the MEGA65 means 64KB.\n");
     exit(-1);
   }
+
+  memset((unsigned char *)addr,val,len);
+  
 }
 
 void lcopy(unsigned long long src, unsigned long long dest, unsigned int len)
@@ -32,6 +61,8 @@ void lcopy(unsigned long long src, unsigned long long dest, unsigned int len)
     fprintf(stderr,"FATAL: lcopy() length = 0, which on the MEGA65 means 64KB.\n");
     exit(-1);
   }
+
+  memmove((unsigned char *)dest,(unsigned char *)src,len);
 }
 
 void write_sector(unsigned char drive_id, unsigned char track, unsigned char sector)
@@ -47,7 +78,7 @@ void write_sector(unsigned char drive_id, unsigned char track, unsigned char sec
     exit(-1);
   }
 
-  if (fseek(offset,SEEK_SET,drive_files[drive_id])) {
+  if (fseek(drive_files[drive_id],SEEK_SET,offset)) {
     fprintf(stderr,"FATAL: write_sector(%d,%d,%d) failed to seek to offset 0x%06x.\n",drive_id,track,sector,offset);
     perror("write_sector()");
     exit(-1);
@@ -75,6 +106,8 @@ char mount_d81(char *filename, unsigned char drive_id)
     perror("fopen()");
     return -1;
   }
+
+  return 0;
 }
 
 char create_d81(char *filename)
@@ -93,7 +126,7 @@ char create_d81(char *filename)
     return -1;
   }
 
-  if (fseek(800*1024-1,SEEK_SET,f)) {
+  if (fseek(f,SEEK_SET,800*1024-1)) {
     fprintf(stderr,"ERROR: Failed to seek to end of newly created disk image '%s'\n",filename);
     perror("fseek()");
     return -1;
@@ -105,5 +138,6 @@ char create_d81(char *filename)
     perror("fwrite()");
     return -1;
   }
-  
+
+  return 0;
 }

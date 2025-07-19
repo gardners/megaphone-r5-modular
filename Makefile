@@ -35,8 +35,8 @@ tools/gen_attr_tables:	tools/gen_attr_tables.c
 src/telephony/attr_tables.c:	tools/gen_attr_tables
 	$< > $@
 
-src/telephony/linux/provision:	src/telephony/d81.c src/telephony/provision.c src/telephony/linux/includes.h src/telephony/linux/hal.c
-	gcc -Wall -g -o $@ src/telephony/d81.c src/telephony/provision.c src/telephony/linux/includes.h src/telephony/linux/hal.c
+src/telephony/linux/provision:	src/telephony/d81.c src/telephony/provision.c src/telephony/linux/includes.h src/telephony/linux/hal.c Makefile
+	gcc -Wall -g -Isrc/telephony/linux -o $@ src/telephony/d81.c src/telephony/provision.c src/telephony/linux/includes.h src/telephony/linux/hal.c
 
 bin65/unicode-font-test.prg:	src/telephony/unicode-font-test.c src/telephony/attr_tables.c
 	mkdir -p bin65

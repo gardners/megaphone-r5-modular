@@ -79,9 +79,9 @@ int main(int argc,char **argv)
 
     create_d81("MESSAGES.D81");
     create_d81("MSGINDEX.D81");
-    mount_d81(0,"MESSAGES.D81");
+    mount_d81("MESSAGES.D81",0);
     format_image_fully_allocated(0,"MESSAGES");
-    mount_d81(0,"MSGINDEX.D81");
+    mount_d81("MSGINDEX.D81",0);
     format_image_fully_allocated(0,"MESSAGE INDEX");
     
   }
