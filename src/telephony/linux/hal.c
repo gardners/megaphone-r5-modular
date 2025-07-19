@@ -1,7 +1,22 @@
 #include <stdio.h>
+#include <unistd.h>
 
 unsigned char sector_buffer[512];
-#define SECTOR_BUFFER_ADDRESS ((unsigned long long) &sector_buffer[0])
+
+#define MAX_DRIVES 2
+FILE *drive_files[MAX_DRIVES]={NULL};
+
+#define PATH_LEN 2048
+char working_directory[PATH_LEN];
+
+void hal_init(void)
+{
+  if (!getcwd(working_directory,PATH_LEN)) {
+    fprintf(stderr,"FATAL: Failed to read current working directory in hal_init()\n");
+    perror("getcwd()");
+    exit(-1);
+  }
+}
 
 void lfill(unsigned long long addr, unsigned char val, unsigned int len)
 {
@@ -43,4 +58,52 @@ void write_sector(unsigned char drive_id, unsigned char track, unsigned char sec
     perror("write_sector()");
     exit(-1);
   }
+}
+
+char mount_d81(char *filename, unsigned char drive_id)
+{
+  if (drive_id >= MAX_DRIVES) {
+    fprintf(stderr,"ERROR: Attempted to mount a disk image to drive %d (must be 0 -- %d)\n",
+	    drive_id, MAX_DRIVES-1);
+    return -1;
+  }
+  if (drive_files[drive_id]) { fclose(drive_files[drive_id]); drive_files[drive_id]=NULL; }
+
+  drive_files[drive_id]=fopen(filename,"rb+");
+  if (!drive_files[drive_id]) {
+    fprintf(stderr,"ERROR: Failed to mount '%s' as drive %d\n",filename,drive_id);
+    perror("fopen()");
+    return -1;
+  }
+}
+
+char create_d81(char *filename)
+{
+  FILE *f=fopen(filename,"rb");
+  if (f) {
+    fprintf(stderr,"ERROR: Disk image '%s' already exists.\n",filename);
+    fclose(f);
+    return -1;
+  }
+
+  f=fopen(filename,"wb");
+  if (!f) {
+    fprintf(stderr,"ERROR: Failed to create disk image '%s'\n",filename);
+    perror("fopen()");
+    return -1;
+  }
+
+  if (fseek(800*1024-1,SEEK_SET,f)) {
+    fprintf(stderr,"ERROR: Failed to seek to end of newly created disk image '%s'\n",filename);
+    perror("fseek()");
+    return -1;
+  }
+
+  unsigned char zero_byte = 0;
+  if (fwrite(&zero_byte,1,1,f)!=1) {
+    fprintf(stderr,"ERROR: Failed to write last byte of new D81 disk image '%s'\n",filename);
+    perror("fwrite()");
+    return -1;
+  }
+  
 }
