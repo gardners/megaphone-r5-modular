@@ -10,6 +10,7 @@
 
 char to_hex(unsigned char v)
 {
+  v&=0xf;
   if (v<0xa) return v+'0';
   if (v>0xf) return 0;
   return 'A'+(v-0xa);

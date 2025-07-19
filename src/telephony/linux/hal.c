@@ -90,7 +90,7 @@ void write_sector(unsigned char drive_id, unsigned char track, unsigned char sec
     exit(-1);
   }
 
-  if (fseek(drive_files[drive_id],SEEK_SET,offset)) {
+  if (fseek(drive_files[drive_id],offset,SEEK_SET)) {
     fprintf(stderr,"FATAL: write_sector(%d,%d,%d) failed to seek to offset 0x%06x.\n",drive_id,track,sector,offset);
     perror("write_sector()");
     exit(-1);
