@@ -46,6 +46,26 @@ int main(int argc,char **argv)
      as it is.
   */
 
+  // D81 for the phone state
+  create_d81("STATE.D81");
+  mount_d81("STATE.D81",0);
+  format_image_fully_allocated(0,"PHONE STATE");
+
+  // And for the first 1,560 contacts.
+  create_d81("CONTACT0.D81");
+  mount_d81("CONTACT0.D81",0);
+  format_image_fully_allocated(0,"CONTACTS 0");
+  // Then we need the different sorted versions of the contacts,
+  create_d81("SORT02-0.D81");
+  create_d81("SORT04-0.D81");
+  // And the character pair lookup indexes
+  create_d81("IDX02-0.D81");
+  create_d81("IDX04-0.D81");
+  
+
+  // XXX - Make testing faster for now
+#define MAX_CONTACTS 10
+  
   for(contact=0;contact<MAX_CONTACTS;contact++) {
 
     printf("Creating contact %d\n",contact);
