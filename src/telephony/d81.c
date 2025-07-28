@@ -107,10 +107,16 @@ void format_image_fully_allocated(char drive_id,char *header)
 
   // Set filename of "all sectors" file
   lcopy((unsigned long)all_sectors_filename,(unsigned long)&directory_entry_template[3],16);
+
   // Create directory entry
   lcopy((unsigned long)directory_entry_template,(unsigned long)(SECTOR_BUFFER_ADDRESS + 0x102), sizeof(directory_entry_template));
   // Clean up after scribbling over the directory entry template
   lfill((unsigned long)&directory_entry_template[3],0xa0,16);
+
+  // Set number of blocks in file to 3160
+  lpoke((unsigned long)(SECTOR_BUFFER_ADDRESS+0x100+0x1e),3160 & 0xff);
+  lpoke((unsigned long)(SECTOR_BUFFER_ADDRESS+0x100+0x1f),(3160 >> 8));
+
   
   write_sector(drive_id,40,1);
   
@@ -132,7 +138,7 @@ void format_image_fully_allocated(char drive_id,char *header)
   // Tracks
   for(i=1;i<=80;i++) {
     // Don't touch the directory sector
-    if (i==0x40) continue;
+    if (i==40) continue;
 
     // Physical sectors
     for(j=0;j<20;j++) {
