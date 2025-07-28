@@ -144,20 +144,35 @@ void format_image_fully_allocated(char drive_id,char *header)
     for(j=0;j<20;j++) {
       
       // Next sector links
+      // Sector numbers are 0 -- 39, not 1 -- 40
 
       // First half always links to 2nd half of physical sector
       lpoke(SECTOR_BUFFER_ADDRESS+0x000,i);
       lpoke(SECTOR_BUFFER_ADDRESS+0x001,j*2+1);
 
+#define CONTENT_TEST
+#ifdef CONTENT_TEST
+      lpoke(SECTOR_BUFFER_ADDRESS+0x000+2,i);
+      lpoke(SECTOR_BUFFER_ADDRESS+0x001+2,j*2+1);
+#endif      
+      
       // Second half points to next physical sector, or to first
       // sector of next track (or track 41 if we are on track 39,
       // so that we skip the directory).
       if (j<20) {
 	lpoke(SECTOR_BUFFER_ADDRESS+0x100,i);
 	lpoke(SECTOR_BUFFER_ADDRESS+0x101,j*2+1+1);
+#ifdef CONTENT_TEST
+	lpoke(SECTOR_BUFFER_ADDRESS+0x100+2,i);
+	lpoke(SECTOR_BUFFER_ADDRESS+0x101+2,j*2+1+1);
+#endif
       } else {
 	lpoke(SECTOR_BUFFER_ADDRESS+0x100, (i==39)?41:(i+1));
 	lpoke(SECTOR_BUFFER_ADDRESS+0x101,0);
+#ifdef CONTENT_TEST
+	lpoke(SECTOR_BUFFER_ADDRESS+0x100+2, (i==39)?41:(i+1));
+	lpoke(SECTOR_BUFFER_ADDRESS+0x101+2,0);
+#endif
       }
 
       write_sector(drive_id,i,j);
