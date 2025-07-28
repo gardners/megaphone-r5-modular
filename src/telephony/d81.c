@@ -154,7 +154,7 @@ void format_image_fully_allocated(char drive_id,char *header)
       // so that we skip the directory).
       if (j<20) {
 	lpoke(SECTOR_BUFFER_ADDRESS+0x100,i);
-	lpoke(SECTOR_BUFFER_ADDRESS+0x101,j+1);
+	lpoke(SECTOR_BUFFER_ADDRESS+0x101,j*2+1+1);
       } else {
 	lpoke(SECTOR_BUFFER_ADDRESS+0x100, (i==39)?41:(i+1));
 	lpoke(SECTOR_BUFFER_ADDRESS+0x101,0);
